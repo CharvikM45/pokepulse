@@ -1,0 +1,10 @@
+begin;
+create index listings_product on public.listings(product_id);
+create index observations_listing_time on public.stock_observations(listing_id,observed_at desc);
+create index events_listing_time on public.stock_events(listing_id,occurred_at desc);
+create index rules_user on public.alert_rules(user_id);
+create index inbox_user_created on public.notifications(user_id,created_at desc);
+create index inbox_rule_created on public.notifications(user_id,rule_id,created_at desc);
+create index privacy_user on public.privacy_jobs(user_id);
+create index push_user on public.push_subscriptions(user_id);
+commit;

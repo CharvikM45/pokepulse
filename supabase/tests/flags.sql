@@ -1,0 +1,12 @@
+begin;
+create extension if not exists pgtap with schema extensions;
+select plan(4);
+set local role anon;
+select is((select count(*)::integer from public.feature_flags),6,'anonymous reads flags');
+select is((select count(*)::integer from public.feature_flags where enabled),0,'all flags disabled');
+select throws_ok($$update public.feature_flags set enabled=true$$,'42501',null,'anonymous cannot enable flags');
+set local role authenticated;
+select throws_ok($$update public.feature_flags set enabled=true$$,'42501',null,'authenticated cannot enable flags');
+reset role;
+select * from finish();
+rollback;
