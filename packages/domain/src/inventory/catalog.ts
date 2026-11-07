@@ -73,6 +73,7 @@ export function listingMatches(l: ListingDTO, q: CatalogQuery): boolean {
   return (
     (!q.retailer_id || q.retailer_id === l.retailer_id) &&
     (!q.seller_type || q.seller_type === l.seller_type) &&
+    (!q.channel || q.channel === l.channel) &&
     (!q.currency || q.currency === l.currency) &&
     (q.max_price_minor === undefined ||
       (l.price_minor !== null && l.price_minor <= q.max_price_minor)) &&
@@ -90,6 +91,7 @@ export function catalogFilter(
   const offerFilter = [
     "retailer_id",
     "seller_type",
+    "channel",
     "currency",
     "max_price_minor",
     "availability_status",
@@ -98,7 +100,9 @@ export function catalogFilter(
   ].some((k) => q[k as keyof CatalogQuery] !== undefined);
   return products.filter(
     (p) =>
-      (!q.q || p.name.toLowerCase().includes(q.q.toLowerCase())) &&
+      (!q.q ||
+        p.name.toLowerCase().includes(q.q.toLowerCase()) ||
+        p.set_name?.toLowerCase().includes(q.q.toLowerCase())) &&
       (!q.set_name || p.set_name === q.set_name) &&
       (!q.product_type || p.product_type === q.product_type) &&
       (!offerFilter ||

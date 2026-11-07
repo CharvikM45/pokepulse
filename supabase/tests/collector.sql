@@ -1,0 +1,18 @@
+begin;
+create extension if not exists pgtap with schema extensions;
+select plan(10);
+select is((select count(*)::integer from public.tcg_sets where is_demo),1,'one original fictional seed set');
+select is((select count(*)::integer from public.card_variants),5,'five explicit demo variants');
+select is((select count(*)::integer from public.master_set_manifests where validated),1,'seed manifest passed publication validation');
+select is((select count(*)::integer from public.b_pack_settings where enabled),0,'pack settings stay off');
+select is((select count(*)::integer from public.b_radar_settings where enabled),0,'Radar settings stay off');
+select is((select count(*)::integer from public.b_calendar_settings where enabled),0,'calendar settings stay off');
+set local role anon;
+select throws_ok($$select * from public.wallets$$,'42501',null,'anonymous cannot read wallets');
+select throws_ok($$select * from public.sightings$$,'42501',null,'anonymous cannot read private submissions');
+select throws_ok($$select public.b_open_pack('10000000-0000-4000-8000-000000000001',gen_random_uuid(),false)$$,'42501',null,'anonymous cannot open packs');
+set local role authenticated;
+select throws_ok($$select public.b_dispatch_sighting_outbox()$$,'42501',null,'ordinary accounts cannot publish events');
+reset role;
+select * from finish();
+rollback;

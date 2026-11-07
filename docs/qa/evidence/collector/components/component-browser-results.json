@@ -1,0 +1,11 @@
+{
+  "checks": [
+    "Combobox keyboard selection/no matches/Escape restores selection",
+    "Tabs use arrows for focus and Enter for activation",
+    "Dialog Cancel focus/Escape/restore, labelled field error and toast"
+  ],
+  "axeScans": 10,
+  "violations": 0,
+  "horizontalOverflow": false,
+  "pageErrors": []
+}

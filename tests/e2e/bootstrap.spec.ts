@@ -1,10 +1,14 @@
 import { test, expect } from "@playwright/test";
-test("anonymous mobile scaffold is explicitly demo", async ({ page }) => {
+test("anonymous mobile catalog is explicitly demo", async ({ page }) => {
   await page.goto("/");
   await expect(
-    page.getByRole("heading", { name: "Collector workspace" }),
+    page.getByRole("heading", { name: /Find your next pack/ }),
   ).toBeVisible();
-  await expect(page.getByRole("note")).toContainText("DEMO DATA");
+  await expect(
+    page.getByText(
+      "DEMO DATA — synthetic products and offers. No live retailer verification.",
+    ),
+  ).toBeVisible();
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= window.innerWidth,

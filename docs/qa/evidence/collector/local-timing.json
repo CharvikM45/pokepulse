@@ -1,0 +1,13 @@
+{
+  "scope": "Local loopback production build, unthrottled Chromium; not a field or staging CWV result",
+  "viewport": {
+    "width": 360,
+    "height": 780
+  },
+  "observed": {
+    "lcp_ms": 100,
+    "layout_shift_sum": 0.11213675213675214,
+    "ttfb_ms": 1.600000023841858
+  },
+  "inp": "Not measured; requires staging interaction and field evidence"
+}

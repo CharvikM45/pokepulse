@@ -1,0 +1,15 @@
+{
+  "checks": [
+    "1000-variant dataset renders nine rows per page; number search, rarity/finish/duplicate filters, page reset and list fallback",
+    "Unknown Extended scope cannot export; failed private checklist retry keeps explicit mode/goal/version without client identity",
+    "Partial or wrong-mode snapshot never labels cards missing/owned; delayed virtual mode and collection-read error/retry retain separation"
+  ],
+  "axeScans": 10,
+  "violations": 0,
+  "pageErrors": [],
+  "fixtureVariants": 1000,
+  "maxRenderedCards": 9,
+  "limits": [
+    "Original fixture data and callback tests; actual authenticated paging/export endpoints remain pending."
+  ]
+}

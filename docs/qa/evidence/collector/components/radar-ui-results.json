@@ -1,0 +1,14 @@
+{
+  "checks": [
+    "ZIP validation, ignored stale/out-of-order search, pagination dedup, missing map/directions fallback and progressive sign-in",
+    "Only approved/unexpired public report fields render; expiry refetch removes stale conflict counts and private identity/notes",
+    "Staff presentation guard prevents queue loads, self-review disabled, private markup escaped, public notes start empty, validation/retry key preservation and approval withdrawal",
+    "Private queue empty/error/retry and late-response discard after staff access is revoked"
+  ],
+  "axeScans": 20,
+  "violations": 0,
+  "pageErrors": [],
+  "limits": [
+    "Callback test doubles; actual staff/auth/API/notification integration remains pending."
+  ]
+}

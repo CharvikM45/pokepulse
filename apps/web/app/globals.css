@@ -1,12 +1,14 @@
 @import "tailwindcss";
+@import "maplibre-gl/dist/maplibre-gl.css";
+@import "../../../packages/ui/src/tokens.css";
 @theme {
   --color-surface: #f7f8fa;
   --color-ink: #18202b;
 }
 body {
   margin: 0;
-  background: var(--color-surface);
-  color: var(--color-ink);
+  background: var(--pp-bg);
+  color: var(--pp-text);
   font-family: system-ui, sans-serif;
 }
 a {
@@ -15,4 +17,157 @@ a {
 :focus-visible {
   outline: 3px solid #245bcc;
   outline-offset: 4px;
+}
+.pp-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-block: 1rem 2rem;
+}
+.pp-topbar > div,
+.pp-actions,
+.pp-badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+.pp-topbar select {
+  margin-inline: 0.5rem;
+}
+.pp-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 750;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--pp-muted);
+}
+.pp-hero {
+  position: relative;
+  padding: clamp(1.5rem, 5vw, 4rem);
+  border-radius: 1.5rem;
+  background: var(--pp-info-bg);
+  border: 1px solid var(--pp-border);
+  margin-bottom: 2rem;
+  overflow: hidden;
+}
+.pp-hero h1 {
+  font-size: clamp(2.3rem, 5vw, 4rem);
+  max-width: 17ch;
+}
+.pp-hero p {
+  max-width: 50ch;
+}
+.pp-hero-note {
+  border-left: 3px solid var(--pp-accent);
+  padding-left: 1rem;
+  margin-top: 2rem;
+  color: var(--pp-muted);
+}
+.pp-filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+  align-items: end;
+  gap: 1rem;
+}
+.pp-filters label {
+  display: grid;
+  gap: 0.35rem;
+}
+.pp-product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 1rem;
+  margin-block: 1.5rem;
+}
+.pp-product-art {
+  min-height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background: var(--pp-info-bg);
+  color: var(--pp-info-text);
+  border-radius: 0.6rem;
+}
+.pp-product-art span {
+  font-size: 4rem;
+}
+.pp-product-art small {
+  letter-spacing: 0.2em;
+  font-weight: 700;
+}
+.pp-badges span {
+  border: 1px solid var(--pp-border);
+  padding: 0.15rem 0.5rem;
+  border-radius: 2rem;
+  font-size: 0.8rem;
+}
+.pp-facts div {
+  display: grid;
+  grid-template-columns: 7rem 1fr;
+  gap: 0.5rem;
+  padding-block: 0.3rem;
+}
+.pp-facts dt {
+  color: var(--pp-muted);
+}
+.pp-facts dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.pp-stack {
+  display: grid;
+  gap: 1rem;
+  margin-block: 1rem;
+}
+.pp-main footer {
+  border-top: 1px solid var(--pp-border);
+  margin-top: 3rem;
+  padding-block: 1rem;
+  font-size: 0.85rem;
+}
+.pp-quick-search {
+  display: flex;
+  gap: 1rem;
+  align-items: end;
+  flex-wrap: wrap;
+  margin-block: 1rem 2rem;
+}
+.pp-quick-search label {
+  flex: 1;
+  min-width: min(100%, 220px);
+  display: grid;
+  gap: 0.4rem;
+}
+.pp-filter-panel {
+  margin-block: 1rem 2rem;
+}
+.pp-filter-panel summary {
+  font-weight: 650;
+  cursor: pointer;
+  padding-block: 0.75rem;
+}
+.pp-account-fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+.pp-provenance {
+  min-height: 8rem;
+  padding-block: 0.5rem;
+}
+.pp-provenance .pp-banner {
+  margin: 0;
+}
+.pp-catalog-placeholder {
+  min-height: 30rem;
+}
+@media (min-width: 768px) {
+  .pp-provenance {
+    min-height: 5rem;
+  }
 }

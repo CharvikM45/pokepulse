@@ -1,0 +1,176 @@
+{
+  "total": {
+    "lines": { "total": 4153, "covered": 1510, "skipped": 0, "pct": 36.35 },
+    "statements": {
+      "total": 4153,
+      "covered": 1510,
+      "skipped": 0,
+      "pct": 36.35
+    },
+    "functions": { "total": 62, "covered": 50, "skipped": 0, "pct": 80.64 },
+    "branches": { "total": 393, "covered": 327, "skipped": 0, "pct": 83.2 },
+    "branchesTrue": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "C:\\Users\\tanma\\Documents\\Codex\\2026-11-06\\pu\\work\\pokepulse\\apps\\web\\src\\api.ts": {
+    "lines": { "total": 53, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 53, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "C:\\Users\\tanma\\Documents\\Codex\\2026-11-06\\pu\\work\\pokepulse\\apps\\web\\src\\catalog-repository.ts": {
+    "lines": { "total": 221, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 221, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "C:\\Users\\tanma\\Documents\\Codex\\2026-11-06\\pu\\work\\pokepulse\\apps\\web\\src\\collector-contracts.ts": {
+    "lines": { "total": 32, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "statements": { "total": 32, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 }
+  },
+  "C:\\Users\\tanma\\Documents\\Codex\\2026-11-06\\pu\\work\\pokepulse\\apps\\web\\src\\collector-repository.ts": {
+    "lines": { "total": 326, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 326, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "C:\\Users\\tanma\\Documents\\Codex\\2026-11-06\\pu\\work\\pokepulse\\apps\\web\\src\\collector-routes.ts": {
+    "lines": { "total": 603, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 603, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "C:\\Users\\tanma\\Documents\\Codex\\2026-11-06\\pu\\work\\pokepulse\\apps\\web\\src\\routes.ts": {
+    "lines": { "total": 346, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 346, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "C:\\Users\\tanma\\Documents\\Codex\\2026-11-06\\pu\\work\\pokepulse\\apps\\web\\src\\server.ts": {
+    "lines": { "total": 138, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 138, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "C:\\Users\\tanma\\Documents\\Codex\\2026-11-06\\pu\\work\\pokepulse\\apps\\web\\src\\auth\\push.ts": {
+    "lines": { "total": 34, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "statements": { "total": 34, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 }
+  },
+  "C:\\Users\\tanma\\Documents\\Codex\\2026-11-06\\pu\\work\\pokepulse\\apps\\web\\src\\auth\\use-session.ts": {
+    "lines": { "total": 79, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "statements": { "total": 79, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 }
+  },
+  "C:\\Users\\tanma\\Documents\\Codex\\2026-11-06\\pu\\work\\pokepulse\\packages\\contracts\\src\\client.ts": {
+    "lines": { "total": 132, "covered": 5, "skipped": 0, "pct": 3.78 },
+    "functions": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 132, "covered": 5, "skipped": 0, "pct": 3.78 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "C:\\Users\\tanma\\Documents\\Codex\\2026-11-06\\pu\\work\\pokepulse\\packages\\contracts\\src\\collector.ts": {
+    "lines": { "total": 227, "covered": 227, "skipped": 0, "pct": 100 },
+    "functions": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 },
+    "statements": { "total": 227, "covered": 227, "skipped": 0, "pct": 100 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "C:\\Users\\tanma\\Documents\\Codex\\2026-11-06\\pu\\work\\pokepulse\\packages\\contracts\\src\\platform.ts": {
+    "lines": { "total": 240, "covered": 234, "skipped": 0, "pct": 97.5 },
+    "functions": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "statements": { "total": 240, "covered": 234, "skipped": 0, "pct": 97.5 },
+    "branches": { "total": 2, "covered": 2, "skipped": 0, "pct": 100 }
+  },
+  "C:\\Users\\tanma\\Documents\\Codex\\2026-11-06\\pu\\work\\pokepulse\\packages\\contracts\\src\\schemas.ts": {
+    "lines": { "total": 111, "covered": 104, "skipped": 0, "pct": 93.69 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 111, "covered": 104, "skipped": 0, "pct": 93.69 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "C:\\Users\\tanma\\Documents\\Codex\\2026-11-06\\pu\\work\\pokepulse\\packages\\domain\\src\\workers.ts": {
+    "lines": { "total": 492, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 492, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "C:\\Users\\tanma\\Documents\\Codex\\2026-11-06\\pu\\work\\pokepulse\\packages\\domain\\src\\calendar\\dates.ts": {
+    "lines": { "total": 26, "covered": 26, "skipped": 0, "pct": 100 },
+    "functions": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "statements": { "total": 26, "covered": 26, "skipped": 0, "pct": 100 },
+    "branches": { "total": 16, "covered": 14, "skipped": 0, "pct": 87.5 }
+  },
+  "C:\\Users\\tanma\\Documents\\Codex\\2026-11-06\\pu\\work\\pokepulse\\packages\\domain\\src\\catalog\\provider.ts": {
+    "lines": { "total": 208, "covered": 206, "skipped": 0, "pct": 99.03 },
+    "functions": { "total": 8, "covered": 8, "skipped": 0, "pct": 100 },
+    "statements": { "total": 208, "covered": 206, "skipped": 0, "pct": 99.03 },
+    "branches": { "total": 67, "covered": 58, "skipped": 0, "pct": 86.56 }
+  },
+  "C:\\Users\\tanma\\Documents\\Codex\\2026-11-06\\pu\\work\\pokepulse\\packages\\domain\\src\\collections\\policies.ts": {
+    "lines": { "total": 196, "covered": 194, "skipped": 0, "pct": 98.97 },
+    "functions": { "total": 8, "covered": 8, "skipped": 0, "pct": 100 },
+    "statements": { "total": 196, "covered": 194, "skipped": 0, "pct": 98.97 },
+    "branches": { "total": 82, "covered": 73, "skipped": 0, "pct": 89.02 }
+  },
+  "C:\\Users\\tanma\\Documents\\Codex\\2026-11-06\\pu\\work\\pokepulse\\packages\\domain\\src\\collections\\privacy.ts": {
+    "lines": { "total": 80, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "statements": { "total": 80, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 }
+  },
+  "C:\\Users\\tanma\\Documents\\Codex\\2026-11-06\\pu\\work\\pokepulse\\packages\\domain\\src\\inventory\\catalog.ts": {
+    "lines": { "total": 139, "covered": 127, "skipped": 0, "pct": 91.36 },
+    "functions": { "total": 8, "covered": 8, "skipped": 0, "pct": 100 },
+    "statements": { "total": 139, "covered": 127, "skipped": 0, "pct": 91.36 },
+    "branches": { "total": 61, "covered": 41, "skipped": 0, "pct": 67.21 }
+  },
+  "C:\\Users\\tanma\\Documents\\Codex\\2026-11-06\\pu\\work\\pokepulse\\packages\\domain\\src\\inventory\\permissions.ts": {
+    "lines": { "total": 34, "covered": 34, "skipped": 0, "pct": 100 },
+    "functions": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "statements": { "total": 34, "covered": 34, "skipped": 0, "pct": 100 },
+    "branches": { "total": 7, "covered": 7, "skipped": 0, "pct": 100 }
+  },
+  "C:\\Users\\tanma\\Documents\\Codex\\2026-11-06\\pu\\work\\pokepulse\\packages\\domain\\src\\inventory\\providers.ts": {
+    "lines": { "total": 104, "covered": 96, "skipped": 0, "pct": 92.3 },
+    "functions": { "total": 4, "covered": 4, "skipped": 0, "pct": 100 },
+    "statements": { "total": 104, "covered": 96, "skipped": 0, "pct": 92.3 },
+    "branches": { "total": 29, "covered": 22, "skipped": 0, "pct": 75.86 }
+  },
+  "C:\\Users\\tanma\\Documents\\Codex\\2026-11-06\\pu\\work\\pokepulse\\packages\\domain\\src\\inventory\\repository.ts": {
+    "lines": { "total": 36, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "statements": { "total": 36, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 }
+  },
+  "C:\\Users\\tanma\\Documents\\Codex\\2026-11-06\\pu\\work\\pokepulse\\packages\\domain\\src\\packs\\policies.ts": {
+    "lines": { "total": 77, "covered": 76, "skipped": 0, "pct": 98.7 },
+    "functions": { "total": 3, "covered": 3, "skipped": 0, "pct": 100 },
+    "statements": { "total": 77, "covered": 76, "skipped": 0, "pct": 98.7 },
+    "branches": { "total": 41, "covered": 34, "skipped": 0, "pct": 82.92 }
+  },
+  "C:\\Users\\tanma\\Documents\\Codex\\2026-11-06\\pu\\work\\pokepulse\\packages\\domain\\src\\packs\\recovery.ts": {
+    "lines": { "total": 43, "covered": 43, "skipped": 0, "pct": 100 },
+    "functions": { "total": 3, "covered": 3, "skipped": 0, "pct": 100 },
+    "statements": { "total": 43, "covered": 43, "skipped": 0, "pct": 100 },
+    "branches": { "total": 25, "covered": 24, "skipped": 0, "pct": 96 }
+  },
+  "C:\\Users\\tanma\\Documents\\Codex\\2026-11-06\\pu\\work\\pokepulse\\packages\\domain\\src\\radar\\policies.ts": {
+    "lines": { "total": 138, "covered": 138, "skipped": 0, "pct": 100 },
+    "functions": { "total": 8, "covered": 8, "skipped": 0, "pct": 100 },
+    "statements": { "total": 138, "covered": 138, "skipped": 0, "pct": 100 },
+    "branches": { "total": 49, "covered": 47, "skipped": 0, "pct": 95.91 }
+  },
+  "C:\\Users\\tanma\\Documents\\Codex\\2026-11-06\\pu\\work\\pokepulse\\services\\ingestion\\run.ts": {
+    "lines": { "total": 10, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 10, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "C:\\Users\\tanma\\Documents\\Codex\\2026-11-06\\pu\\work\\pokepulse\\services\\notification-worker\\run.ts": {
+    "lines": { "total": 28, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 28, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 }
+  }
+}

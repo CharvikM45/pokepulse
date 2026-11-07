@@ -1,0 +1,12 @@
+{
+  "checks": [
+    "Staff-only form, source host gate, blank verification time, validation, unknown date null and same-key lost-response retry; unchanged save disabled",
+    "Month precision preserved through normalized storage; subsequent edits use next revision/new key; explicit withdrawal"
+  ],
+  "axeScans": 10,
+  "violations": 0,
+  "pageErrors": [],
+  "limits": [
+    "Callback test doubles, not a published announcement or A auth/API integration."
+  ]
+}

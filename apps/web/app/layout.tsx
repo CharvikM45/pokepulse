@@ -1,8 +1,9 @@
 import "./globals.css";
 import type { ReactNode } from "react";
 export const metadata = {
-  title: "Collector workspace — development",
-  description: "Neutral development scaffold. No live inventory.",
+  title: "PokéPulse — collector workspace",
+  description:
+    "Explore source-aware retailer offers, community reports and your collection.",
 };
 export default function Layout({ children }: { children: ReactNode }) {
   return (
