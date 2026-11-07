@@ -344,7 +344,7 @@ try {
       await a.call("/api/v1/sightings/confirm", {
         method: "POST",
         body: { id: report.id },
-        expected: 403,
+        expected: 404,
       });
       const body = {
         decision: "approved",
@@ -362,6 +362,15 @@ try {
         { method: "POST", body },
       );
       assert.equal(approved.revision, 1);
+      await a.call("/api/v1/sightings/confirm", {
+        method: "POST",
+        body: { id: report.id },
+        expected: 403,
+      });
+      await b.call("/api/v1/sightings/confirm", {
+        method: "POST",
+        body: { id: report.id },
+      });
       const visible = await anonymous(`/api/v1/stores/${storeId}/sightings`);
       assert.equal(visible.length, 1);
       assert(!JSON.stringify(visible).includes("Private fixture report"));
