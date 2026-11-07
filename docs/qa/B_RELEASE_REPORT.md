@@ -20,7 +20,7 @@ Date: 2026-11-07. Branch: `feat/developer-b-product`, based on A platform commit
 | B-09   | Private opening history/recovery, locked collection snapshots, idempotent real edits, progress and missing CSV                                                       | Two-user SQL isolation; absolute edit retry cannot overwrite a newer edit; notes preserved; private mode/version/goal exports                                        |
 | B-10   | Saved-result reveal, pause/resume/skip, reload/retry/history and reference-only recovery cache                                                                       | Controller and application-adapter tests cover lost/ambiguous acknowledgment, double click, reload, rights-disabled recovery and account switching                   |
 | B-11   | Nine-card grid/list, set/mode separation, number/name/rarity/finish/ownership filters, duplicates, goal provenance and real editor                                   | 1,000-variant fixture renders at most nine cards; keyboard focus after save, partial/error snapshots and export retries tested                                       |
-| B-12   | Production-browser journeys, isolated component/adaptor suites, automated accessibility, screenshots, native SQL concurrency and local timing                        | Local checks below pass; Docker/hosted staging, manual screen-reader/device checks and staging CWV remain outstanding                                                |
+| B-12   | Production-browser journeys, isolated component/adaptor suites, automated accessibility, screenshots, native SQL concurrency and local timing                        | Local and GitHub CI checks pass, including Docker Supabase; hosted staging, manual screen-reader/device checks and staging CWV remain outstanding                    |
 
 ## Commands and results
 
@@ -40,6 +40,8 @@ Environment: Node 22.14.0, pnpm 10.34.9, TypeScript 5.9.3, Next 16.4.5, React 19
 
 The native groups cover same-key pack replay, distinct-key balance/ledger consistency, injected rollback, one UTC allowance, used-odds immutability, binder reads waiting for commit, deduplicated report submission, competing stale moderation, parallel outbox publication real-edit replay after a newer quantity, and deletion waiting for in-flight curation before audit redaction.
 
+GitHub [PR CI run 42420003614](https://github.com/CharvikM45/pokepulse/actions/runs/42420003614) passed all three jobs for source commit `7006b38`: `quality` (install, lint, typecheck, coverage, build, browser E2E and component suites), `database` (Docker Supabase start/reset/pgTAP), and `collector-concurrency` (PostgreSQL 18 service). The sanitized job/step status record is `docs/qa/evidence/collector/github-ci.json`. These CI services do not establish hosted email, supported-device push, manual accessibility or field performance.
+
 ## Accessibility, mobile and evidence
 
 The application sweep covers 13 routes at 360/1440px in light/dark themes, using WCAG 2/2.1/2.2 AA axe tags. Private adapter screens add checks for binder, alerts and calendar. Component suites cover 360, 390, 768, 1024 and 1440px, keyboard tabs/combobox/dialog/focus, errors, notifications, reduced-motion reveal controls and large binder pagination. No automated violations or horizontal overflow were reported in the passing runs. This is not a full WCAG conformance audit.
@@ -57,7 +59,7 @@ B exports/erasure register with A's existing privacy worker. Exports include own
 ## Remaining release gates and reviewable next task
 
 1. Supply a staging environment or local env-file path, keeping secret keys out of chat. Verify real signup/email/recovery/logout, two-user private HTTP/RLS, independently provisioned staff, wallet-to-binder, real-only edits, A event-to-inbox, report approval/reversal/expiry and privacy-worker export/delete.
-2. Run the Docker Supabase reset and pgTAP job in CI. Docker was unavailable on this Windows host; adding a CI job is not evidence that it ran.
+2. Docker Supabase reset and pgTAP passed in the [PR CI database job](https://github.com/CharvikM45/pokepulse/actions/runs/42420003614) for source commit `7006b38`. Docker remains unavailable on this Windows host; hosted authentication and private HTTP acceptance remain separate gates.
 3. Review shared changes with Developer A, run supported-device push and manual screen-reader checks, and measure staging/field CWV. No review, legal clearance, staging signoff or deployment is fabricated.
 4. Keep real inventory sources, live directories/maps, unlicensed art and unsupported physical odds disabled until their permission evidence is supplied. No live vendor adapter or payment mechanism is enabled.
 
@@ -65,4 +67,4 @@ The next external step is the hosted acceptance matrix, using the supplied runbo
 
 Latest local timing: LCP 100 ms, TTFB 1.60 ms and raw layout-shift sum 0.1121; INP was not measured. These local diagnostics do not establish staging/field performance. The corrected application sweep asserts each new scan page’s actual viewport and media settings before checking it.
 
-Repository publication remains pending: GitHub installation/permission is recognized, but this session has no repository tools or Git push credential. A local source commit/archive is provided; no remote branch, PR or B CI success is claimed.
+Repository publication: source commit `7006b38f9f97cd34af52d743ca08b754eb686168` is pushed to `feat/developer-b-product`. [Draft PR #1](https://github.com/CharvikM45/pokepulse/pull/1) targets Developer A's `feat/developer-a-platform` branch. It remains unmerged pending review and the outstanding release gates. GitHub authentication is available; hosted staging configuration remains absent.

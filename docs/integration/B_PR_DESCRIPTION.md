@@ -8,4 +8,6 @@ Eight additive migrations and 27 RLS-protected B tables are included. Global/int
 
 Validation: pinned-toolchain build, lint/type checks, 106 unit/embedded SQL tests, 21 production-browser/transport-adapter tests, seven component suites and native PostgreSQL concurrency with 20 connections. Automated scans report no violations in the passing runs. Full evidence and limitations are in `docs/qa/B_RELEASE_REPORT.md`.
 
-Draft until A reviews shared amendments and hosted/Docker acceptance, supported-device push, manual screen-reader checks and staging CWV are recorded. Local SQL auth stubs and transport fixtures do not establish hosted auth or staging signoff.
+GitHub CI for source commit `7006b38` additionally passed Docker Supabase reset/pgTAP and the native PostgreSQL concurrency job. The release report links the run and records the quality job result separately.
+
+Draft until A reviews shared amendments and hosted acceptance, supported-device push, manual screen-reader checks and staging CWV are recorded. Local SQL auth stubs and transport fixtures do not establish hosted auth or staging signoff.

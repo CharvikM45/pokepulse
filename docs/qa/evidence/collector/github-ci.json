@@ -1,0 +1,343 @@
+{
+  "run_url": "https://github.com/CharvikM45/pokepulse/actions/runs/42420003614",
+  "source_commit": "7006b38f9f97cd34af52d743ca08b754eb686168",
+  "jobs": [
+    {
+      "id": 128546182784,
+      "name": "quality",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-07T22:18:42Z",
+      "completed_at": "2026-11-07T22:22:00Z",
+      "html_url": "https://github.com/CharvikM45/pokepulse/actions/runs/42420003614/job/128546182784",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-07T22:18:43Z",
+          "completed_at": "2026-11-07T22:18:44Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-07T22:18:44Z",
+          "completed_at": "2026-11-07T22:18:45Z"
+        },
+        {
+          "name": "Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-07T22:18:45Z",
+          "completed_at": "2026-11-07T22:18:47Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-07T22:18:47Z",
+          "completed_at": "2026-11-07T22:18:52Z"
+        },
+        {
+          "name": "Run pnpm install --frozen-lockfile",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-07T22:18:52Z",
+          "completed_at": "2026-11-07T22:18:58Z"
+        },
+        {
+          "name": "Run pnpm lint",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-07T22:18:58Z",
+          "completed_at": "2026-11-07T22:19:07Z"
+        },
+        {
+          "name": "Run pnpm typecheck",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-07T22:19:07Z",
+          "completed_at": "2026-11-07T22:19:18Z"
+        },
+        {
+          "name": "Run pnpm test:coverage",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-07T22:19:18Z",
+          "completed_at": "2026-11-07T22:19:25Z"
+        },
+        {
+          "name": "Run pnpm build",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-07T22:19:25Z",
+          "completed_at": "2026-11-07T22:19:42Z"
+        },
+        {
+          "name": "Run pnpm exec playwright install --with-deps chromium",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-11-07T22:19:42Z",
+          "completed_at": "2026-11-07T22:19:59Z"
+        },
+        {
+          "name": "Run pnpm test:e2e",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-07T22:19:59Z",
+          "completed_at": "2026-11-07T22:20:59Z"
+        },
+        {
+          "name": "Run pnpm test:components",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-11-07T22:20:59Z",
+          "completed_at": "2026-11-07T22:21:53Z"
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-11-07T22:21:53Z",
+          "completed_at": "2026-11-07T22:21:55Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 24,
+          "started_at": "2026-11-07T22:21:55Z",
+          "completed_at": "2026-11-07T22:21:57Z"
+        },
+        {
+          "name": "Post Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 25,
+          "started_at": "2026-11-07T22:21:57Z",
+          "completed_at": "2026-11-07T22:21:57Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 26,
+          "started_at": "2026-11-07T22:21:57Z",
+          "completed_at": "2026-11-07T22:21:58Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 27,
+          "started_at": "2026-11-07T22:21:58Z",
+          "completed_at": "2026-11-07T22:21:58Z"
+        }
+      ]
+    },
+    {
+      "id": 128546182844,
+      "name": "collector-concurrency",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-07T22:18:42Z",
+      "completed_at": "2026-11-07T22:19:19Z",
+      "html_url": "https://github.com/CharvikM45/pokepulse/actions/runs/42420003614/job/128546182844",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-07T22:18:43Z",
+          "completed_at": "2026-11-07T22:18:44Z"
+        },
+        {
+          "name": "Initialize containers",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-07T22:18:44Z",
+          "completed_at": "2026-11-07T22:18:56Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-07T22:18:56Z",
+          "completed_at": "2026-11-07T22:18:58Z"
+        },
+        {
+          "name": "Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-07T22:18:58Z",
+          "completed_at": "2026-11-07T22:18:59Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-07T22:18:59Z",
+          "completed_at": "2026-11-07T22:19:04Z"
+        },
+        {
+          "name": "Run pnpm install --frozen-lockfile",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-07T22:19:04Z",
+          "completed_at": "2026-11-07T22:19:09Z"
+        },
+        {
+          "name": "Run pnpm test:collector:concurrency",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-07T22:19:09Z",
+          "completed_at": "2026-11-07T22:19:10Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-07T22:19:10Z",
+          "completed_at": "2026-11-07T22:19:15Z"
+        },
+        {
+          "name": "Post Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-11-07T22:19:15Z",
+          "completed_at": "2026-11-07T22:19:15Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-11-07T22:19:15Z",
+          "completed_at": "2026-11-07T22:19:16Z"
+        },
+        {
+          "name": "Stop containers",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-11-07T22:19:16Z",
+          "completed_at": "2026-11-07T22:19:18Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15,
+          "started_at": "2026-11-07T22:19:18Z",
+          "completed_at": "2026-11-07T22:19:18Z"
+        }
+      ]
+    },
+    {
+      "id": 128546182869,
+      "name": "database",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-07T22:18:42Z",
+      "completed_at": "2026-11-07T22:20:46Z",
+      "html_url": "https://github.com/CharvikM45/pokepulse/actions/runs/42420003614/job/128546182869",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-07T22:18:43Z",
+          "completed_at": "2026-11-07T22:18:44Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-07T22:18:44Z",
+          "completed_at": "2026-11-07T22:18:45Z"
+        },
+        {
+          "name": "Run supabase/setup-cli@v1",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-07T22:18:45Z",
+          "completed_at": "2026-11-07T22:18:47Z"
+        },
+        {
+          "name": "Run supabase start",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-07T22:18:47Z",
+          "completed_at": "2026-11-07T22:20:06Z"
+        },
+        {
+          "name": "Run supabase db reset",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-07T22:20:06Z",
+          "completed_at": "2026-11-07T22:20:28Z"
+        },
+        {
+          "name": "Run supabase test db",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-07T22:20:28Z",
+          "completed_at": "2026-11-07T22:20:31Z"
+        },
+        {
+          "name": "Run supabase stop",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-07T22:20:31Z",
+          "completed_at": "2026-11-07T22:20:43Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-11-07T22:20:43Z",
+          "completed_at": "2026-11-07T22:20:44Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15,
+          "started_at": "2026-11-07T22:20:44Z",
+          "completed_at": "2026-11-07T22:20:44Z"
+        }
+      ]
+    }
+  ]
+}
