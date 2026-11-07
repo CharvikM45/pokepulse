@@ -302,6 +302,11 @@ try {
   await check(
     "pending report, independent staff approval, A worker to inbox and reversal",
     async () => {
+      assert.equal((await b.call("/api/v1/me/preferences")).in_app, false);
+      await b.call("/api/v1/me/preferences", {
+        method: "PATCH",
+        body: { in_app: true },
+      });
       const rule = {
         enabled: true,
         product_ids: [productId],
