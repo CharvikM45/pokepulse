@@ -31,12 +31,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
       - uses: supabase/setup-cli@v1
         with:
           version: latest
       - run: supabase start
       - run: supabase db reset
       - run: supabase test db
+      - run: pnpm build
+      - name: Authenticated collector HTTP acceptance
+        run: |
+          supabase status -o env > "$RUNNER_TEMP/collector-supabase.env"
+          pnpm test:collector:http "$RUNNER_TEMP/collector-supabase.env"
+        env:
+          B_ACCEPT_DISPOSABLE_LOCAL: "true"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: collector-http-results
+          path: test-results/collector-http/
       - run: supabase stop
         if: always()
   collector-concurrency:

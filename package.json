@@ -22,7 +22,8 @@
     "test:coverage": "vitest run --coverage",
     "test:collector": "vitest run tests/collector",
     "test:collector:concurrency": "node scripts/collector-concurrency.mjs",
-    "test:components": "node scripts/test-collector-components.mjs"
+    "test:components": "node scripts/test-collector-components.mjs",
+    "test:collector:http": "node scripts/collector-http.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.14.0",
