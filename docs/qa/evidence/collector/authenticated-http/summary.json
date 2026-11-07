@@ -1,0 +1,16 @@
+{
+  "backend": "Disposable Docker Supabase GoTrue/PostgREST and production Next",
+  "checks": [
+    "real auth, session cookies, anonymous denial and CSRF",
+    "watch idempotency and two-user private HTTP isolation",
+    "atomic pack replay, saved history and real/virtual separation",
+    "pending report, independent staff approval, A worker to inbox and reversal",
+    "real browser watch, saved reveal/reload and mode-separated binder editing",
+    "private export, registered B hooks and completed account erasure"
+  ],
+  "passed": 6,
+  "limitations": [
+    "No hosted email or recovery delivery",
+    "No device push or manual screen-reader claim"
+  ]
+}

@@ -23,12 +23,14 @@ The B outbox drains transactionally into A's `publish_local_event`, retaining th
 
 `services/notification-worker/run.ts` registers B privacy participants, drains the outbox in match mode and supplies an approved-centroid ZIP-distance resolver. Privacy exports include saved opening cards, balances/ledger, inventories, authored reports/confirmations and authored audit actions. Erasure is idempotent and locks collection writes; authored private audit prose is redacted before auth deletion cascades.
 
+The real local Supabase HTTP acceptance harness exposed a native ESM startup failure in the shared worker: installed `web-push@4.0.0` has named exports and no default export. `packages/domain/src/workers.ts` now imports its namespace. This fixes startup of match, privacy and push modes without changing delivery behavior or claiming device push acceptance.
+
 ## Tooling amendments
 
 The root remains Node 22.14.0 and pnpm 10.34.9. Added test-only `pg`, `esbuild` and `@axe-core/playwright`, a native-concurrency command, a collector policy-test command included in the main Vitest/coverage run, typed story fixtures and component-test CI coverage. MapLibre is a web dependency loaded only after an explicit map action and approved server configuration. The seed configuration adds `seed-b.sql`; every B seed is original and fictional, and all public gates stay off.
 
 ## Review and release conditions
 
-Review these shared changes with A before merge. Run the Docker/Supabase CI job and hosted auth/RLS/notification/privacy journeys with two real accounts and separately provisioned staff. No hosted credentials, Docker runtime, approved live inventory provider, tile license or real-card art grant was available in this checkout. These external checks are not inferred from embedded PostgreSQL, native auth stubs, transport-stub UI tests or anonymous browser tests.
+Review these shared changes with A before merge. Docker/Supabase CI and authenticated local HTTP/browser journeys passed with actual GoTrue/PostgREST, two user accounts and separately provisioned staff; see the B release report. Repeat acceptance against hosted staging and verify its email/recovery, deployment and scheduler behavior. No hosted credentials, approved live inventory provider, tile license or real-card art grant was available in this checkout. Hosted checks are not inferred from disposable local services, native auth stubs or transport-stub UI tests.
 
 The current-signal bridge clones A’s actual definition and replaces the wrapper at the same function OID, preserving existing callers. Pending/running/blocked deletion jobs pause new B mutations; committed receipt replay and reads remain available. Erasure acquires every B per-account write lock, waits for in-flight staff edits, then redacts audit prose. These races have native multi-connection evidence.

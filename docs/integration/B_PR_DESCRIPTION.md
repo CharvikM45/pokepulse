@@ -10,4 +10,6 @@ Validation: pinned-toolchain build, lint/type checks, 106 unit/embedded SQL test
 
 GitHub CI for source commit `7006b38` additionally passed Docker Supabase reset/pgTAP and the native PostgreSQL concurrency job. The release report links the run and records the quality job result separately.
 
+The later CI run for `a8e976e` passed six real local GoTrue/PostgREST/production-Next acceptance groups, including a Playwright watch/dashboard/pack/reload/binder journey, independent report approval/confirmation to A's opt-in inbox, and private export/deletion through B's worker hooks. This exposed a shared-worker startup bug: `web-push@4.0.0` has named ESM exports, and the worker now imports the namespace. No migration changed. The downloaded credential-free summary and mobile screenshots are committed with the release evidence.
+
 Draft until A reviews shared amendments and hosted acceptance, supported-device push, manual screen-reader checks and staging CWV are recorded. Local SQL auth stubs and transport fixtures do not establish hosted auth or staging signoff.

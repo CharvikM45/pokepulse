@@ -4,7 +4,7 @@
     "node": "22.14.0",
     "pnpm": "10.34.9",
     "postgresql": "18.6",
-    "database_auth": "Disposable role stubs; not hosted GoTrue"
+    "database_auth": "Native concurrency uses role stubs; authenticated HTTP/browser acceptance uses actual Docker GoTrue/PostgREST"
   },
   "checks": {
     "unit_and_embedded_tests": 106,
@@ -17,13 +17,14 @@
     "native_independent_connections": 20,
     "B_tables_with_RLS": 27,
     "viewport_widths": [360, 390, 768, 1024, 1440],
-    "actual_application_scan_viewport_and_media_assertions": true
+    "actual_application_scan_viewport_and_media_assertions": true,
+    "authenticated_local_acceptance_groups": 6,
+    "authenticated_local_browser_journeys": 1
   },
   "limits": [
-    "No hosted Supabase auth/email/private HTTP acceptance",
-    "Docker/Supabase and remote CI not run for B yet",
+    "No hosted Supabase email/recovery or deployed staging acceptance",
     "No manual screen-reader/device push or staging/field CWV signoff",
-    "GitHub permission recognized; no authenticated push or draft PR exists yet"
+    "Shared amendments await Developer A review; draft PR remains unmerged"
   ],
   "screenshots": {
     "application\\b-calendar-unconfirmed-360.png": "3e83fab58b566be446f55430546583778c9198dc480bbf89f10469d17d9ae1ff",
@@ -44,6 +45,8 @@
     "application\\b-local-360-dark.png": "4b823e4280e5621f18e8e248a4c537c52e48e3a03367f1843368ef84cdd30c10",
     "application\\b-local-360-light.png": "7ebfe6984c8f7dbc6df8975dc3c5cd9b87a7dbbf85dbb554b75cef49bf947017",
     "application\\b-private-binder-360.png": "b6e6c8bbc7f8c6bf282d6320e6ad344b3af7ac93be4958f31a59ecf81eb79405",
+    "authenticated-http\\real-binder-360.png": "d3b34d9b5e08865b6bdf12847f1c8d2b65e2ef7fa2c5d89f0fb8c375dd796c13",
+    "authenticated-http\\real-pack-360.png": "f205713d0c7a579a6e82e8a79b1da200f9d33c152b736d594bc8f555f3f65486",
     "components\\screenshots\\binder-1440-dark.png": "84d0bf1f77b8fb10986ed26f742df85c91dbf92641cd34720dc72ac5315aed0f",
     "components\\screenshots\\binder-1440-light.png": "0b8071058f9c9e4b25cacb6ecd5316fbb2436fba7882d1e5a09cc24966a242e7",
     "components\\screenshots\\binder-360-dark.png": "ed346ec73b618cdb066af271505e22170199ede329b1688266dd77ac83bf84ab",
