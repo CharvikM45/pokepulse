@@ -44,6 +44,7 @@ jobs:
       - run: supabase db reset
       - run: supabase test db
       - run: pnpm build
+      - run: pnpm exec playwright install --with-deps chromium
       - name: Authenticated collector HTTP acceptance
         run: |
           supabase status -o env > "$RUNNER_TEMP/collector-supabase.env"
@@ -57,6 +58,9 @@ jobs:
           path: test-results/collector-http/
       - run: supabase stop
         if: always()
+      - name: Remove temporary local credentials
+        if: always()
+        run: rm -f "$RUNNER_TEMP/collector-supabase.env"
   collector-concurrency:
     runs-on: ubuntu-latest
     services:

@@ -5,6 +5,7 @@ import { readFile, mkdir, writeFile } from "node:fs/promises";
 import { spawn, execFileSync } from "node:child_process";
 import { setTimeout as delay } from "node:timers/promises";
 import pg from "pg";
+import { chromium, expect } from "@playwright/test";
 
 if (process.env.B_ACCEPT_DISPOSABLE_LOCAL !== "true")
   throw new Error("Explicit disposable-local acceptance opt-in required");
@@ -401,6 +402,107 @@ try {
     },
   );
   await check(
+    "real browser watch, saved reveal/reload and mode-separated binder editing",
+    async () => {
+      await mkdir("test-results/collector-http", { recursive: true });
+      const browser = await chromium.launch();
+      try {
+        const context = await browser.newContext({
+          baseURL: origin,
+          viewport: { width: 360, height: 780 },
+          reducedMotion: "reduce",
+        });
+        const signIn = await context.request.post("/auth/sign-in", {
+          headers: { Origin: origin, "Idempotency-Key": crypto.randomUUID() },
+          data: { email: b.email, password: b.password },
+        });
+        assert.equal(signIn.status(), 200);
+        const page = await context.newPage();
+        await page.goto(`/products/${productId}`);
+        await page
+          .getByRole("button", { name: "Watch product", exact: true })
+          .click();
+        await expect
+          .poll(async () => (await b.call("/api/v1/me/watchlist")).length)
+          .toBe(1);
+        await page.goto("/dashboard");
+        await expect(
+          page.getByRole("heading", { name: "Followed products and offers" }),
+        ).toBeVisible();
+        await expect(
+          page.getByText(products[0].name, { exact: true }).first(),
+        ).toBeVisible();
+        await page.goto("/lab");
+        const committed = page.waitForResponse(
+          (response) =>
+            response.url().endsWith("/api/v1/packs/open") &&
+            response.request().method() === "POST",
+        );
+        await page
+          .getByRole("button", { name: "Open Lumen Grove simulation" })
+          .click();
+        assert.equal((await committed).status(), 200);
+        await page.getByRole("button", { name: "Reveal all" }).click();
+        await expect(
+          page.getByText("All cards shown.", { exact: false }),
+        ).toBeVisible();
+        await page.screenshot({
+          path: "test-results/collector-http/real-pack-360.png",
+          fullPage: true,
+        });
+        await page.reload();
+        await expect(
+          page.getByRole("button", { name: "Reveal all" }),
+        ).toBeVisible();
+        assert.equal(
+          (
+            await pool.query(
+              "select count(*)::int n from public.pack_openings where user_id=$1",
+              [b.id],
+            )
+          ).rows[0].n,
+          1,
+        );
+        const read = (mode) =>
+          b.call(`/api/v1/me/collections?set_id=${setId}&mode=${mode}`);
+        const virtual = await read("virtual");
+        assert.equal(
+          virtual.entries.reduce((sum, entry) => sum + entry.quantity, 0),
+          2,
+        );
+        await page.goto("/collection");
+        await expect(
+          page.getByRole("region", { name: "Virtual collection" }),
+        ).toBeVisible();
+        await page
+          .getByRole("button", { name: "Real collection", exact: true })
+          .click();
+        await page.getByRole("button", { name: "Edit 001 standard" }).click();
+        await page.getByLabel("Quantity").fill("2");
+        await page.getByLabel("Private notes").fill("Private browser fixture");
+        await page.getByRole("button", { name: "Save real quantity" }).click();
+        await expect(
+          page
+            .locator(".pp-binder-grid")
+            .getByText("Owned: 2", { exact: true }),
+        ).toBeVisible();
+        assert.equal(
+          (await read("real")).entries.find(
+            (entry) => entry.variant_id === variantId,
+          ).quantity,
+          2,
+        );
+        assert.deepEqual((await read("virtual")).entries, virtual.entries);
+        await page.screenshot({
+          path: "test-results/collector-http/real-binder-360.png",
+          fullPage: true,
+        });
+      } finally {
+        await browser.close();
+      }
+    },
+  );
+  await check(
     "private export, registered B hooks and completed account erasure",
     async () => {
       const job = await a.call("/api/v1/me/export", {
@@ -415,6 +517,12 @@ try {
       const exported = await a.call(`/api/v1/me/export/${job.id}`);
       for (const name of ["radar", "binder", "packs"])
         assert(Object.hasOwn(exported, name), `Missing ${name} privacy hook`);
+      assert.equal(exported.binder.real[0].quantity, 5);
+      assert.equal(exported.packs.cards.length, 2);
+      assert.equal(
+        exported.radar.reports[0].private_notes,
+        "Private fixture report",
+      );
       const deletion = await a.call("/api/v1/me/delete-request", {
         method: "POST",
         body: {},
