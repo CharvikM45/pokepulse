@@ -47,6 +47,8 @@ V8 coverage across included TypeScript server/domain/client/worker files: **27.8
 
 Database integration uses PGlite PostgreSQL and minimal Supabase auth-role stubs, not a mocked JavaScript database. It runs the migration SQL and exercises RLS and transactions, but is a single embedded connection; it does not prove hosted PostgREST/Auth behavior or independent-connection concurrency. Browser evidence: docs/qa/evidence/bootstrap-mobile.png.
 
+Implementation commit `47a65e846ddaa32c4629e6835162d8248fed3dc7` passed both GitHub CI jobs (quality and database). [Verified CI run](https://github.com/CharvikM45/pokepulse/actions/runs/42394817356). This includes Linux frozen installation, lint, typecheck, coverage tests, build, Chromium E2E, Supabase startup, clean reset and pgTAP. The subsequent documentation-only commit records these results without rerunning unchanged application checks.
+
 ## Contracts, migrations and security
 
 All domain additions are under A-owned or shared paths. B's radar/packs/collections modules remain empty and main consumer UI remains a placeholder. Additive contract decisions are recorded in docs/adr/0002-platform-contracts.md and await B review. Public DTOs never return raw provider responses, service credentials or parser payload data. Source failures never create out_of_stock. Private writes derive auth.uid() and idempotency is persisted. Staff assignment is a trusted DB operation. Record retention and failure response are documented in docs/runbooks/operations.md.
@@ -57,7 +59,7 @@ Known tooling limits: ESLint 9 is pinned to satisfy Next's lint plugin peer rang
 
 ## Required final signoffs
 
-1. Run Docker Supabase CI and real staging signup/confirmation/recovery, two-user private API flows and operator controls.
+1. Docker Supabase CI passed. Still verify real staging signup/confirmation/recovery, two-user private API flows and operator controls.
 2. Register a legally approved, correctly scoped provider with credentials and a tested source-specific parser, or retain honest catalog/community fallback. Do not label synthetic observations verified.
 3. Supply B's actual consumer screens, moderated-report producer, vetted distance resolver and privacy participants; review shared contracts/migrations and cross-test complete flows.
 4. Configure VAPID and verify supported-device opt-in/revoke behavior; verify hosting, secrets, monitoring, backups, retention and multi-worker concurrency.
