@@ -8,7 +8,7 @@ import {
 } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AppShell } from "@pokepulse/ui";
+import { AppShell, BallMark } from "@pokepulse/ui";
 
 export function Workspace({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -28,7 +28,13 @@ export function Workspace({ children }: { children: ReactNode }) {
   return (
     <AppShell pathname={pathname}>
       <header className="pp-topbar">
-        <Link href="/">◈ PokéPulse</Link>
+        <Link className="pp-topbar-brand" href="/">
+          <BallMark />
+          PokéPulse
+        </Link>
+        <span className="pp-topbar-caption">
+          POKÉMON TCG <span aria-hidden="true">/</span> COLLECTOR HQ
+        </span>
         <div>
           <label>
             Appearance{" "}

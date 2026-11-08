@@ -305,6 +305,11 @@ export function SearchCombobox({
   const selected =
     options.find((option) => option.value === value)?.label ?? "";
   const [query, setQuery] = useState(selected);
+  const [lastSelected, setLastSelected] = useState(selected);
+  if (lastSelected !== selected) {
+    setLastSelected(selected);
+    setQuery(selected);
+  }
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
   const optionRefs = useRef<(HTMLLIElement | null)[]>([]);
@@ -312,10 +317,6 @@ export function SearchCombobox({
     option.label.toLocaleLowerCase().includes(query.toLocaleLowerCase()),
   );
   const current = filtered.length ? Math.min(active, filtered.length - 1) : -1;
-  useEffect(() => {
-    const timer = setTimeout(() => setQuery(selected), 0);
-    return () => clearTimeout(timer);
-  }, [selected]);
   useEffect(() => {
     if (open && current >= 0)
       optionRefs.current[current]?.scrollIntoView({ block: "nearest" });

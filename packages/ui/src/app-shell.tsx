@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-html-link-for-pages -- This framework-independent UI package uses native links and also runs outside Next. */
 import type { ReactNode } from "react";
+import { BallMark } from "./brand";
 const discovery = [
   { href: "/drops", label: "Drops" },
   { href: "/products", label: "Explore" },
@@ -30,33 +31,48 @@ export function AppShell({
         Skip to content
       </a>
       <aside className="pp-sidebar">
-        <a href="/" aria-label="PokéPulse home">
-          ◈ PokéPulse
+        <a className="pp-brand" href="/" aria-label="PokéPulse home">
+          <BallMark />
+          <span>
+            PokéPulse<span className="pp-brand-tag">THE COLLECTOR’S DESK</span>
+          </span>
         </a>
-        <p className="pp-muted">Collector workspace</p>
+        <p className="pp-nav-label">01 / DISCOVER</p>
         <nav aria-label="Discovery">
-          {discovery.map((link) => (
+          {discovery.map((link, index) => (
             <a
               key={link.href}
               href={link.href}
               aria-current={isCurrent(link.href) ? "page" : undefined}
             >
+              <span className="pp-nav-index" aria-hidden="true">
+                {String(index + 1).padStart(2, "0")}
+              </span>
               {link.label}
             </a>
           ))}
         </nav>
-        <h2>Collecting & account</h2>
+        <h2 className="pp-nav-label">02 / YOUR COLLECTION</h2>
         <nav aria-label="Collecting and account">
-          {collecting.map((link) => (
+          {collecting.map((link, index) => (
             <a
               key={link.href}
               href={link.href}
               aria-current={isCurrent(link.href) ? "page" : undefined}
             >
+              <span className="pp-nav-index" aria-hidden="true">
+                {String(index + 5).padStart(2, "0")}
+              </span>
               {link.label}
             </a>
           ))}
         </nav>
+        <div className="pp-sidebar-foot">
+          <span className="pp-sidebar-signal" aria-hidden="true" />
+          POKÉMON TCG
+          <br />
+          <span>Independent collector tools.</span>
+        </div>
       </aside>
       <main id="main-content" tabIndex={-1} className="pp-main">
         <details className="pp-mobile-menu">

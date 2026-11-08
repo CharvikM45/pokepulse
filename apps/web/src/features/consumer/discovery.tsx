@@ -9,7 +9,13 @@ import {
   ApiError,
 } from "@pokepulse/contracts";
 import Link from "next/link";
-import { Skeleton, StateCard, useNow } from "@pokepulse/ui";
+import {
+  Skeleton,
+  StateCard,
+  useNow,
+  CollectorGraphic,
+  FieldKitGraphic,
+} from "@pokepulse/ui";
 import { useResource, useSourceRefresh } from "./workspace";
 
 export const client = (signal?: AbortSignal) =>
@@ -285,27 +291,33 @@ export function Discovery({ mode }: { mode: "home" | "products" | "drops" }) {
     <>
       {mode === "home" ? (
         <section className="pp-hero">
-          <p className="pp-eyebrow">THE COLLECTOR’S DAILY CHECK-IN</p>
-          <h1>
-            Find your next pack.
-            <br />
-            Know the evidence.
-          </h1>
-          <p>
-            Explore sealed products, compare retailer offers and keep your
-            collection in view.
-          </p>
-          <div className="pp-actions">
-            <a className="pp-button" href="/drops">
-              Explore drops →
-            </a>
-            <a href="/local">Check nearby reports</a>
+          <div className="pp-hero-copy">
+            <p className="pp-eyebrow">
+              <span className="pp-red-dot" aria-hidden="true" /> POKÉMON TCG ·
+              THE FIELD GUIDE
+            </p>
+            <h1>
+              Find your next pack.
+              <br />
+              <span>Finish your next page.</span>
+            </h1>
+            <p>
+              Track sealed products, scout nearby reports, and plan the next
+              page of your binder.
+            </p>
+            <div className="pp-actions">
+              <a className="pp-button" href="/drops">
+                Explore drops →
+              </a>
+              <a href="/local">Check nearby reports</a>
+            </div>
+            <div className="pp-hero-note">
+              <span>01 / SOURCE</span>
+              <span>02 / SELLER</span>
+              <span>03 / CHECKED TIME</span>
+            </div>
           </div>
-          <div className="pp-hero-note">
-            Freshness. Source. Seller.
-            <br />
-            Every offer tells the full story.
-          </div>
+          <FieldKitGraphic />
         </section>
       ) : (
         <header>
@@ -553,14 +565,11 @@ export function Discovery({ mode }: { mode: "home" | "products" | "drops" }) {
                     className="pp-card pp-catalog-product"
                     key={product.id}
                   >
-                    <div className="pp-product-art" aria-hidden="true">
-                      <span>◈</span>
-                      <small>
-                        {product.product_type === "booster_box"
-                          ? "BOX"
-                          : "PACKS"}
-                      </small>
-                    </div>
+                    <CollectorGraphic
+                      format={
+                        product.product_type === "booster_box" ? "box" : "pack"
+                      }
+                    />
                     <p className="pp-eyebrow">
                       {product.is_demo ? "DEMO · " : ""}
                       {product.set_name ?? "Set unconfirmed"}

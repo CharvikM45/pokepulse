@@ -4,6 +4,8 @@ The A platform previously exposed a neutral landing scaffold and platform APIs. 
 
 Users can browse clearly labeled demo products/offers, share filters, watch a product or exact offer, manage alert rules/inbox/preferences, search coarse store areas, submit pending reports, review sourced releases, recover committed free simulations and keep virtual and real inventories separate. Pack draws, debits and inventory writes commit atomically. Reports require independent staff review and current revision/expiry checks before A can notify.
 
+The collector UI now has a Pokémon field-kit theme: Pokédex red, warm paper, graphite, trainer-yellow navigation, locally hosted condensed typography and original SVG/CSS illustrations. Light/dark desktop and mobile layouts were checked, including 52 public-route axe scans and 80 component scans. The redesign also fixes a combobox selection timer that could overwrite immediate typing. `docs/qa/POKEMON_THEME.md` records validation and screenshots.
+
 Eight additive migrations and 27 RLS-protected B tables are included. Global/internal gates default off; fixtures and artwork placeholders are original and fictional. Shared changes and review dependencies are explicitly recorded in CONTRACT-02. No live provider, tile permission, real-card art grant or payment flow is enabled.
 
 Validation: pinned-toolchain build, lint/type checks, 106 unit/embedded SQL tests, 21 production-browser/transport-adapter tests, seven component suites and native PostgreSQL concurrency with 20 connections. Automated scans report no violations in the passing runs. Full evidence and limitations are in `docs/qa/B_RELEASE_REPORT.md`.
