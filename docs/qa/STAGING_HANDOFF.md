@@ -41,3 +41,11 @@ The repository owner must grant the Supabase GitHub app access to `CharvikM45/po
 ## Still required before release
 
 Developer A review of shared amendments; hosted email/confirmation/recovery and deployed callback behavior; frontend hosting and worker scheduling; supported-device push; manual screen-reader acceptance; staging/field performance; and any permission review needed for real sources/art/content. The full goal is not complete merely because staging is initialized.
+
+## Hosted advisor review evidence
+
+The staging Security and Performance Advisors each reported zero errors. The Security Advisor reported 22 warnings: three anonymous-callable and 19 authenticated-callable `SECURITY DEFINER` RPCs. These include intentionally callable public projections and authenticated transactional/staff helpers. Their guards and grants remain a review item against CONTRACT-02; the findings were not dismissed or treated as a clean security signoff.
+
+The Performance Advisor reported seven auth-RLS initialization-plan warnings on A's `own_read` policies for `profiles`, `user_preferences`, `watchlists`, `alert_rules`, `notifications`, `push_subscriptions` and `privacy_jobs`. A forward migration can replace per-row `auth.uid()` evaluation with `(select auth.uid())` while preserving the ownership predicate. No applied policy or original migration was changed during this evidence pass. The advisors also reported 32 security and 38 performance informational suggestions; those counts are not a claim that every suggestion was resolved.
+
+Complete warning exports are committed beside the other hosted evidence as `security-advisor-warnings.csv` and `performance-advisor-warnings.csv`, with server observation timestamps. `initialization.sql` is the exact one-time transaction bundle used on the empty staging schema, including CLI-compatible migration history. Its digest is recorded in `initialization.json`. It refuses an existing public schema and is evidence of this initialization, not a reset command for an active database.
