@@ -1,0 +1,36 @@
+{
+  "project_ref": "nqxjljmdieyedkiilbuc",
+  "project_name": "pokepulse-staging",
+  "connection": "verified",
+  "key_types": "existing publishable and secret keys; values omitted",
+  "public_flags": [
+    {
+      "name": "retailer_verification",
+      "enabled": false
+    },
+    {
+      "name": "local_radar",
+      "enabled": false
+    },
+    {
+      "name": "web_push",
+      "enabled": false
+    },
+    {
+      "name": "calendar",
+      "enabled": false
+    },
+    {
+      "name": "pack_lab",
+      "enabled": false
+    },
+    {
+      "name": "licensed_card_art",
+      "enabled": false
+    }
+  ],
+  "server_product_count": 50,
+  "anonymous_private_read": "denied",
+  "anonymous_pack_write": "denied",
+  "source_commit": "cef16120a97891525ca0de128db243dd82f90750"
+}

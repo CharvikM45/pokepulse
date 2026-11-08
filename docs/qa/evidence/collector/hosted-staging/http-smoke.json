@@ -1,0 +1,21 @@
+{
+  "project_ref": "nqxjljmdieyedkiilbuc",
+  "source_commit": "cef16120a97891525ca0de128db243dd82f90750",
+  "frontend": "http://localhost:3000",
+  "backend": "Hosted Supabase GoTrue/PostgREST",
+  "checks": [
+    "Hosted catalog through app: 50 explicitly demo products",
+    "Anonymous account API denied",
+    "Actual hosted GoTrue sign-in and verified app session cookies",
+    "Hosted watch idempotency and two-user isolation",
+    "Hosted private preference write/read",
+    "Mode-separated empty snapshots; rights-disabled pack write denied",
+    "Watch cleanup and logout/session denial"
+  ],
+  "temporary_users_removed": 2,
+  "feature_flags_changed": false,
+  "limitations": [
+    "Test users created by admin with confirmed email; no hosted email/recovery delivery claim",
+    "Local frontend; no publicly deployed frontend or device/manual acceptance claim"
+  ]
+}

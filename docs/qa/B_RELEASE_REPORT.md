@@ -2,7 +2,7 @@
 
 Date: 2026-11-07. Branch: `feat/developer-b-product`, based on A platform commit `e9dba87a4fce51331d6597e95ac8d6b0cbab09c2`.
 
-**The B implementation is integrated locally. Public launch and hosted staging acceptance are not cleared.** Local evidence does not establish hosted authentication, provider permission, device push delivery, screen-reader conformance or field Core Web Vitals.
+**The B implementation is pushed and the hosted staging database is initialized. Public launch and full staging acceptance are not cleared.** [The staging handoff](STAGING_HANDOFF.md) records actual hosted sign-in/logout, private API and deployment checks. Email/recovery delivery, frontend/worker deployment, provider permission, device push, manual screen-reader conformance and field Core Web Vitals remain unverified.
 
 ## Ticket delivery
 
@@ -63,8 +63,8 @@ B exports/erasure register with A's existing privacy worker. Exports include own
 
 ## Remaining release gates and reviewable next task
 
-1. Supply a hosted staging environment or local env-file path, keeping secret keys out of chat. Verify signup/email/recovery and deployed cookie behavior, repeat the locally passing private HTTP/staff/wallet/binder/inbox/privacy journeys against that deployment, and verify expiry under its scheduler. Disposable local GoTrue acceptance does not establish hosted delivery or deployment configuration.
-2. Docker Supabase reset and pgTAP passed in the [PR CI database job](https://github.com/CharvikM45/pokepulse/actions/runs/42420003614) for source commit `7006b38`. Docker remains unavailable on this Windows host; hosted authentication and private HTTP acceptance remain separate gates.
+1. Hosted `pokepulse-staging` is now initialized and the local frontend is connected through a private ignored env file. Seven hosted HTTP smoke groups passed, including admin-confirmed sign-in/logout and two-user private isolation. Still verify signup/email/recovery, deployed frontend cookies, scheduled staff/wallet/inbox/privacy journeys and expiry. Admin-confirmed test users do not prove email delivery.
+2. Docker Supabase reset and pgTAP passed in the [PR CI database job](https://github.com/CharvikM45/pokepulse/actions/runs/42420003614) for source commit `7006b38`. Actual hosted initialization and private HTTP evidence is separately recorded in the staging handoff; Docker remains unavailable on this Windows host.
 3. Review shared changes with Developer A, run supported-device push and manual screen-reader checks, and measure staging/field CWV. No review, legal clearance, staging signoff or deployment is fabricated.
 4. Keep real inventory sources, live directories/maps, unlicensed art and unsupported physical odds disabled until their permission evidence is supplied. No live vendor adapter or payment mechanism is enabled.
 
@@ -72,4 +72,4 @@ The next external step is the hosted acceptance matrix, using the supplied runbo
 
 Latest local timing: LCP 100 ms, TTFB 1.60 ms and raw layout-shift sum 0.1121; INP was not measured. These local diagnostics do not establish staging/field performance. The corrected application sweep asserts each new scan page’s actual viewport and media settings before checking it.
 
-Repository publication: source commit `7006b38f9f97cd34af52d743ca08b754eb686168` is pushed to `feat/developer-b-product`. [Draft PR #1](https://github.com/CharvikM45/pokepulse/pull/1) targets Developer A's `feat/developer-a-platform` branch. It remains unmerged pending review and the outstanding release gates. GitHub authentication is available; hosted staging configuration remains absent.
+Repository publication: `feat/developer-b-product` is pushed, including the worker fix and acceptance evidence through application source `cef1612`. [Draft PR #1](https://github.com/CharvikM45/pokepulse/pull/1) targets Developer A's `feat/developer-a-platform` branch. It remains unmerged pending review and the outstanding release gates. Hosted Supabase is configured; automatic GitHub-to-Supabase integration still requires repository-owner access.

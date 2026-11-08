@@ -1,0 +1,82 @@
+{
+  "source_commit": "cef16120a97891525ca0de128db243dd82f90750",
+  "sql_sha256": "9133429899629a6122e4f7d8e03cac41b6b95f9f59947261d38928993da14b19",
+  "files": [
+    {
+      "file": "20261106000000_bootstrap.sql",
+      "sha256": "80b83b60c7f1bbfdd11ae6d707907aaf63055eccb96b0b72e0101782ca5dfd30"
+    },
+    {
+      "file": "20261106010000_platform.sql",
+      "sha256": "e8df972f0b23c31fd9d6addaa4819de0e1364391844049a3134f60392e5ca17e"
+    },
+    {
+      "file": "20261106020000_transactions.sql",
+      "sha256": "28691e6fe9ebcfc420d4838164e129231ca396bad95ffe4363f30c78454f7452"
+    },
+    {
+      "file": "20261106030000_cross_lane_and_retention.sql",
+      "sha256": "3e5b6076be1dceb99e77b1f9116e248609432520e0968f3563c34e8086b7b4be"
+    },
+    {
+      "file": "20261106040000_immutable_evidence.sql",
+      "sha256": "0effc0e2714f85a96c0df2198cf63f553205667aabfa4b25b3072c4752a881ff"
+    },
+    {
+      "file": "20261106050000_indexes.sql",
+      "sha256": "01c175f3774f09e0c1631079c9eecd45758d18189dc7b91582c2e5126f0f2ef3"
+    },
+    {
+      "file": "20261106060000_health_and_delivery_dedup.sql",
+      "sha256": "82583f13c338ea9a86ef127cbba66e73f758bf80d44f68045e597dee53071f67"
+    },
+    {
+      "file": "20261106070000_operator_metrics.sql",
+      "sha256": "8a5e8ae3bf9a77f3ec0de859a6ae0c55f8369acaf30b186dc815905ec47ea49e"
+    },
+    {
+      "file": "20261107000000_b_packs.sql",
+      "sha256": "803db18f30d66f8b4fa22e144ea1cb4f42be6033c5d25be885865e3d7ea8fa0e"
+    },
+    {
+      "file": "20261107010000_b_radar.sql",
+      "sha256": "4ec048cb8a74ef98ada374b69a5cad885ed06151fc0ab4b148813dfdc73546f7"
+    },
+    {
+      "file": "20261107020000_b_calendar.sql",
+      "sha256": "3f07e1cb3088c1abaa6b62cbbd050e262eaf2290cb2c8d1e5fdd13f2f244ec5b"
+    },
+    {
+      "file": "20261107030000_b_manifests.sql",
+      "sha256": "de3a2953dca915784a02221d3e9ca3b0607c067020affb9f0f9e30bf4468ee71"
+    },
+    {
+      "file": "20261107040000_b_platform_bridge.sql",
+      "sha256": "d986d0f6866cb8ee0ed2d1e3326d9814520085a0c39abc41e0147d06f268baf2"
+    },
+    {
+      "file": "20261107050000_b_collection_snapshot.sql",
+      "sha256": "0d7c3cf4cf0b6496ccff594c92c7ae507dbfe524af778481f89908b451a921e3"
+    },
+    {
+      "file": "20261107060000_b_metadata_provenance.sql",
+      "sha256": "9004324810fb8f59cc8547001970d6fec6259290af5969eabe7d4bcc6469a22d"
+    },
+    {
+      "file": "20261107070000_b_real_edit_idempotency.sql",
+      "sha256": "e5a74e62b345daeff82498dbd40c01a1454403d9557c789bab64feb5a46ca7ae"
+    },
+    {
+      "file": "seed.sql",
+      "sha256": "7c82fd2330e53afd066042a18b19fd9b6428a66459ca010b1ffb302d2b03b566"
+    },
+    {
+      "file": "seed-b.sql",
+      "sha256": "332a6ec5c8e99bae176a9e542419bc093579697693bc97b4d7f7818f6869e087"
+    }
+  ],
+  "local_validation": {
+    "migrations": 16
+  },
+  "hosted_execution": "Verified through SQL Editor: 16 migrations, 54 public tables, zero public tables without RLS, 50 demo products, five fictional variants and zero enabled global flags"
+}
