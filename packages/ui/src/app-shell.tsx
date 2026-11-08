@@ -30,10 +30,17 @@ export function AppShell({
         Skip to content
       </a>
       <aside className="pp-sidebar">
-        <a href="/" aria-label="PokéPulse home">
-          ◈ PokéPulse
+        <a className="pp-brand" href="/" aria-label="PokéPulse home">
+          <span className="pp-brand-mark" aria-hidden="true">
+            <span />
+          </span>
+          <span>
+            Poké<span>Pulse</span>
+            <small>COLLECTOR STUDIO</small>
+          </span>
         </a>
-        <p className="pp-muted">Collector workspace</p>
+        <p className="pp-sidebar-intro">Your corner of the collecting world.</p>
+        <p className="pp-nav-caption">DISCOVER</p>
         <nav aria-label="Discovery">
           {discovery.map((link) => (
             <a
@@ -45,7 +52,7 @@ export function AppShell({
             </a>
           ))}
         </nav>
-        <h2>Collecting & account</h2>
+        <h2 className="pp-nav-caption">YOUR SPACE</h2>
         <nav aria-label="Collecting and account">
           {collecting.map((link) => (
             <a
@@ -57,6 +64,9 @@ export function AppShell({
             </a>
           ))}
         </nav>
+        <div className="pp-sidebar-bottom">
+          <span className="pp-live-dot" /> Made for the joy of the hunt
+        </div>
       </aside>
       <main id="main-content" tabIndex={-1} className="pp-main">
         <details className="pp-mobile-menu">
