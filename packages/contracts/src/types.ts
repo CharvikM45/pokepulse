@@ -138,12 +138,13 @@ export interface ReleaseDTO {
   id: string;
   product_id: string | null;
   name: string;
-  date: string;
+  date: string | null;
   event_type: "release" | "preorder" | "announcement";
   date_precision: "day" | "month" | "unconfirmed";
   region: string | null;
   source_url: string;
   verified_at: string;
+  is_demo: boolean;
 }
 
 export interface SetDTO {
@@ -151,7 +152,7 @@ export interface SetDTO {
   name: string;
   release_date: string | null;
   rights_status: "approved" | "metadata_only" | "disabled";
-  manifest_version: string;
+  manifest_version: string | null;
   odds_version: string | null;
   enabled_for_simulation: boolean;
 }
@@ -184,8 +185,8 @@ export interface CollectionProgressDTO {
   mode: "virtual" | "real";
   base_collected: number;
   base_required: number;
-  master_collected: number;
-  master_required: number;
+  master_collected: number | null;
+  master_required: number | null;
   extended_collected: number | null;
   extended_required: number | null;
   manifest_version: string;

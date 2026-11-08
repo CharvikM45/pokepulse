@@ -19,6 +19,7 @@ jobs:
       - run: pnpm build
       - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm test:e2e
+      - run: pnpm test:components
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -30,11 +31,55 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
       - uses: supabase/setup-cli@v1
         with:
           version: latest
       - run: supabase start
       - run: supabase db reset
       - run: supabase test db
+      - run: pnpm build
+      - run: pnpm exec playwright install --with-deps chromium
+      - name: Authenticated collector HTTP acceptance
+        run: |
+          supabase status -o env > "$RUNNER_TEMP/collector-supabase.env"
+          pnpm test:collector:http "$RUNNER_TEMP/collector-supabase.env"
+        env:
+          B_ACCEPT_DISPOSABLE_LOCAL: "true"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: collector-http-results
+          path: test-results/collector-http/
       - run: supabase stop
         if: always()
+      - name: Remove temporary local credentials
+        if: always()
+        run: rm -f "$RUNNER_TEMP/collector-supabase.env"
+  collector-concurrency:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports: ["5432:5432"]
+        options: --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test:collector:concurrency
+        env:
+          B_TEST_ADMIN_URL: postgresql://postgres:postgres@127.0.0.1:5432/postgres

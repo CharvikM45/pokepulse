@@ -462,23 +462,14 @@ it("rate limits count successes and deny excess work", async () => {
       ).rows[0].ok,
     ).toBe(i < 2);
 });
-it("blocks cross-lane privacy completion when B tables exist without hooks", async () => {
+it("requires every integrated B privacy participant", async () => {
   expect(
     (
       await db.query<{ p: string[] }>(
         "select public.privacy_participants_required() p",
       )
     ).rows[0].p,
-  ).toEqual([]);
-  await db.exec("create table public.sightings(id uuid)");
-  expect(
-    (
-      await db.query<{ p: string[] }>(
-        "select public.privacy_participants_required() p",
-      )
-    ).rows[0].p,
-  ).toContain("radar");
-  await db.exec("drop table public.sightings");
+  ).toEqual(expect.arrayContaining(["radar", "binder", "packs"]));
 });
 it("daily budgets fail closed on unknown costs and account for configured cost", async () => {
   clock = new Date(clock.getTime() + 10000);

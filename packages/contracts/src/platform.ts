@@ -161,6 +161,7 @@ export const catalogQuerySchema = z
     set_name: z.string().max(100).optional(),
     product_type: z.string().max(100).optional(),
     seller_type: sellerSchema.optional(),
+    channel: channelSchema.optional(),
     retailer_id: id.optional(),
     max_price_minor: z.coerce.number().int().nonnegative().optional(),
     currency: z

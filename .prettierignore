@@ -3,4 +3,5 @@ pnpm-lock.yaml
 node_modules
 playwright-report
 test-results
+coverage
 docs/specifications/

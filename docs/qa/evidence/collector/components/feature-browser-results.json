@@ -1,0 +1,10 @@
+{
+  "checks": [
+    "Reduced motion, pause/resume/skip, ordered server-result presentation",
+    "Real edit server error/draft retry, unloaded notes preserved, real/virtual input separation, compact list",
+    "Report lost-response retry reuses normalized body and idempotency key; pending receipt"
+  ],
+  "axeScans": 10,
+  "violations": 0,
+  "note": "UI callback test doubles only. No backend persistence/concurrency/auth claim."
+}

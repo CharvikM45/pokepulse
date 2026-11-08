@@ -16,6 +16,7 @@
     "packages/**/*.tsx",
     "services/**/*.ts",
     "tests/**/*.ts",
+    "tests/**/*.tsx",
     "*.config.ts",
     "scripts/**/*.ts"
   ],

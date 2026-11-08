@@ -19,9 +19,14 @@
     "worker:notifications": "tsx services/notification-worker/run.ts",
     "test:db": "vitest run tests/integration",
     "simulate": "tsx scripts/simulate.ts",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "test:collector": "vitest run tests/collector",
+    "test:collector:concurrency": "node scripts/collector-concurrency.mjs",
+    "test:components": "node scripts/test-collector-components.mjs",
+    "test:collector:http": "node scripts/collector-http.mjs"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
     "@electric-sql/pglite": "0.5.15",
     "@playwright/test": "1.65.0",
     "@tailwindcss/postcss": "4.3.5",
@@ -30,8 +35,10 @@
     "@types/react-dom": "19.3.0",
     "@types/web-push": "3.6.4",
     "@vitest/coverage-v8": "3.2.7",
+    "esbuild": "0.28.2",
     "eslint": "^9.39.5",
     "eslint-config-next": "16.4.5",
+    "pg": "8.23.1",
     "prettier": "3.9.10",
     "tailwindcss": "4.3.5",
     "tsx": "4.23.15",

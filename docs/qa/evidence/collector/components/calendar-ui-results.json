@@ -1,0 +1,11 @@
+{
+  "checks": [
+    "Day-only date stable in Los Angeles; month-level release not assigned to day 1; unknown dates separate; keyboard day selection/month navigation",
+    "Controlled region/set filtering, safe source fallback, loading/empty/error/retry states and visible demo/source/verification labels"
+  ],
+  "axeScans": 10,
+  "violations": 0,
+  "limits": [
+    "Fictional presentation fixtures; no integrated release HTTP endpoint or live source."
+  ]
+}

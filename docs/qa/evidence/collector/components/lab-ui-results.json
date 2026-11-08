@@ -1,0 +1,20 @@
+{
+  "checks": [
+    "Anonymous browse has no private state loads; explicit sign-in, disabled rights and double-click guard; lost response preserves one committed server request",
+    "Reload makes no POST; pending retry preserves key/body; mid-reveal reload reads the same saved ID and exact cards; browser cache contains references only",
+    "Account switch clears prior private presentation/recovery; definitive server rejection clears pending reference without another debit",
+    "Ambiguous 5xx after commitment retains the original request key; retry returns the same saved result without a second debit",
+    "A committed result survives wallet refresh failure; retry refresh is GET-only; history pages deduplicate saved IDs"
+  ],
+  "axeScans": 10,
+  "violations": 0,
+  "stateCalls": 10,
+  "resultCalls": 2,
+  "openingRequests": 6,
+  "committedA": 2,
+  "committedB": 1,
+  "limits": [
+    "State persists in the Node browser-test fixture, not actual Supabase or A auth/API.",
+    "Native PostgreSQL transaction tests are separate evidence."
+  ]
+}

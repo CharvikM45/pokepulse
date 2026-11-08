@@ -1,0 +1,17 @@
+{
+  "database": "pp_b_1794087543000_13484",
+  "independent_connections": 20,
+  "passed": [
+    "same-key replay",
+    "distinct-key balance and ledger",
+    "injected rollback",
+    "one UTC free allowance",
+    "used odds immutable",
+    "binder waits for committed inventory",
+    "same-key report submission",
+    "stale competing moderation rejected",
+    "one event across parallel outbox workers",
+    "same-key real edit and stale replay preserve newer quantity",
+    "deletion waits for in-flight curation, redacts notes and pauses new writes"
+  ]
+}

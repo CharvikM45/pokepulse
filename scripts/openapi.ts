@@ -22,6 +22,43 @@ const models: Record<string, z.ZodType> = {
   Error: c.errorResponseSchema,
   LocalSightingEvent: c.localEventSchema,
   PushInput: c.pushSubscriptionSchema,
+  CollectorSets: c.setsSchema,
+  CollectorCards: c.cardsSchema,
+  PackOpening: c.openingSchema,
+  OpeningHistory: c.historySchema,
+  LabState: c.labSchema,
+  CollectionSnapshot: c.inventorySchema,
+  CollectionProgress: c.collectionProgressSchema,
+  StoreResults: c.storesSchema,
+  Sighting: c.sightingSchema,
+  SightingInput: c.reportDraft,
+  SightingReceipt: z.object({ id: uuid, moderation: z.literal("pending") }),
+  ReviewInput: c.reviewDraft.omit({ sighting_id: true }),
+  ReviewReceipt: c.reviewReceipt,
+  Release: c.releaseSchema,
+  ReleaseInput: c.releaseDraft,
+  EditableRelease: c.editableRelease,
+  MapConfiguration: c.mapSchema,
+  PackInput: z
+    .object({ set_id: uuid, use_free_open: z.boolean().default(false) })
+    .strict(),
+  RealInventoryInput: z
+    .object({
+      card_variant_id: uuid,
+      quantity: z.number().int().min(0).max(9999),
+      notes: z.string().max(500).optional(),
+    })
+    .strict(),
+  ReviewQueue: z.object({
+    reports: z.array(c.reviewSchema),
+    next_cursor: z.string().nullable(),
+  }),
+  CollectorAdmin: z.object({
+    authorized: z.literal(true),
+    hosts: z.array(z.string()),
+    products: z.array(z.object({ id: uuid, name: z.string() })),
+    releases: z.array(c.editableRelease),
+  }),
 };
 const spec: {
   openapi: string;
@@ -31,10 +68,10 @@ const spec: {
 } = {
   openapi: "3.1.0",
   info: {
-    title: "PokéPulse Developer A API",
+    title: "PokéPulse API",
     version: "1.0.0",
     description:
-      "Demo mode without Supabase. No approved live source. CONTRACT-01 joint review pending.",
+      "A platform and B collector domains. Demo mode without Supabase; live sources and B feature flags default off. CONTRACT-01/02 review pending.",
   },
   paths: {},
   components: {
@@ -260,6 +297,120 @@ spec.paths["/auth/callback"] = {
       401: { description: "Invalid or expired link" },
     },
   },
+};
+add("/api/v1/sets", "get", "CollectorSets", false, undefined, true);
+add("/api/v1/sets/{id}/cards", "get", "CollectorCards", false, undefined, true);
+add("/api/v1/stores", "get", "StoreResults", false, undefined, true);
+add("/api/v1/stores/map", "get", "MapConfiguration", false, undefined, true);
+add("/api/v1/stores/{id}/sightings", "get", "Sighting", true, undefined, true);
+add(
+  "/api/v1/sightings",
+  "post",
+  "SightingReceipt",
+  false,
+  "SightingInput",
+  false,
+  201,
+);
+add("/api/v1/sightings/confirm", "post", "Id", false, "Id");
+add("/api/v1/admin/sightings", "get", "ReviewQueue");
+add(
+  "/api/v1/admin/sightings/{id}/moderate",
+  "post",
+  "ReviewReceipt",
+  false,
+  "ReviewInput",
+);
+add("/api/v1/admin/collector", "get", "CollectorAdmin");
+add(
+  "/api/v1/admin/collector/releases",
+  "post",
+  "EditableRelease",
+  false,
+  "ReleaseInput",
+);
+add("/api/v1/releases", "get", "Release", true, undefined, true);
+add("/api/v1/packs/open", "post", "PackOpening", false, "PackInput");
+add("/api/v1/me/lab", "get", "LabState");
+add("/api/v1/me/pack-openings", "get", "OpeningHistory");
+add("/api/v1/me/pack-openings/{id}", "get", "PackOpening");
+add("/api/v1/me/collections", "get", "CollectionSnapshot");
+add("/api/v1/me/collections/progress", "get", "CollectionProgress");
+add("/api/v1/me/collections/real", "patch", "Id", false, "RealInventoryInput");
+add("/api/v1/me/collections/missing-export", "get", "Id");
+function queryParameters(
+  path: string,
+  fields: Record<string, unknown>,
+  required: readonly string[] = [],
+) {
+  const operation = spec.paths[path].get as { parameters: unknown[] };
+  operation.parameters = operation.parameters.filter(
+    (value) => (value as { in: string }).in !== "query",
+  );
+  for (const [name, schema] of Object.entries(fields))
+    operation.parameters.push({
+      name,
+      in: "query",
+      schema,
+      required: required.includes(name),
+    });
+}
+const pagination = {
+  limit: { type: "integer", minimum: 1, maximum: 50, default: 20 },
+  cursor: { type: "string", maxLength: 512 },
+};
+queryParameters("/api/v1/sets", pagination);
+queryParameters("/api/v1/sets/{id}/cards", {
+  ...pagination,
+  manifest_version: { type: "string", maxLength: 80 },
+});
+queryParameters(
+  "/api/v1/stores",
+  {
+    ...pagination,
+    zip: { type: "string", pattern: "^[0-9]{5}$" },
+    radius_mi: { type: "integer", minimum: 1, maximum: 100 },
+  },
+  ["zip", "radius_mi"],
+);
+queryParameters("/api/v1/stores/{id}/sightings", pagination);
+queryParameters("/api/v1/releases", {
+  ...pagination,
+  region: { type: "string", maxLength: 32 },
+  event_type: { enum: ["release", "preorder", "announcement"] },
+});
+queryParameters(
+  "/api/v1/admin/sightings",
+  {
+    ...pagination,
+    state: { enum: ["pending", "approved", "rejected", "expired"] },
+  },
+  ["state"],
+);
+queryParameters("/api/v1/me/pack-openings", pagination);
+for (const path of [
+  "/api/v1/me/collections",
+  "/api/v1/me/collections/progress",
+  "/api/v1/me/collections/missing-export",
+])
+  queryParameters(
+    path,
+    {
+      set_id: { type: "string", format: "uuid" },
+      mode: { enum: ["real", "virtual"] },
+      manifest_version: { type: "string", maxLength: 80 },
+      ...(path.endsWith("missing-export")
+        ? { goal: { enum: ["base", "master", "extended"] } }
+        : {}),
+    },
+    ["set_id", "mode", ...(path.endsWith("missing-export") ? ["goal"] : [])],
+  );
+const csv = spec.paths["/api/v1/me/collections/missing-export"].get as {
+  responses: Record<string, unknown>;
+};
+csv.responses[200] = {
+  description: "Private mode/version-bound checklist",
+  content: { "text/csv": { schema: { type: "string" } } },
 };
 writeFileSync(
   "packages/contracts/openapi.json",
