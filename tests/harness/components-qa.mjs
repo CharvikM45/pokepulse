@@ -1,6 +1,6 @@
 import { build } from "esbuild";
 import { mkdir, writeFile } from "node:fs/promises";
-import { chromium } from "@playwright/test";
+import { chromium, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import assert from "node:assert/strict";
 await mkdir("test-results/components/browser", { recursive: true });
@@ -32,50 +32,37 @@ try {
   await combo.focus();
   await combo.press("ArrowDown");
   await combo.press("Enter");
-  assert.equal(await combo.inputValue(), "Foil");
-  assert.equal(await page.locator("#selected").innerText(), "Selected: foil");
+  await expect(combo).toHaveValue("Foil");
+  await expect(page.locator("#selected")).toHaveText("Selected: foil");
   await combo.fill("does not exist");
-  assert.equal(
-    await page.getByText("No matching options", { exact: true }).isVisible(),
-    true,
-  );
+  await expect(
+    page.getByText("No matching options", { exact: true }),
+  ).toBeVisible();
   await combo.press("Escape");
-  assert.equal(await combo.inputValue(), "Foil");
-  assert.equal(await combo.getAttribute("aria-expanded"), "false");
+  await expect(combo).toHaveValue("Foil");
+  await expect(combo).toHaveAttribute("aria-expanded", "false");
   checks.push(
     "Combobox keyboard selection/no matches/Escape restores selection",
   );
   await page.getByRole("tab", { name: "Real", exact: true }).focus();
   await page.keyboard.press("ArrowRight");
-  assert.equal(
-    await page
-      .getByRole("tab", { name: "Virtual", exact: true })
-      .evaluate((el) => el === document.activeElement),
-    true,
-  );
-  assert.equal(
-    await page
-      .getByRole("tab", { name: "Real", exact: true })
-      .getAttribute("aria-selected"),
-    "true",
-  );
+  await expect(
+    page.getByRole("tab", { name: "Virtual", exact: true }),
+  ).toBeFocused();
+  await expect(
+    page.getByRole("tab", { name: "Real", exact: true }),
+  ).toHaveAttribute("aria-selected", "true");
   await page.keyboard.press("Enter");
-  assert.equal(
-    await page.getByRole("tabpanel").innerText(),
-    "Virtual panel content",
-  );
+  await expect(page.getByRole("tabpanel")).toHaveText("Virtual panel content");
   checks.push("Tabs use arrows for focus and Enter for activation");
   const trigger = page.getByRole("button", {
     name: "Edit quantity",
     exact: true,
   });
   await trigger.click();
-  assert.equal(
-    await page
-      .getByRole("button", { name: "Cancel", exact: true })
-      .evaluate((el) => el === document.activeElement),
-    true,
-  );
+  await expect(
+    page.getByRole("button", { name: "Cancel", exact: true }),
+  ).toBeFocused();
   const input = page.getByRole("spinbutton", { name: "Quantity" });
   assert.equal(await input.getAttribute("aria-invalid"), "true");
   assert.equal(
@@ -83,18 +70,12 @@ try {
     "quantity-hint quantity-error",
   );
   await page.keyboard.press("Escape");
-  assert.equal(
-    await trigger.evaluate((el) => el === document.activeElement),
-    true,
-  );
+  await expect(trigger).toBeFocused();
   await trigger.click();
   await page.getByRole("button", { name: "Preview save" }).click();
-  assert.equal(
-    await page
-      .getByText("Example update acknowledged; no backend write.")
-      .isVisible(),
-    true,
-  );
+  await expect(
+    page.getByText("Example update acknowledged; no backend write."),
+  ).toBeVisible();
   await page.getByRole("button", { name: "Dismiss notification" }).click();
   checks.push(
     "Dialog Cancel focus/Escape/restore, labelled field error and toast",

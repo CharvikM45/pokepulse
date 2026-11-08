@@ -30,6 +30,8 @@ Actual hosted checks passed:
 
 The credential-free evidence is in `docs/qa/evidence/collector/hosted-staging/`. Commands actually executed were the production build/start and temporary setup/connection/HTTP smoke scripts; these are separate from the full local Docker acceptance command documented in the collector runbook. Admin-confirmed test users do not prove email confirmation or recovery delivery.
 
+The documentation CI rerun exposed an immediate-assertion race in the primitive browser harness after combobox input. The harness now awaits Playwright's value/text/visibility/focus assertions while preserving each expected behavior. The affected primitive suite passed locally, including ten viewport/theme axe scans. This is a test synchronization fix; application behavior and migrations did not change. Check PR #1 for the latest full CI result.
+
 ## GitHub connection
 
 The Supabase GitHub app is authorized and installed for the `tanmaynat` personal account. The source repository belongs to `CharvikM45`; it did not appear in Supabase's repository picker, and GitHub showed that the current browser account cannot manage that repository's options. No repository connection or automatic deployment was enabled.
