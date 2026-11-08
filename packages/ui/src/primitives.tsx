@@ -5,6 +5,7 @@ import type {
   ButtonHTMLAttributes,
   InputHTMLAttributes,
   ReactNode,
+  RefObject,
 } from "react";
 
 /** Hydration-safe clock; time-sensitive views refresh from an external timer. */
@@ -221,11 +222,13 @@ export function Dialog({
   onClose,
   title,
   children,
+  restoreFocusTo,
 }: {
   open: boolean;
   onClose: () => void;
   title: string;
   children: ReactNode;
+  restoreFocusTo?: RefObject<HTMLElement | null>;
 }) {
   const ref = useRef<HTMLDialogElement>(null);
   const titleId = useId();
@@ -240,10 +243,12 @@ export function Dialog({
     if (!dialog.open) dialog.showModal();
     return () => {
       if (dialog.open) dialog.close();
-      if (returnFocus instanceof HTMLElement && returnFocus.isConnected)
-        returnFocus.focus();
+      // The caller can choose a new destination after an asynchronous save.
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      const target = restoreFocusTo?.current ?? returnFocus;
+      if (target instanceof HTMLElement && target.isConnected) target.focus();
     };
-  }, [open]);
+  }, [open, restoreFocusTo]);
   return (
     <dialog
       ref={ref}

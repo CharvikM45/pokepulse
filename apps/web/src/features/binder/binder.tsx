@@ -220,7 +220,6 @@ function BinderSet({
     setSavingVariant(edit.card_variant_id);
     try {
       await onSaveReal(edit);
-      requestAnimationFrame(() => realControl.current?.focus());
     } finally {
       mutationLock.current = false;
       setSavingVariant(null);
@@ -488,6 +487,7 @@ function BinderSet({
           initialNotes={realNotes?.[editing.id]}
           onClose={() => setEditing(null)}
           onSave={saveReal}
+          savedFocusTarget={() => realControl.current}
         />
       )}
     </section>
@@ -501,6 +501,7 @@ function RealEdit({
   initialNotes,
   onClose,
   onSave,
+  savedFocusTarget,
 }: {
   variant: Variant;
   quantity: number;
@@ -508,6 +509,7 @@ function RealEdit({
   onClose: () => void;
   initialNotes?: string;
   onSave: NonNullable<BinderProps["onSaveReal"]>;
+  savedFocusTarget: () => HTMLElement | null;
 }) {
   const [count, setCount] = useState(String(quantity));
   const [notes, setNotes] = useState(initialNotes ?? "");
@@ -515,6 +517,7 @@ function RealEdit({
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
   const errorRef = useRef<HTMLParagraphElement>(null);
+  const savedFocus = useRef<HTMLElement | null>(null);
   const id = useId();
   async function submit(event: FormEvent) {
     event.preventDefault();
@@ -542,6 +545,7 @@ function RealEdit({
     };
     try {
       await onSave(payload);
+      savedFocus.current = savedFocusTarget();
       onClose();
     } catch {
       setError(
@@ -557,6 +561,7 @@ function RealEdit({
       open
       title={`Edit ${variant.card_name} — ${variant.finish}`}
       onClose={onClose}
+      restoreFocusTo={savedFocus}
     >
       <form onSubmit={submit} aria-busy={pending}>
         <p>
