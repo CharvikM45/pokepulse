@@ -10,6 +10,7 @@ import {
 } from "@pokepulse/contracts";
 import Link from "next/link";
 import Image from "next/image";
+import { setArtwork } from "./set-art";
 import { Skeleton, StateCard, useNow } from "@pokepulse/ui";
 import { useResource, useSourceRefresh } from "./workspace";
 
@@ -140,6 +141,42 @@ export function WatchButton({
     </div>
   );
 }
+function ProductArtwork({ product }: { product: ProductRecord }) {
+  const art =
+    product.set_name && Object.hasOwn(setArtwork, product.set_name)
+      ? setArtwork[product.set_name]
+      : undefined;
+  if (!art)
+    return (
+      <div className="pp-product-art pp-art-unavailable">
+        Set artwork unavailable
+      </div>
+    );
+  return (
+    <figure className="pp-set-art">
+      <div className="pp-product-art pp-chase-art">
+        <Image
+          src={art.src}
+          alt={`${art.name} #${art.number} from ${art.set}`}
+          width={200}
+          height={275}
+          sizes="(max-width: 700px) 130px, 200px"
+        />
+      </div>
+      <figcaption>
+        <span>FEATURED SET CARD</span>
+        <strong>
+          {art.name} <small>#{art.number}</small>
+        </strong>
+        <a href={art.source} target="_blank" rel="noopener noreferrer">
+          Card source ↗
+        </a>
+        <small>Set illustration · not product packaging</small>
+      </figcaption>
+    </figure>
+  );
+}
+
 export function Offer({
   offer,
   product,
@@ -157,6 +194,7 @@ export function Offer({
       : null;
   return (
     <article className="pp-card pp-offer">
+      {product && <ProductArtwork product={product} />}
       <div className="pp-eyebrow">
         {offer.is_demo ? "DEMO DATA · synthetic offer" : offer.retailer_name}
       </div>
@@ -602,20 +640,7 @@ export function Discovery({ mode }: { mode: "home" | "products" | "drops" }) {
                     className="pp-card pp-catalog-product"
                     key={product.id}
                   >
-                    <div className="pp-product-art" aria-hidden="true">
-                      <Image
-                        src={`/pokemon/${[133, 25, 6, 151, 94, 143, 149, 448, 384, 7][Number(product.id.slice(-12)) % 10]}.png`}
-                        alt=""
-                        width="200"
-                        height="200"
-                        loading="lazy"
-                      />
-                      <small>
-                        {product.product_type === "booster_box"
-                          ? "BOX"
-                          : "PACKS"}
-                      </small>
-                    </div>
+                    <ProductArtwork product={product} />
                     <p className="pp-eyebrow">
                       {product.is_demo ? "DEMO · " : ""}
                       {product.set_name ?? "Pokémon TCG"}
@@ -677,6 +702,9 @@ export function ProductDetail({ id }: { id: string }) {
     <>
       <Link href="/products">← Product Explorer</Link>
       <h1>{product.name}</h1>
+      <div className="pp-detail-art">
+        <ProductArtwork product={product} />
+      </div>
       {product.is_demo && (
         <p className="pp-banner">
           Preview Pokémon catalog record. Product configurations and pricing are
