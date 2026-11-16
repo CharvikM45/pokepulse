@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-html-link-for-pages -- This framework-independent UI package uses native links and also runs outside Next. */
 import type { ReactNode } from "react";
 const discovery = [
+  { href: "/", label: "Overview" },
   { href: "/drops", label: "Drops" },
   { href: "/products", label: "Explore" },
   { href: "/local", label: "Local Radar" },
@@ -36,10 +37,12 @@ export function AppShell({
           </span>
           <span>
             Poké<span>Pulse</span>
-            <small>COLLECTOR STUDIO</small>
+            <small>POKÉMON COLLECTOR CLUB</small>
           </span>
         </a>
-        <p className="pp-sidebar-intro">Your corner of the collecting world.</p>
+        <p className="pp-sidebar-intro">
+          A little closer to your next great find.
+        </p>
         <p className="pp-nav-caption">DISCOVER</p>
         <nav aria-label="Discovery">
           {discovery.map((link) => (
@@ -65,7 +68,7 @@ export function AppShell({
           ))}
         </nav>
         <div className="pp-sidebar-bottom">
-          <span className="pp-live-dot" /> Made for the joy of the hunt
+          <span className="pp-live-dot" /> Made for Pokémon collectors
         </div>
       </aside>
       <main id="main-content" tabIndex={-1} className="pp-main">

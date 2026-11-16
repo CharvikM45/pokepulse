@@ -9,6 +9,7 @@ import {
   ApiError,
 } from "@pokepulse/contracts";
 import Link from "next/link";
+import Image from "next/image";
 import { Skeleton, StateCard, useNow } from "@pokepulse/ui";
 import { useResource, useSourceRefresh } from "./workspace";
 
@@ -24,6 +25,7 @@ export const client = (signal?: AbortSignal) =>
 export async function allProducts(signal?: AbortSignal) {
   const products: ProductRecord[] = [];
   let cursor: string | null | undefined;
+  const seen = new Set<string>();
   do {
     const page = await client(signal).products({
       limit: 50,
@@ -31,12 +33,20 @@ export async function allProducts(signal?: AbortSignal) {
     });
     products.push(...page.data);
     cursor = page.meta.next_cursor;
+    if (cursor) {
+      if (seen.has(cursor) || seen.size >= 200)
+        throw new Error(
+          "Catalog pagination could not complete. Narrow your search and retry.",
+        );
+      seen.add(cursor);
+    }
   } while (cursor);
   return products;
 }
 export async function allOffers(signal?: AbortSignal) {
   const offers: ListingDTO[] = [];
   let cursor: string | null | undefined;
+  const seen = new Set<string>();
   do {
     const page = await client(signal).drops({
       limit: 50,
@@ -44,6 +54,13 @@ export async function allOffers(signal?: AbortSignal) {
     });
     offers.push(...page.data);
     cursor = page.meta.next_cursor;
+    if (cursor) {
+      if (seen.has(cursor) || seen.size >= 200)
+        throw new Error(
+          "Catalog pagination could not complete. Narrow your search and retry.",
+        );
+      seen.add(cursor);
+    }
   } while (cursor);
   return offers;
 }
@@ -285,34 +302,66 @@ export function Discovery({ mode }: { mode: "home" | "products" | "drops" }) {
     <>
       {mode === "home" ? (
         <section className="pp-hero">
-          <p className="pp-eyebrow">THE COLLECTOR’S DAILY CHECK-IN</p>
+          <p className="pp-eyebrow">YOUR POKÉMON TCG COMPANION</p>
           <h1>
-            Find your next pack.
+            The hunt is half
             <br />
-            Know the evidence.
+            the adventure.
           </h1>
           <p>
-            Explore sealed products, compare retailer offers and keep your
-            collection in view.
+            Chase your next Pokémon favorite. Discover sets, follow drops, and
+            build a collection that’s entirely yours.
           </p>
           <div className="pp-actions">
             <a className="pp-button" href="/drops">
-              Explore drops →
+              Discover Pokémon →
             </a>
-            <a href="/local">Check nearby reports</a>
+            <Link href="/local">Check nearby reports</Link>
+          </div>
+          <div className="pp-hero-art" aria-hidden="true">
+            <div className="pp-orbit" />
+            <Image
+              src="/pokemon/25.png"
+              width="420"
+              height="420"
+              alt=""
+              fetchPriority="high"
+            />
+            <span className="pp-art-label">
+              ELECTRIC ENERGY. COLLECTOR SPIRIT.
+            </span>
           </div>
           <div className="pp-hero-note">
-            Freshness. Source. Seller.
+            One world. Endless discoveries.
             <br />
-            Every offer tells the full story.
+            Your next great pull starts here.
           </div>
         </section>
       ) : (
         <header>
           <p className="pp-eyebrow">DISCOVER</p>
-          <h1>{mode === "products" ? "Product Explorer" : "Live Drops"}</h1>
+          <h1>{mode === "products" ? "Pokémon Explorer" : "Pokémon Drops"}</h1>
           <p>Availability, evidence and freshness are shown independently.</p>
         </header>
+      )}
+      {mode === "home" && (
+        <section className="pp-shortcuts" aria-label="Your Pokémon journey">
+          <Link href="/products">
+            <span>01 / DISCOVER</span>
+            <strong>Find your chase ↗</strong>
+            <small>Explore Pokémon TCG sets & sealed products</small>
+          </Link>
+          <Link href="/collection">
+            <span>02 / COLLECT</span>
+            <strong>Build your binder ↗</strong>
+            <small>Keep every favorite in one place</small>
+          </Link>
+          <Link href="/local">
+            <span>03 / EXPLORE</span>
+            <strong>Scout the radar ↗</strong>
+            <small>Discover community sightings nearby</small>
+          </Link>
+        </section>
       )}
       {mode === "home" ? (
         <form className="pp-quick-search" onSubmit={filter}>
@@ -321,7 +370,7 @@ export function Discovery({ mode }: { mode: "home" | "products" | "drops" }) {
             <input
               className="pp-input"
               name="q"
-              placeholder="Search products or sets"
+              placeholder="Search Pokémon sets, booster boxes, and more…"
               maxLength={100}
             />
           </label>
@@ -475,7 +524,7 @@ export function Discovery({ mode }: { mode: "home" | "products" | "drops" }) {
         <h2>
           {mode === "drops"
             ? "Source observations on this page"
-            : "Explore the catalog"}
+            : "Discover your next favorite"}
         </h2>
         <div>
           <label>
@@ -512,8 +561,8 @@ export function Discovery({ mode }: { mode: "home" | "products" | "drops" }) {
           (data.products.data.some((p) => p.is_demo) ||
             data.offers.data.some((l) => l.is_demo)) ? (
           <p className="pp-banner">
-            DEMO DATA — synthetic products and offers. No live retailer
-            verification.
+            Preview catalog · Pokémon set names with simulated products and
+            offers. Prices, configurations, and inventory are illustrative.
           </p>
         ) : data ? (
           <p className="pp-banner">
@@ -554,7 +603,13 @@ export function Discovery({ mode }: { mode: "home" | "products" | "drops" }) {
                     key={product.id}
                   >
                     <div className="pp-product-art" aria-hidden="true">
-                      <span>◈</span>
+                      <Image
+                        src={`/pokemon/${[133, 25, 6, 151, 94, 143, 149, 448, 384, 7][Number(product.id.slice(-12)) % 10]}.png`}
+                        alt=""
+                        width="200"
+                        height="200"
+                        loading="lazy"
+                      />
                       <small>
                         {product.product_type === "booster_box"
                           ? "BOX"
@@ -563,7 +618,7 @@ export function Discovery({ mode }: { mode: "home" | "products" | "drops" }) {
                     </div>
                     <p className="pp-eyebrow">
                       {product.is_demo ? "DEMO · " : ""}
-                      {product.set_name ?? "Set unconfirmed"}
+                      {product.set_name ?? "Pokémon TCG"}
                     </p>
                     <h2>
                       <a href={`/products/${product.id}`}>{product.name}</a>
@@ -624,7 +679,8 @@ export function ProductDetail({ id }: { id: string }) {
       <h1>{product.name}</h1>
       {product.is_demo && (
         <p className="pp-banner">
-          DEMO DATA — original synthetic catalog record.
+          Preview Pokémon catalog record. Product configurations and pricing are
+          illustrative.
         </p>
       )}
       <p>

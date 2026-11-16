@@ -66,8 +66,9 @@ export async function setCatalog(limit = 20, after?: string) {
         sets: [
           {
             id: ids.set,
-            name: "Lumen Grove",
-            metadata_source: "Original fictional PokéPulse demo",
+            name: "Pokémon Discovery Demo",
+            metadata_source:
+              "Illustrative Pokémon sample; unofficial numbering and odds",
             metadata_permission_checked_at: null,
             release_date: null,
             manifest_version: "fictional-1",
@@ -90,16 +91,16 @@ export async function setCatalog(limit = 20, after?: string) {
                 {
                   label: "Slot 1",
                   outcomes: [
-                    { label: "Moss Courier", probability: "50%" },
-                    { label: "Harbor Lantern", probability: "50%" },
+                    { label: "Pikachu", probability: "50%" },
+                    { label: "Eevee", probability: "50%" },
                   ],
                 },
                 {
                   label: "Slot 2",
                   outcomes: [
-                    { label: "Moss Courier standard", probability: "70%" },
-                    { label: "Moss Courier foil", probability: "25%" },
-                    { label: "Cloud Archivist", probability: "5%" },
+                    { label: "Pikachu standard", probability: "70%" },
+                    { label: "Pikachu foil", probability: "25%" },
+                    { label: "Mew", probability: "5%" },
                   ],
                 },
               ],
@@ -218,7 +219,8 @@ export async function cardCatalog(setId: string, version?: string) {
       variants: demoVariants,
       manifest: demoManifest,
       is_demo: true,
-      metadata_source: "Original fictional PokéPulse demo",
+      metadata_source:
+        "Illustrative Pokémon sample; unofficial numbering and odds",
     });
   }
   const { data: set, error } = await adminDb()

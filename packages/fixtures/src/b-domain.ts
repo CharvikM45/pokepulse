@@ -13,13 +13,13 @@ export const ids = {
   userB: "40000000-0000-4000-8000-000000000002",
 };
 export const fixtureDisclosure =
-  "DEMO DATA — Lumen Grove is an original fictional set. No physical cards or prizes.";
+  "DEMO DATA — Pokémon Discovery Demo is an illustrative Pokémon sample, not an official expansion. No physical cards or prizes.";
 export const variants: Variant[] = [
   {
     id: ids.moss,
     set_id: ids.set,
     card_number: "001",
-    card_name: "Moss Courier",
+    card_name: "Pikachu",
     finish: "standard",
     eligible_for_packs: true,
   },
@@ -27,7 +27,7 @@ export const variants: Variant[] = [
     id: ids.mossFoil,
     set_id: ids.set,
     card_number: "001",
-    card_name: "Moss Courier",
+    card_name: "Pikachu",
     finish: "foil",
     eligible_for_packs: true,
   },
@@ -35,7 +35,7 @@ export const variants: Variant[] = [
     id: ids.lantern,
     set_id: ids.set,
     card_number: "002",
-    card_name: "Harbor Lantern",
+    card_name: "Eevee",
     finish: "standard",
     eligible_for_packs: true,
   },
@@ -43,7 +43,7 @@ export const variants: Variant[] = [
     id: ids.cloud,
     set_id: ids.set,
     card_number: "003",
-    card_name: "Cloud Archivist",
+    card_name: "Mew",
     finish: "foil",
     eligible_for_packs: true,
   },
@@ -51,7 +51,7 @@ export const variants: Variant[] = [
     id: ids.promo,
     set_id: ids.set,
     card_number: "P01",
-    card_name: "Moss Courier — Festival",
+    card_name: "Pikachu — Demo Promo",
     finish: "etched",
     eligible_for_packs: false,
   },

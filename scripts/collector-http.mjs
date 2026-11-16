@@ -444,7 +444,7 @@ try {
             response.request().method() === "POST",
         );
         await page
-          .getByRole("button", { name: "Open Lumen Grove simulation" })
+          .getByRole("button", { name: "Open Pokémon Discovery Demo simulation" })
           .click();
         assert.equal((await committed).status(), 200);
         await page.getByRole("button", { name: "Reveal all" }).click();

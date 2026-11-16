@@ -1,9 +1,9 @@
 import "./globals.css";
 import type { ReactNode } from "react";
 export const metadata = {
-  title: "PokéPulse — collector workspace",
+  title: "PokéPulse — Your Pokémon collecting companion",
   description:
-    "Explore source-aware retailer offers, community reports and your collection.",
+    "Discover Pokémon TCG sets, track retailer evidence, explore local sightings, and organize your collection.",
 };
 export default function Layout({ children }: { children: ReactNode }) {
   return (

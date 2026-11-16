@@ -9,7 +9,7 @@ import {
 } from "@pokepulse/contracts";
 import { demoCatalog, demoOffers } from "@pokepulse/fixtures";
 import { projectListing } from "@pokepulse/domain";
-import { adminDb, configured, dbError } from "./server";
+import { adminDb, configured, dbError, HttpError } from "./server";
 const observation = z.object({
   id: z.string(),
   listing_id: z.string(),
@@ -63,6 +63,12 @@ export async function catalogSnapshot() {
       dbError(error);
       all.push(...(data ?? []));
       if (!data || data.length < 1000) break;
+      if (all.length >= 50000)
+        throw new HttpError(
+          "SOURCE_UNAVAILABLE",
+          503,
+          "Catalog snapshot is too large. Please try again later.",
+        );
     }
     return all;
   }

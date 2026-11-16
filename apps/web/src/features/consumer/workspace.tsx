@@ -28,7 +28,7 @@ export function Workspace({ children }: { children: ReactNode }) {
   return (
     <AppShell pathname={pathname}>
       <header className="pp-topbar">
-        <Link href="/">◈ PokéPulse</Link>
+        <Link href="/">Pokémon TCG / Collector studio</Link>
         <div>
           <label>
             Appearance{" "}
@@ -50,11 +50,16 @@ export function Workspace({ children }: { children: ReactNode }) {
               <option value="dark">Dark</option>
             </select>
           </label>
-          <a href="/dashboard">Your workspace</a>
+          <a href="/dashboard">Trainer profile ↗</a>
         </div>
       </header>
       {children}
       <footer className="pp-muted">
+        <p>
+          PokéPulse · An independent Pokémon collecting companion. Pokémon and
+          character names are trademarks of Nintendo, Creatures, and GAME FREAK.
+          Not affiliated with or endorsed by The Pokémon Company.
+        </p>
         Check source, seller, region and observation time before visiting or
         buying. Community reports and simulations carry separate labels.
       </footer>

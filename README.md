@@ -1,6 +1,6 @@
-# PokéPulse — Developer A platform
+# PokéPulse — Pokémon collector studio
 
-Working project name. A Next.js/TypeScript modular monolith with evidence-based inventory, private watchlists/rules, durable queues and notifications, source controls and privacy orchestration. Consumer screens, Radar, Pack Lab and binder belong to Developer B. No live retailer source is approved or connected.
+A Pokémon TCG collecting companion. A Next.js/TypeScript modular monolith with evidence-based inventory, private watchlists/rules, durable queues and notifications, source controls and privacy orchestration. Consumer screens, Radar, Pack Lab and binder belong to Developer B. No live retailer source is approved or connected.
 
 ## Run locally
 
@@ -11,7 +11,7 @@ pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Open http://localhost:3000. Without Supabase configuration, public browsing serves 50 original DEMO products, 51 offers and the original fictional Lumen Grove binder catalog. Consumer pages include Drops, Explorer/detail, Radar, Calendar, Pack Lab, Collections and account tools. Account operations require real authentication. Pack opening, reports, calendar data and maps remain disabled until their database, configuration and permission gates pass.
+Open http://localhost:3000. Without Supabase configuration, public browsing serves 50 original DEMO products, 51 offers and an illustrative Pokémon binder catalog with unofficial numbering and simulation odds. Consumer pages include Drops, Explorer/detail, Radar, Calendar, Pack Lab, Collections and account tools. Account operations require real authentication. Pack opening, reports, calendar data and maps remain disabled until their database, configuration and permission gates pass.
 
 To enable the backend, install Docker and the Supabase CLI, then run `supabase start`, `supabase db reset`, `supabase test db`. Copy apps/web/.env.example to apps/web/.env.local and fill local project values. Never commit populated env files. The seed is local/demo only. See docs/runbooks/migrations.md before using hosted databases.
 
@@ -44,3 +44,9 @@ Worker commands, outage response, migration procedure and retention are in docs/
 Read docs/DEVELOPER_B_HANDOFF.md, docs/adr/0002-platform-contracts.md, and docs/qa/A_RELEASE_REPORT.md for implementation evidence and remaining launch gates. A local code implementation is not proof of retailer rights, hosted-auth delivery, supported-device push or staging integration with B.
 
 Developer B's integration amendments are in [CONTRACT-02](docs/adr/0003-collector-contracts.md), with operational setup in [collector domains](docs/runbooks/collector-domains.md) and current evidence in [B release report](docs/qa/B_RELEASE_REPORT.md). `/staff/collector` uses A's trusted database staff membership. The notification worker registers collection/report/pack privacy hooks and drains approved report events into A's existing matching engine.
+
+## Pokémon collector studio refresh
+
+The shared workspace now uses a Pokémon-focused visual system, local character artwork, responsive discovery cards, theme-aware surfaces, and reduced-motion support. Public preview catalog entries reference Pokémon expansion names but remain synthetic product configurations and offers. The binder's Pokémon Discovery Demo uses unofficial card numbering and invented simulation odds, not an official expansion or physical pack odds.
+
+Catalog reads fail closed above 50,000 rows per source table. Client catalog aggregation rejects repeating cursors and stops after 200 pages. Security headers disable framing, prevent content sniffing, restrict referrer disclosure, and disable unused camera/microphone access. Production retailer adapters, Supabase authentication, notification credentials, and permission-gated simulations still require deployment configuration and operational verification.
