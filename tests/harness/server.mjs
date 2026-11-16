@@ -13,6 +13,12 @@ const server = http.createServer(async (request, response) => {
         .end(await readFile("packages/ui/src/tokens.css"));
       return;
     }
+    if (/^\/cards\/[a-z0-9-]+\.webp$/.test(pathname)) {
+      response
+        .writeHead(200, { "Content-Type": "image/webp" })
+        .end(await readFile(resolve("apps/web/public", "." + pathname)));
+      return;
+    }
     if (!pathname.startsWith("/qa/")) {
       response.writeHead(404).end();
       return;

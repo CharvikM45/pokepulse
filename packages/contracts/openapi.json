@@ -9634,12 +9634,19 @@
                 },
                 "image_url": {
                   "default": null,
-                  "type": "null"
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
                 },
                 "image_rights_cleared": {
                   "default": false,
-                  "type": "boolean",
-                  "const": false
+                  "type": "boolean"
                 },
                 "finish": {
                   "type": "string"

@@ -12,17 +12,40 @@ const sets = [
   "Paradox Rift",
   "Stellar Crown",
 ];
+const specialSets = new Set([0, 3, 4]);
+const format = (i: number) =>
+  Math.floor(i / 5) === 5
+    ? "elite_trainer_box"
+    : i % 2
+      ? specialSets.has(Math.floor(i / 5))
+        ? "elite_trainer_box"
+        : "booster_box"
+      : specialSets.has(Math.floor(i / 5))
+        ? "multi_pack"
+        : "elite_trainer_box";
+const formatLabel = {
+  booster_box: "Booster Box",
+  multi_pack: "Booster Bundle",
+  elite_trainer_box: "Elite Trainer Box",
+};
 export const demoCatalog: ProductRecord[] = Array.from(
   { length: 50 },
   (_, i) => ({
     ...baseProducts[0],
     id: `10000000-0000-4000-8000-${String(i + 1).padStart(12, "0")}`,
     slug: `demo-starlight-${i + 1}`,
-    name: `${sets[Math.floor(i / 5)]} ${i % 2 ? "Booster Box" : "Booster Bundle"}`,
+    name: `${sets[Math.floor(i / 5)]} ${formatLabel[format(i)]}`,
     set_name: sets[Math.floor(i / 5)],
-    product_type: i % 2 ? "booster_box" : "multi_pack",
+    product_type: format(i),
     edition: `Pokémon TCG · illustrative catalog variant ${(i % 5) + 1}`,
-    pack_count: i % 2 ? 36 : 6,
+    pack_count:
+      format(i) === "booster_box"
+        ? 36
+        : format(i) === "multi_pack"
+          ? 6
+          : Math.floor(i / 5) === 5
+            ? 10
+            : 9,
   }),
 );
 export const demoOffers: ListingDTO[] = demoCatalog.flatMap((p, i) =>

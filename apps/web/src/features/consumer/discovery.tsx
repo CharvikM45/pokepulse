@@ -10,7 +10,7 @@ import {
 } from "@pokepulse/contracts";
 import Link from "next/link";
 import Image from "next/image";
-import { setArtwork } from "./set-art";
+import { productArtwork } from "./product-art";
 import { Skeleton, StateCard, useNow } from "@pokepulse/ui";
 import { useResource, useSourceRefresh } from "./workspace";
 
@@ -142,40 +142,40 @@ export function WatchButton({
   );
 }
 function ProductArtwork({ product }: { product: ProductRecord }) {
+  const formats =
+    product.set_name && Object.hasOwn(productArtwork, product.set_name)
+      ? productArtwork[product.set_name]
+      : undefined;
   const art =
-    product.set_name && Object.hasOwn(setArtwork, product.set_name)
-      ? setArtwork[product.set_name]
+    formats && Object.hasOwn(formats, product.product_type)
+      ? formats[product.product_type]
       : undefined;
   if (!art)
     return (
       <div className="pp-product-art pp-art-unavailable">
-        Set artwork unavailable
+        Product packaging unavailable
       </div>
     );
   return (
     <figure className="pp-set-art">
-      <div className="pp-product-art pp-chase-art">
+      <div className="pp-product-art pp-packaging-art">
         <Image
           src={art.src}
-          alt={`${art.name} #${art.number} from ${art.set}`}
-          width={200}
-          height={275}
-          sizes="(max-width: 700px) 130px, 200px"
+          alt={art.name + " packaging"}
+          width={320}
+          height={280}
+          sizes="(max-width: 700px) 160px, 320px"
         />
       </div>
       <figcaption>
-        <span>FEATURED SET CARD</span>
-        <strong>
-          {art.name} <small>#{art.number}</small>
-        </strong>
-        <a href={art.source} target="_blank" rel="noopener noreferrer">
-          Card source ↗
-        </a>
-        <small>Set illustration · not product packaging</small>
+        <span>SEALED PRODUCT</span>
+        <small>{formatProduct(product.product_type)}</small>
       </figcaption>
     </figure>
   );
 }
+const formatProduct = (value: string) =>
+  value === "multi_pack" ? "Booster bundle" : value.replaceAll("_", " ");
 
 export function Offer({
   offer,
@@ -450,7 +450,8 @@ export function Discovery({ mode }: { mode: "home" | "products" | "drops" }) {
               >
                 <option value="">All formats</option>
                 <option value="booster_box">Booster box</option>
-                <option value="multi_pack">Multi-pack</option>
+                <option value="multi_pack">Booster bundle</option>
+                <option value="elite_trainer_box">Elite Trainer Box</option>
               </select>
             </label>
             <label>

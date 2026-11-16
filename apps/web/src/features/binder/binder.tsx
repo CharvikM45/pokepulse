@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import type { FormEvent } from "react";
+import { CardArtwork } from "./card-artwork";
 import {
   Dialog,
   Skeleton,
@@ -404,9 +405,7 @@ function BinderSet({
         <ul className={list ? "pp-binder-list" : "pp-binder-grid"}>
           {visible.map((variant) => (
             <li key={variant.id} className="pp-card">
-              <span className="pp-binder-placeholder" aria-hidden="true">
-                ◇
-              </span>
+              <CardArtwork variant={variant} />
               <h3>{variant.card_name}</h3>
               <p>
                 {variant.card_number} · {variant.finish} ·{" "}
@@ -567,6 +566,7 @@ function RealEdit({
       title={`Edit ${variant.card_name} — ${variant.finish}`}
       onClose={onClose}
     >
+      <CardArtwork variant={variant} />
       <form onSubmit={submit} aria-busy={pending}>
         <p>
           Only your real collection will change. Quantity 0 removes this

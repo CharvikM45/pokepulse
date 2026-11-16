@@ -6,6 +6,8 @@ export interface Variant {
   set_id: string;
   card_number: string;
   card_name: string;
+  image_url?: string | null;
+  image_rights_cleared?: boolean;
   finish: string;
   rarity?: string | null;
   eligible_for_packs: boolean;

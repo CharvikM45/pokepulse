@@ -9,17 +9,29 @@ export const mapSchema = z.object({
     .object({ template: z.string(), attribution: z.string(), host: z.string() })
     .nullable(),
 });
-export const variantSchema = z.object({
-  id: uuid,
-  set_id: uuid,
-  card_number: z.string(),
-  card_name: z.string(),
-  rarity: z.string().nullable().default(null),
-  image_url: z.null().default(null),
-  image_rights_cleared: z.literal(false).default(false),
-  finish: z.string(),
-  eligible_for_packs: z.boolean(),
-});
+export const variantSchema = z
+  .object({
+    id: uuid,
+    set_id: uuid,
+    card_number: z.string(),
+    card_name: z.string(),
+    rarity: z.string().nullable().default(null),
+    image_url: z
+      .url()
+      .refine(
+        (value) => value.startsWith("https://"),
+        "Card artwork must use HTTPS",
+      )
+      .nullable()
+      .default(null),
+    image_rights_cleared: z.boolean().default(false),
+    finish: z.string(),
+    eligible_for_packs: z.boolean(),
+  })
+  .refine(
+    (value) => value.image_url === null || value.image_rights_cleared,
+    "Card artwork must have recorded clearance",
+  );
 export const manifestSchema = z.object({
   set_id: uuid,
   version: z.string(),

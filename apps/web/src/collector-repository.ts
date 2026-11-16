@@ -237,12 +237,17 @@ export async function cardCatalog(setId: string, version?: string) {
   const variants = (
     await allRows(
       "card_variants",
-      "id,set_id,card_id,rarity,finish,eligible_for_packs",
+      "id,set_id,card_id,rarity,finish,eligible_for_packs,image_url,image_rights_cleared",
       { set_id: setId },
     )
   ).map((v) => {
     const card = cards.find((c) => c.id === v.card_id);
-    return { ...v, card_name: card?.card_name, card_number: card?.card_number };
+    return {
+      ...v,
+      image_url: v.image_rights_cleared === true ? v.image_url : null,
+      card_name: card?.card_name,
+      card_number: card?.card_number,
+    };
   });
   let query = adminDb()
     .from("master_set_manifests")

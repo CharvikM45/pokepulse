@@ -492,3 +492,37 @@ button:disabled {
     scroll-behavior: auto !important;
   }
 }
+
+.pp-card-scan {
+  margin: 0 0 0.8rem;
+}
+.pp-card-scan img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 245 / 337;
+  object-fit: contain;
+  border-radius: 0.45rem;
+}
+.pp-card-scan figcaption {
+  margin-top: 0.4rem;
+  font-size: 0.62rem;
+  line-height: 1.4;
+  color: var(--pp-muted);
+}
+.pp-card-scan-unavailable {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 245 / 337;
+  border: 1px dashed var(--pp-border);
+  border-radius: 0.6rem;
+  font-size: 0.75rem;
+  color: var(--pp-muted);
+}
+.pp-binder-list .pp-card-scan {
+  width: 80px;
+}
+.pp-dialog > .pp-card-scan {
+  max-width: 180px;
+  margin-inline: auto;
+}

@@ -1039,3 +1039,23 @@ a {
     height: 172px;
   }
 }
+.pp-packaging-art {
+  min-height: 260px;
+  padding: 1.25rem;
+  background: #f5f5ef;
+}
+.pp-packaging-art img {
+  width: 100%;
+  height: 230px;
+  object-fit: contain;
+  border-radius: 0.6rem;
+}
+@media (max-width: 700px) {
+  .pp-packaging-art {
+    min-height: 180px;
+    padding: 0.6rem;
+  }
+  .pp-packaging-art img {
+    height: 160px;
+  }
+}
