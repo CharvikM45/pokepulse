@@ -1,5 +1,5 @@
 "use client";
-import { useId, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import type { FormEvent } from "react";
 import {
   Dialog,
@@ -77,6 +77,7 @@ function BinderSet({
   const [exportError, setExportError] = useState("");
   const [exportNotice, setExportNotice] = useState("");
   const realControl = useRef<HTMLButtonElement>(null);
+  const restoreRealFocus = useRef(false);
   const [savingVariant, setSavingVariant] = useState<string | null>(null);
   const mutationLock = useRef(false);
   const exportLock = useRef(false);
@@ -86,6 +87,14 @@ function BinderSet({
   const [editing, setEditing] = useState<Variant | null>(null);
   const id = useId();
   const waiting = loading || entriesMode !== mode || !entriesComplete;
+  useEffect(() => {
+    if (editing || waiting || !restoreRealFocus.current) return;
+    const frame = requestAnimationFrame(() => {
+      realControl.current?.focus();
+      restoreRealFocus.current = false;
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [editing, waiting]);
   const quantities = useMemo(() => {
     try {
       return waiting
@@ -220,7 +229,7 @@ function BinderSet({
     setSavingVariant(edit.card_variant_id);
     try {
       await onSaveReal(edit);
-      requestAnimationFrame(() => realControl.current?.focus());
+      restoreRealFocus.current = true;
     } finally {
       mutationLock.current = false;
       setSavingVariant(null);
