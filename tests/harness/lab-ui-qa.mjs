@@ -127,7 +127,7 @@ try {
       const opening = {
         openingId: randomUUID(),
         setId: set,
-        setName: "Lumen Grove",
+        setName: "Pokémon Discovery Demo",
         openedAtLabel: new Date().toISOString(),
         oddsVersion: "fictional-1",
         spentCoins: 10,
@@ -136,14 +136,14 @@ try {
           {
             card_variant_id: "20000000-0000-4000-8000-000000000001",
             slot_index: 0,
-            name: "Moss Courier",
+            name: "Pikachu",
             number: "001",
             finish: "standard",
           },
           {
             card_variant_id: "20000000-0000-4000-8000-000000000004",
             slot_index: 1,
-            name: "Cloud Archivist",
+            name: "Mew",
             number: "003",
             finish: "foil",
           },
@@ -197,7 +197,7 @@ try {
     true,
   );
   await page
-    .getByRole("button", { name: "Open Lumen Grove simulation", exact: true })
+    .getByRole("button", { name: "Open Pokémon Discovery Demo simulation", exact: true })
     .dblclick();
   await page
     .getByRole("heading", { name: "Pending opening request", exact: true })
@@ -228,7 +228,7 @@ try {
   );
   assert.equal(
     await page
-      .getByRole("button", { name: "Open Lumen Grove simulation", exact: true })
+      .getByRole("button", { name: "Open Pokémon Discovery Demo simulation", exact: true })
       .isDisabled(),
     true,
   );
@@ -266,8 +266,8 @@ try {
   assert.equal(attempts.length, 2);
   await page.getByRole("button", { name: "Reveal all", exact: true }).click();
   assert.deepEqual(await page.locator(".pp-reveal-list li").allTextContents(), [
-    "◇ Moss Courier · 001 · standard",
-    "◇ Cloud Archivist · 003 · foil",
+    "◇ Pikachu · 001 · standard",
+    "◇ Mew · 003 · foil",
   ]);
   const cache = await page.evaluate(() =>
     Object.entries(sessionStorage).filter(([key]) =>
@@ -277,7 +277,7 @@ try {
   assert.ok(
     cache.every(
       ([, value]) =>
-        !value.includes("Moss Courier") && !value.includes("cards"),
+        !value.includes("Pikachu") && !value.includes("cards"),
     ),
   );
   checks.push(
@@ -298,7 +298,7 @@ try {
   );
   rejectNext = true;
   await page
-    .getByRole("button", { name: "Open Lumen Grove simulation", exact: true })
+    .getByRole("button", { name: "Open Pokémon Discovery Demo simulation", exact: true })
     .click();
   await page
     .getByText("Simulation disabled by the test server.", { exact: true })
@@ -319,7 +319,7 @@ try {
     .waitFor();
   ambiguousNext = true;
   await page
-    .getByRole("button", { name: "Open Lumen Grove simulation", exact: true })
+    .getByRole("button", { name: "Open Pokémon Discovery Demo simulation", exact: true })
     .click();
   await page.getByText(/The opening response was not acknowledged/).waitFor();
   assert.equal(models.get(B).openings.length, 1);
@@ -354,7 +354,7 @@ try {
     .click();
   failState = true;
   await page
-    .getByRole("button", { name: "Open Lumen Grove simulation", exact: true })
+    .getByRole("button", { name: "Open Pokémon Discovery Demo simulation", exact: true })
     .click();
   await page
     .getByRole("heading", {

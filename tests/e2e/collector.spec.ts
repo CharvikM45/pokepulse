@@ -9,17 +9,19 @@ test("filters survive refresh and browser back, including channel and third-part
   await page.getByText("Filter products and offers", { exact: true }).click();
   await page
     .getByRole("textbox", { name: "Search", exact: true })
-    .fill("Starlight 1");
+    .fill("Surging Sparks");
   await page.getByRole("button", { name: "Apply filters" }).click();
-  await expect(page).toHaveURL(/q=Starlight\+1/);
+  await expect(page).toHaveURL(/q=Surging\+Sparks/);
   await expect(
-    page.getByRole("link", { name: "Demo Starlight 1", exact: true }),
+    page
+      .getByRole("link", { name: "Surging Sparks Booster Box", exact: true })
+      .first(),
   ).toBeVisible();
   await page.reload();
   await page.getByText("Filter products and offers", { exact: true }).click();
   await expect(
     page.getByRole("textbox", { name: "Search", exact: true }),
-  ).toHaveValue("Starlight 1");
+  ).toHaveValue("Surging Sparks");
   await page
     .getByRole("textbox", { name: "Search", exact: true })
     .fill("missing-product");
@@ -36,7 +38,7 @@ test("filters survive refresh and browser back, including channel and third-part
     await page.getByText("Filter products and offers", { exact: true }).click();
   await expect(
     page.getByRole("textbox", { name: "Search", exact: true }),
-  ).toHaveValue("Starlight 1");
+  ).toHaveValue("Surging Sparks");
   await page.goto("/drops?seller_type=third_party&channel=ship_to_home");
   await expect(page.getByText("Third-party marketplace seller")).toBeVisible();
   await expect(page.getByText("Price unavailable")).toBeVisible();
@@ -133,7 +135,9 @@ test("free simulation disabled and anonymous binder never imply physical ownersh
   await expect(
     page.getByRole("heading", { name: "Pack opening unavailable" }),
   ).toBeVisible();
-  await expect(page.getByText(/Lumen Grove/, { exact: true })).toBeVisible();
+  await expect(
+    page.getByText(/Pokémon Discovery Demo/, { exact: true }),
+  ).toBeVisible();
   await page.goto("/collection");
   await expect(page.getByText(/Anonymous demo sample/)).toBeVisible();
   await expect(page.getByText(/fictional-1/).first()).toBeVisible();

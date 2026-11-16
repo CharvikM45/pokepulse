@@ -24,12 +24,12 @@ const approved = () => ({
 });
 const raw = () => ({
   provider_set_id: "original-test",
-  name: "Original Lumen Grove fixture",
+  name: "Original Pokémon Discovery Demo fixture",
   cards: [
     {
       provider_card_id: "original-001",
       card_number: "001",
-      card_name: "Moss Courier",
+      card_name: "Pikachu",
       variant_status: "explicit",
       variants: [
         {

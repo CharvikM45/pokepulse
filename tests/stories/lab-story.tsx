@@ -12,7 +12,7 @@ const setId = "10000000-0000-4000-8000-000000000001";
 const sets: SimulationSet[] = [
   {
     id: setId,
-    name: "Lumen Grove",
+    name: "Pokémon Discovery Demo",
     rights_status: "approved",
     enabled: true,
     is_demo: true,
@@ -30,16 +30,16 @@ const sets: SimulationSet[] = [
         {
           label: "Slot 1",
           outcomes: [
-            { label: "Moss Courier standard", probability: "50%" },
-            { label: "Harbor Lantern standard", probability: "50%" },
+            { label: "Pikachu standard", probability: "50%" },
+            { label: "Eevee standard", probability: "50%" },
           ],
         },
         {
           label: "Slot 2",
           outcomes: [
-            { label: "Moss Courier standard", probability: "70%" },
-            { label: "Moss Courier foil", probability: "25%" },
-            { label: "Cloud Archivist foil", probability: "5%" },
+            { label: "Pikachu standard", probability: "70%" },
+            { label: "Pikachu foil", probability: "25%" },
+            { label: "Mew foil", probability: "5%" },
           ],
         },
       ],

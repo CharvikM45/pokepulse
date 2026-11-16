@@ -89,7 +89,7 @@ try {
   assert.equal(await page.locator("article").count(), 1);
   await page.getByLabel("Region", { exact: true }).selectOption("");
   await page.getByRole("button", { name: "List view", exact: true }).click();
-  await page.getByLabel("Set", { exact: true }).selectOption("Lumen Grove");
+  await page.getByLabel("Set", { exact: true }).selectOption("Pokémon Discovery Demo");
   assert.equal(await page.locator("article").count(), 1);
   await page.getByLabel("Set", { exact: true }).selectOption("");
   await page.getByRole("button", { name: "Show error", exact: true }).click();

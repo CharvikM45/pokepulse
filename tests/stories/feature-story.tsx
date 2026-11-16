@@ -31,14 +31,14 @@ function Story() {
           {
             card_variant_id: ids.moss,
             slot_index: 0,
-            name: "Moss Courier",
+            name: "Pikachu",
             number: "001",
             finish: "standard",
           },
           {
             card_variant_id: ids.mossFoil,
             slot_index: 1,
-            name: "Moss Courier",
+            name: "Pikachu",
             number: "001",
             finish: "foil",
           },

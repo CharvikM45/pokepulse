@@ -2,11 +2,11 @@ import { test, expect } from "@playwright/test";
 test("anonymous mobile catalog is explicitly demo", async ({ page }) => {
   await page.goto("/");
   await expect(
-    page.getByRole("heading", { name: /Find your next pack/ }),
+    page.getByRole("heading", { name: /The hunt is half/ }),
   ).toBeVisible();
   await expect(
     page.getByText(
-      "DEMO DATA — synthetic products and offers. No live retailer verification.",
+      "Preview catalog · Pokémon set names with simulated products and offers. Prices, configurations, and inventory are illustrative.",
     ),
   ).toBeVisible();
   expect(

@@ -67,7 +67,7 @@ function Story() {
       <ReleaseCalendar
         entries={state === "empty" ? [] : entries}
         productSetNames={{
-          "80000000-0000-4000-8000-000000000001": "Lumen Grove",
+          "80000000-0000-4000-8000-000000000001": "Pokémon Discovery Demo",
         }}
         initialMonth="2027-02"
         formatVerifiedAt={(value) =>

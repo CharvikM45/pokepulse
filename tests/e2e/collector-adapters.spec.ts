@@ -258,7 +258,7 @@ test("adapter: lost pack acknowledgment reuses its key, reload restores saved re
   const saved = {
     id: "91111111-1111-4111-8111-111111111111",
     set_id: setId,
-    set_name: "Lumen Grove",
+    set_name: "Pokémon Discovery Demo",
     opened_at: new Date().toISOString(),
     spent_coins: 10,
     used_free_open: false,
@@ -268,14 +268,14 @@ test("adapter: lost pack acknowledgment reuses its key, reload restores saved re
       {
         card_variant_id: moss,
         slot_index: 0,
-        card_name: "Moss Courier",
+        card_name: "Pikachu",
         card_number: "001",
         finish: "standard",
       },
       {
         card_variant_id: lantern,
         slot_index: 1,
-        card_name: "Harbor Lantern",
+        card_name: "Eevee",
         card_number: "002",
         finish: "standard",
       },
@@ -359,7 +359,7 @@ test("adapter: lost pack acknowledgment reuses its key, reload restores saved re
   });
   await page.goto("/lab");
   await page
-    .getByRole("button", { name: "Open Lumen Grove simulation" })
+    .getByRole("button", { name: "Open Pokémon Discovery Demo simulation" })
     .click();
   await expect(page.getByText(/response was not acknowledged/)).toBeVisible();
   await page.reload();
