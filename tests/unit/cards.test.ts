@@ -167,3 +167,30 @@ describe("price and copy data boundaries", () => {
     ).toThrow();
   });
 });
+
+it("keeps multilingual printing identities distinct and accepts the supported catalog locales", () => {
+  const languages = [
+    "en",
+    "ja",
+    "fr",
+    "de",
+    "es",
+    "it",
+    "pt",
+    "es-mx",
+    "zh-tw",
+    "zh-cn",
+    "ko",
+    "th",
+    "id",
+  ];
+  const ids = languages.map((language) =>
+    providerIdentity("tcgdex", language, "card", "base1-4"),
+  );
+  expect(new Set(ids).size).toBe(languages.length);
+  for (const language of languages)
+    expect(cardSearchQuery.parse({ language }).language).toBe(language);
+  expect(() =>
+    providerIdentity("tcgdex", "invented", "card", "base1-4"),
+  ).toThrow();
+});

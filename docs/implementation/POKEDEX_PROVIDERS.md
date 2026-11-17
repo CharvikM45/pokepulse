@@ -1,6 +1,6 @@
 # Card metadata and pricing providers
 
-Reviewed 2026-11-16 against primary documentation. These findings do not constitute project licensing approval.
+Updated 2026-11-17. The dedicated project's TCGdex metadata and retention permission was reviewed against the MIT-licensed source at revision `4218f64dcbf3de6e7b7548530f938fb0b9ebbe2a`; its notice is preserved in `docs/content-rights/TCGDEX_LICENSE.txt`. This approval covers metadata import, not Pokémon artwork, market prices, or simulation odds. Previously disabled integrations are not implicitly approved.
 
 | Provider               | Documentation                                                                                                | Implementation                                                                                                                               | Production status                                                                                                                                                                                            |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -24,3 +24,13 @@ Price observations are independent from retailer inventory and compare the same 
 6. Pricing adapters may be registered only after their independent terms/credentials review. `ingestSinglesPrices` rejects unapproved providers, mismatched variants, future timestamps, incomparable metrics, and batches above 1,000 observations.
 
 No worker is automatically scheduled by a Vercel web deployment. Do not configure cron or external paid services until their provider permissions and intended worker host are known.
+
+## Physical card snapshot import
+
+The source checkout provides 135,414 eligible localized physical card records, 208,965 documented variants and 1,148 localized set entries across 13 languages at the reviewed revision. These are measured source counts; they do not certify every worldwide promo, error, stamp or language printing. Digital-only TCG Pocket cards are excluded. A record needs an explicit localized card and set name; missing translations are not silently labeled as another language. Missing variant declarations remain `unspecified`. Detailed subtype, foil, size and stamp combinations remain separate.
+
+`pnpm catalog:snapshot CHECKOUT OUTPUT REVISION` reads TypeScript object literals with the TypeScript parser. It never imports or executes downloaded source code. Calls, computed properties and path escapes fail closed, and a source error prevents publication. Output is JSONL, a coverage report, and the source license, outside the repository.
+
+`CARD_CATALOG_SYNC_ENABLED=true pnpm catalog:load OUTPUT` requires server-only Supabase credentials. It checks metadata permission before each bounded upsert, uses deterministic provider/locale IDs, imports sets privately, and publishes only the verified source revision after cards/variants/credits are loaded. A failed run can be rerun safely. No artwork URLs, vendor price payloads, retail offers or pack manifests are imported. Check final `c_catalog_coverage` measurements and source counts before reporting completion.
+
+Use the same source snapshot pathway for future full refreshes. The per-card REST worker is retained for bounded English/Japanese operations; do not infer missing detailed stamp/edition combinations from its coarser variant response. No automatic schedule is configured.

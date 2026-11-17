@@ -7,6 +7,7 @@ import {
   type SingleCard,
   type PhysicalLotInput,
 } from "@pokepulse/contracts";
+import { useCardUser } from "../cards/card-user";
 import { cardRequest, receipt } from "../cards/api";
 export function LotForm({
   variants,
@@ -119,102 +120,107 @@ export function LotForm({
             ))}
           </select>
         </label>
-        <label>
-          Currency
-          <select
-            className="pp-input"
-            name="currency"
-            defaultValue={initial?.currency ?? "USD"}
-          >
-            <option>USD</option>
-            <option>EUR</option>
-            <option>JPY</option>
-            <option>GBP</option>
-          </select>
-        </label>
-        <label>
-          Total paid for this lot
-          <input
-            className="pp-input"
-            name="paid"
-            type="number"
-            min="0"
-            step="0.01"
-            defaultValue={
-              initial?.cost_minor == null
-                ? ""
-                : initial.cost_minor / (initial.currency === "JPY" ? 1 : 100)
-            }
-          />
-        </label>
-        <label>
-          Acquired on
-          <input
-            className="pp-input"
-            name="acquired_on"
-            type="date"
-            defaultValue={initial?.acquired_on ?? ""}
-          />
-        </label>
-        <label>
-          Grading company (graded only)
-          <input
-            className="pp-input"
-            name="grading_company"
-            maxLength={40}
-            defaultValue={initial?.grading_company ?? ""}
-          />
-        </label>
-        <label>
-          Grade (graded only)
-          <input
-            className="pp-input"
-            name="grade"
-            maxLength={20}
-            defaultValue={initial?.grade ?? ""}
-          />
-        </label>
-        <label>
-          Binder / organization
-          <input
-            className="pp-input"
-            name="binder"
-            maxLength={100}
-            defaultValue={initial?.binder ?? ""}
-          />
-        </label>
-        <label>
-          Binder page
-          <input
-            className="pp-input"
-            name="page"
-            type="number"
-            min="1"
-            max="1000"
-            defaultValue={initial?.page ?? ""}
-          />
-        </label>
-        <label>
-          Position
-          <input
-            className="pp-input"
-            name="position"
-            type="number"
-            min="1"
-            max="100"
-            defaultValue={initial?.position ?? ""}
-          />
-        </label>
       </div>
-      <label>
-        Private notes
-        <textarea
-          className="pp-input"
-          name="notes"
-          maxLength={500}
-          defaultValue={initial?.notes ?? ""}
-        />
-      </label>
+      <details className="pp-lot-details">
+        <summary>Purchase, grading & organization (optional)</summary>
+        <div className="pp-filters">
+          <label>
+            Currency
+            <select
+              className="pp-input"
+              name="currency"
+              defaultValue={initial?.currency ?? "USD"}
+            >
+              <option>USD</option>
+              <option>EUR</option>
+              <option>JPY</option>
+              <option>GBP</option>
+            </select>
+          </label>
+          <label>
+            Total paid for this lot
+            <input
+              className="pp-input"
+              name="paid"
+              type="number"
+              min="0"
+              step="0.01"
+              defaultValue={
+                initial?.cost_minor == null
+                  ? ""
+                  : initial.cost_minor / (initial.currency === "JPY" ? 1 : 100)
+              }
+            />
+          </label>
+          <label>
+            Acquired on
+            <input
+              className="pp-input"
+              name="acquired_on"
+              type="date"
+              defaultValue={initial?.acquired_on ?? ""}
+            />
+          </label>
+          <label>
+            Grading company (graded only)
+            <input
+              className="pp-input"
+              name="grading_company"
+              maxLength={40}
+              defaultValue={initial?.grading_company ?? ""}
+            />
+          </label>
+          <label>
+            Grade (graded only)
+            <input
+              className="pp-input"
+              name="grade"
+              maxLength={20}
+              defaultValue={initial?.grade ?? ""}
+            />
+          </label>
+          <label>
+            Binder / organization
+            <input
+              className="pp-input"
+              name="binder"
+              maxLength={100}
+              defaultValue={initial?.binder ?? ""}
+            />
+          </label>
+          <label>
+            Binder page
+            <input
+              className="pp-input"
+              name="page"
+              type="number"
+              min="1"
+              max="1000"
+              defaultValue={initial?.page ?? ""}
+            />
+          </label>
+          <label>
+            Position
+            <input
+              className="pp-input"
+              name="position"
+              type="number"
+              min="1"
+              max="100"
+              defaultValue={initial?.position ?? ""}
+            />
+          </label>
+        </div>
+        <label>
+          Private notes
+          <textarea
+            className="pp-input"
+            name="notes"
+            maxLength={500}
+            defaultValue={initial?.notes ?? ""}
+          />
+        </label>
+      </details>
       <p className="pp-muted">
         Physical copies only. Leave cost or grade blank when unknown. Graded and
         raw copies are valued separately.
@@ -268,6 +274,7 @@ export function LotForm({
   );
 }
 export function QuickAdd({ card }: { card: SingleCard }) {
+  const user = useCardUser();
   const [open, setOpen] = useState(false),
     [saved, setSaved] = useState(false);
   return (
@@ -277,7 +284,7 @@ export function QuickAdd({ card }: { card: SingleCard }) {
         onClick={() => setOpen(true)}
         disabled={!card.variants.length}
       >
-        Add physical copy
+        + Add to collection
       </button>
       {saved && <span role="status">Physical collection updated.</span>}
       {open && (
@@ -286,16 +293,25 @@ export function QuickAdd({ card }: { card: SingleCard }) {
           title={`Add ${card.name} to your physical collection`}
           onClose={() => setOpen(false)}
         >
-          <LotForm
-            variants={card.variants.map((v) => ({
-              id: v.id,
-              label: `${v.finish}${v.edition ? " · " + v.edition : ""} · ${v.rarity ?? "Rarity unavailable"}`,
-            }))}
-            onSaved={() => {
-              setSaved(true);
-              setOpen(false);
-            }}
-          />
+          {user ? (
+            <LotForm
+              variants={card.variants.map((v) => ({
+                id: v.id,
+                label: `${v.finish}${v.edition ? " · " + v.edition : ""} · ${v.rarity ?? "Rarity unavailable"}`,
+              }))}
+              onSaved={() => {
+                setSaved(true);
+                setOpen(false);
+              }}
+            />
+          ) : (
+            <>
+              <p>Sign in to save cards to your collection.</p>
+              <Link className="pp-button" href="/dashboard">
+                Sign in
+              </Link>
+            </>
+          )}
         </Dialog>
       )}
     </>

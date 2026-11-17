@@ -24,7 +24,9 @@
     "test:collector:concurrency": "node scripts/collector-concurrency.mjs",
     "test:components": "node scripts/test-collector-components.mjs",
     "test:collector:http": "node scripts/collector-http.mjs",
-    "worker:catalog": "tsx services/ingestion/cards/run.ts"
+    "worker:catalog": "tsx services/ingestion/cards/run.ts",
+    "catalog:snapshot": "tsx services/ingestion/cards/source-snapshot.ts",
+    "catalog:load": "tsx services/ingestion/cards/load-snapshot.ts"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.14.0",

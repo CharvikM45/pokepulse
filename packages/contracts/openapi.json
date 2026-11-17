@@ -7532,7 +7532,26 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "enum": ["en", "ja"]
+              "enum": [
+                "en",
+                "ja",
+                "fr",
+                "de",
+                "es",
+                "it",
+                "pt",
+                "pt-br",
+                "pt-pt",
+                "es-mx",
+                "zh-tw",
+                "zh-cn",
+                "ko",
+                "th",
+                "id",
+                "nl",
+                "pl",
+                "ru"
+              ]
             },
             "required": false
           },

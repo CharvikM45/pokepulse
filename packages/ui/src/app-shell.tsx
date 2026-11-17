@@ -2,19 +2,21 @@
 import type { ReactNode } from "react";
 const discovery = [
   { href: "/", label: "Overview" },
-  { href: "/drops", label: "Drops" },
-  { href: "/products", label: "Sealed products" },
-  { href: "/cards", label: "Card Pokédex" },
-  { href: "/market", label: "Singles market" },
-  { href: "/local", label: "Local Radar" },
-  { href: "/calendar", label: "Calendar" },
+  { href: "/cards", label: "Card library" },
+  { href: "/collection/portfolio", label: "My collection" },
+  { href: "/card-sets", label: "Sets" },
+  { href: "/market", label: "Market" },
 ];
 const collecting = [
-  { href: "/lab", label: "Pack Lab" },
-  { href: "/collection", label: "Collection" },
-  { href: "/collection/portfolio", label: "Physical portfolio" },
+  { href: "/collection", label: "Set binder" },
+  { href: "/products", label: "Sealed products" },
+  { href: "/drops", label: "Retail drops" },
   { href: "/watchlist", label: "Watchlist" },
   { href: "/alerts", label: "Alerts & inbox" },
+  { href: "/local", label: "Local Radar" },
+  { href: "/calendar", label: "Calendar" },
+  { href: "/lab", label: "Pack Lab" },
+  { href: "/artists", label: "Illustrators" },
   { href: "/settings", label: "Settings" },
 ];
 export function AppShell({
@@ -50,10 +52,7 @@ export function AppShell({
             <small>POKÉMON COLLECTOR CLUB</small>
           </span>
         </a>
-        <p className="pp-sidebar-intro">
-          A little closer to your next great find.
-        </p>
-        <p className="pp-nav-caption">DISCOVER</p>
+        <p className="pp-sidebar-intro">Your cards. Your collection.</p>
         <nav aria-label="Discovery">
           {discovery.map((link) => (
             <a
@@ -65,18 +64,20 @@ export function AppShell({
             </a>
           ))}
         </nav>
-        <h2 className="pp-nav-caption">YOUR SPACE</h2>
-        <nav aria-label="Collecting and account">
-          {collecting.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              aria-current={isCurrent(link.href) ? "page" : undefined}
-            >
-              {link.label}
-            </a>
-          ))}
-        </nav>
+        <details className="pp-sidebar-more">
+          <summary>More</summary>
+          <nav aria-label="Collecting and account">
+            {collecting.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                aria-current={isCurrent(link.href) ? "page" : undefined}
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
+        </details>
         <div className="pp-sidebar-bottom">
           <span className="pp-live-dot" /> Made for Pokémon collectors
         </div>
@@ -101,11 +102,10 @@ export function AppShell({
       </main>
       <nav className="pp-mobile-nav" aria-label="Primary mobile navigation">
         {[
-          { href: "/drops", label: "Drops" },
-          { href: "/local", label: "Radar" },
-          { href: "/watchlist", label: "Watchlist" },
-          { href: "/collection", label: "Collection" },
-          { href: "/collection/portfolio", label: "Physical portfolio" },
+          { href: "/", label: "Home" },
+          { href: "/cards", label: "Search" },
+          { href: "/collection/portfolio", label: "Collection" },
+          { href: "/card-sets", label: "Sets" },
         ].map((link) => (
           <a
             key={link.href}

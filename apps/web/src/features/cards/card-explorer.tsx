@@ -6,12 +6,13 @@ import {
   cardSearchResult,
   coverageSchema,
   cardIndexResult,
+  supportedCardLanguages,
+  cardLanguageNames,
   type SingleCard,
 } from "@pokepulse/contracts";
 import { Skeleton, StateCard, useNow } from "@pokepulse/ui";
 import { useResource } from "../consumer/workspace";
 import { CardSurface } from "./card-surface";
-import { CardActions } from "./card-actions";
 import { QuickAdd } from "../collection/quick-add";
 import { cardRequest } from "./api";
 import { currencyValue } from "../collection/price-chart";
@@ -44,32 +45,22 @@ export function CardTile({
         <Link href={`/cards/${card.id}`}>{card.name}</Link>{" "}
         <small>#{card.number}</small>
       </h2>
-      <p>
-        {card.rarity?.replaceAll("_", " ") ?? "Rarity unavailable"} ·{" "}
-        {card.types.join(" / ") || card.category || "Category unavailable"}
+      <p className="pp-tile-caption">
+        {card.rarity?.replaceAll("_", " ") ?? "Rarity not listed"}
       </p>
-      <p className="pp-muted">
-        Illustrator: {card.artists.join(", ") || "Not documented"}
-      </p>
-      <p className="pp-muted">
-        {card.favorites} favorites ·{" "}
-        <Link href={`/cards/${card.id}#prices`}>View sourced prices</Link>
-      </p>
-      <p>
-        {price
-          ? `From ${currencyValue(price.amount_minor, price.currency)} · ${price.provider_id} market reference`
-          : "Singles price unavailable"}
-        {price && (
-          <small className="pp-price-freshness">
-            Observed {new Date(price.observed_at).toLocaleDateString()}
+      {price && (
+        <p className="pp-tile-price">
+          {currencyValue(price.amount_minor, price.currency)}
+          <small>
+            {" "}
+            · {price.provider_id}
             {now > 0 && now - Date.parse(price.observed_at) > 7 * 86400000
-              ? " · Stale reference"
+              ? " · stale"
               : ""}
           </small>
-        )}
-      </p>
+        </p>
+      )}
       <QuickAdd card={card} />
-      <CardActions id={card.id} />
     </article>
   );
 }
@@ -135,11 +126,11 @@ export function CardExplorer({ market = false }: { market?: boolean }) {
           POKÉPULSE / {market ? "SINGLES MARKET" : "CARD ARCHIVE"}
         </p>
         <h1>
-          {market ? "A clearer view of the market." : "Every card has a story."}
+          {market ? "A clearer view of the market." : "The card library."}
         </h1>
         <p>
-          Explore documented printings, meet the illustrators, and make your
-          collection your own.
+          Search real printings. Find your favorites. Make them part of your
+          collection.
         </p>
         <div className="pp-row">
           <Link href="/card-sets">Browse sets ↗</Link>
@@ -160,7 +151,7 @@ export function CardExplorer({ market = false }: { market?: boolean }) {
             <span>Illustrators</span>
           </div>
           <div>
-            <strong>{count?.languages.join(" / ").toUpperCase() || "—"}</strong>
+            <strong>{count?.languages.length ?? "—"}</strong>
             <span>Indexed languages</span>
           </div>
         </div>
@@ -226,8 +217,11 @@ export function CardExplorer({ market = false }: { market?: boolean }) {
                 defaultValue={params.get("language") ?? ""}
               >
                 <option value="">All languages</option>
-                <option value="en">English</option>
-                <option value="ja">Japanese</option>
+                {supportedCardLanguages.map((language) => (
+                  <option key={language} value={language}>
+                    {cardLanguageNames[language]}
+                  </option>
+                ))}
               </select>
             </label>
             <label>

@@ -1,3 +1,4 @@
+import { supportedCardLanguages } from "../../../contracts/src/cards";
 import { createHash } from "node:crypto";
 export function providerIdentity(
   provider: string,
@@ -7,7 +8,9 @@ export function providerIdentity(
 ) {
   if (
     !/^[a-z0-9_-]+$/.test(provider) ||
-    !["en", "ja"].includes(language) ||
+    !supportedCardLanguages.includes(
+      language as (typeof supportedCardLanguages)[number],
+    ) ||
     !["card", "set", "artist", "variant"].includes(kind) ||
     !id ||
     id.length > 200

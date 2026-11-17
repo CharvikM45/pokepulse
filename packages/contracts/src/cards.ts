@@ -1,5 +1,48 @@
 import { z } from "zod";
 import { variantSchema } from "./collector";
+export const supportedCardLanguages = [
+  "en",
+  "ja",
+  "fr",
+  "de",
+  "es",
+  "it",
+  "pt",
+  "pt-br",
+  "pt-pt",
+  "es-mx",
+  "zh-tw",
+  "zh-cn",
+  "ko",
+  "th",
+  "id",
+  "nl",
+  "pl",
+  "ru",
+] as const;
+export const cardLanguageNames: Record<
+  (typeof supportedCardLanguages)[number],
+  string
+> = {
+  en: "English",
+  ja: "Japanese",
+  fr: "French",
+  de: "German",
+  es: "Spanish",
+  it: "Italian",
+  pt: "Portuguese",
+  "pt-br": "Portuguese (Brazil)",
+  "pt-pt": "Portuguese (Portugal)",
+  "es-mx": "Spanish (Latin America)",
+  "zh-tw": "Chinese (Traditional)",
+  "zh-cn": "Chinese (Simplified)",
+  ko: "Korean",
+  th: "Thai",
+  id: "Indonesian",
+  nl: "Dutch",
+  pl: "Polish",
+  ru: "Russian",
+};
 export const cardConditions = [
   "unknown",
   "near_mint",
@@ -22,7 +65,7 @@ export const cardSearchQuery = z
     type: multi,
     set_id: z.uuid().optional(),
     series: z.string().max(100).optional(),
-    language: z.enum(["en", "ja"]).optional(),
+    language: z.enum(supportedCardLanguages).optional(),
     pokedex: z.coerce.number().int().min(1).max(10000).optional(),
     finish: z.string().max(64).optional(),
     ownership: z.enum(["all", "owned", "missing"]).default("all"),

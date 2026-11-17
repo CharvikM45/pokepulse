@@ -1453,3 +1453,272 @@ body,
 .pp-search-form .pp-filter-panel .pp-actions {
   margin-top: 1rem;
 }
+
+/* Collection-first layout: compact navigation, quiet surfaces and generous space. */
+.pp-sidebar {
+  padding: 1.75rem 1rem;
+}
+.pp-sidebar-intro {
+  margin: 1.5rem 0;
+  padding: 0 0.75rem;
+}
+.pp-sidebar nav a {
+  font-size: 0.9rem;
+  padding: 0.7rem 1rem;
+}
+.pp-sidebar-more {
+  margin-top: 1.25rem;
+}
+.pp-sidebar-more > summary {
+  color: var(--pp-muted);
+  cursor: pointer;
+  padding: 0.7rem 1rem;
+  font-size: 0.85rem;
+}
+.pp-sidebar-bottom {
+  margin-top: 2rem;
+}
+.pp-main {
+  width: min(100%, 1320px);
+}
+.pp-topbar {
+  margin-bottom: 2rem;
+}
+.pp-topbar > a {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--pp-muted);
+  text-decoration: none;
+}
+.pp-collector-welcome {
+  padding: clamp(1rem, 3vw, 3rem) 0 2.5rem;
+  max-width: 820px;
+}
+.pp-collector-welcome h1 {
+  font-size: clamp(2.6rem, 5.5vw, 4.8rem);
+  letter-spacing: -0.065em;
+  line-height: 1.06;
+  margin: 0.9rem 0 1.25rem;
+}
+.pp-collector-welcome > p:not(.pp-eyebrow) {
+  color: var(--pp-muted);
+  font-size: 1.05rem;
+}
+.pp-library-search {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 2rem;
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
+  background: var(--pp-surface);
+  border: 1px solid var(--pp-border);
+  border-radius: 1rem;
+}
+.pp-library-search > span {
+  font-size: 1.8rem;
+  color: var(--pp-muted);
+}
+.pp-library-search input {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: var(--pp-text);
+  outline-offset: 0;
+}
+.pp-library-search input::placeholder {
+  color: var(--pp-muted);
+}
+.pp-collector-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  color: var(--pp-muted);
+  font-size: 0.8rem;
+}
+.pp-collector-stats strong {
+  color: var(--pp-text);
+  font-weight: 650;
+}
+.pp-library-links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+.pp-library-links > a {
+  padding: 1.5rem;
+  border: 1px solid var(--pp-border);
+  border-radius: 1rem;
+  color: var(--pp-text);
+  text-decoration: none;
+  background: var(--pp-surface);
+  transition:
+    border-color 160ms,
+    transform 160ms;
+}
+.pp-library-links > a:hover {
+  border-color: var(--pp-accent);
+  transform: translateY(-2px);
+}
+.pp-library-links > a > span {
+  color: var(--pp-muted);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+}
+.pp-library-links strong {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 650;
+}
+.pp-library-links p {
+  margin: 0.5rem 0 0;
+  color: var(--pp-muted);
+  font-size: 0.85rem;
+}
+.pp-section-heading {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+.pp-section-heading h2 {
+  font-size: 1.6rem;
+  margin: 0.25rem 0;
+}
+.pp-section-heading a {
+  font-size: 0.85rem;
+}
+.pp-library-source {
+  margin-top: 2rem;
+  color: var(--pp-muted);
+  font-size: 0.8rem;
+}
+.pp-library-more {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  font-size: 0.8rem;
+  margin-top: 1.5rem;
+}
+.pp-library-more a {
+  color: var(--pp-muted);
+}
+.pp-pokedex-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 210px), 1fr));
+  gap: 1.25rem;
+}
+.pp-pokedex-tile {
+  padding: 0.9rem;
+  border-radius: 1rem;
+  box-shadow: none;
+  gap: 0.35rem;
+}
+.pp-pokedex-tile h2 {
+  font-size: 1rem;
+  margin: 0.3rem 0;
+}
+.pp-pokedex-tile > .pp-eyebrow {
+  font-size: 0.65rem;
+  margin-bottom: 0;
+}
+.pp-pokedex-tile .pp-tile-caption {
+  color: var(--pp-muted);
+  font-size: 0.75rem;
+  margin: 0 0 0.5rem;
+}
+.pp-pokedex-tile > .pp-button {
+  width: 100%;
+  background: var(--pp-surface);
+  color: var(--pp-text);
+  border-color: var(--pp-border);
+  font-size: 0.8rem;
+  box-shadow: none;
+}
+.pp-pokedex-tile > .pp-button:hover {
+  border-color: var(--pp-accent);
+  color: var(--pp-accent);
+}
+.pp-tile-price {
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+}
+.pp-tile-price small {
+  color: var(--pp-muted);
+}
+.pp-dex-hero {
+  background: transparent;
+  border: 0;
+  color: var(--pp-text);
+  padding: 0.5rem 0 1rem;
+  border-radius: 0;
+}
+.pp-dex-hero h1 {
+  font-size: clamp(2rem, 4vw, 3.3rem);
+  margin: 0.65rem 0;
+}
+.pp-dex-hero .pp-eyebrow,
+.pp-dex-hero p,
+.pp-dex-hero a {
+  color: var(--pp-muted);
+}
+.pp-dex-counts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 1.25rem;
+  font-size: 0.75rem;
+}
+.pp-dex-counts > div {
+  flex-direction: row;
+  gap: 0.4rem;
+  align-items: baseline;
+}
+.pp-dex-counts strong {
+  font-size: 1rem;
+}
+.pp-lot-details > summary {
+  cursor: pointer;
+  padding-block: 0.75rem;
+  color: var(--pp-muted);
+  font-size: 0.85rem;
+}
+@media (max-width: 600px) {
+  .pp-library-links {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+  .pp-library-links > a {
+    padding: 1.15rem;
+  }
+  .pp-pokedex-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem;
+  }
+  .pp-pokedex-tile {
+    padding: 0.6rem;
+  }
+  .pp-pokedex-tile h2 {
+    font-size: 0.9rem;
+  }
+  .pp-library-search {
+    gap: 0.4rem;
+    padding-left: 0.65rem;
+  }
+  .pp-library-search > span {
+    display: none;
+  }
+  .pp-library-search .pp-button {
+    padding-inline: 0.75rem;
+  }
+  .pp-library-search input {
+    font-size: 0.85rem;
+  }
+}

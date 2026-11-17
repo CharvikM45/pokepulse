@@ -1,9 +1,4 @@
-import { Suspense } from "react";
-import { Discovery } from "../../src/features/consumer/discovery";
+import { CollectorHome } from "../../src/features/cards/collector-home";
 export default function Page() {
-  return (
-    <Suspense fallback={<p>Loading catalog…</p>}>
-      <Discovery mode="home" />
-    </Suspense>
-  );
+  return <CollectorHome />;
 }
