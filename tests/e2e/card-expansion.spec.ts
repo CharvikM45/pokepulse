@@ -60,7 +60,9 @@ test("card archive, artist index, market and private portfolio retain usable mob
     ).toEqual([]);
   }
   await page.goto("/cards");
-  await page.getByRole("textbox", { name: "Find a card" }).fill("Pikachu");
+  await page
+    .getByRole("combobox", { name: "Find a card", exact: true })
+    .fill("Pikachu");
   await page.getByRole("button", { name: "Explore cards" }).click();
   await expect(page).toHaveURL(/q=Pikachu/);
   await expect(
