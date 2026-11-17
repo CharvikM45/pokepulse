@@ -27,18 +27,18 @@ No worldwide completeness, historical prices, official pack odds or artwork righ
 
 Commands use pinned pnpm 10.34.9 on Node 22.14.0.
 
-| Check | Result |
-| --- | --- |
-| `pnpm test` | 124 tests passed across 10 files, including PostgreSQL integration |
-| `pnpm test:collector` | 33 tests passed across 3 files |
-| `pnpm lint` | Passed |
-| `pnpm typecheck` | Passed, including web application |
-| `pnpm build` | Production build passed |
-| `pnpm format:check` | Passed |
-| `git diff --check` | Passed |
-| `pnpm test:e2e` local | Five API checks passed; browser tests blocked before execution by macOS Chromium sandbox launch restriction |
-| In-app browser | Archive empty/coverage state, expanded filters and portfolio sign-in gate verified on production localhost build |
-| Supabase | Forward migration applied; RLS confirmed on 63/63 public tables |
+| Check                 | Result                                                                                                           |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `pnpm test`           | 124 tests passed across 10 files, including PostgreSQL integration                                               |
+| `pnpm test:collector` | 33 tests passed across 3 files                                                                                   |
+| `pnpm lint`           | Passed                                                                                                           |
+| `pnpm typecheck`      | Passed, including web application                                                                                |
+| `pnpm build`          | Production build passed                                                                                          |
+| `pnpm format:check`   | Passed                                                                                                           |
+| `git diff --check`    | Passed                                                                                                           |
+| `pnpm test:e2e` local | Five API checks passed; browser tests blocked before execution by macOS Chromium sandbox launch restriction      |
+| In-app browser        | Archive empty/coverage state, expanded filters and portfolio sign-in gate verified on production localhost build |
+| Supabase              | Forward migration applied; RLS confirmed on 63/63 public tables                                                  |
 
 GitHub CI supplies Linux Chromium and database/concurrency acceptance. Its result is tracked separately after push; a local build alone does not establish hosted authentication or provider operation.
 
