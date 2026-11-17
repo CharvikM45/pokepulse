@@ -24,7 +24,7 @@ const bodySchema = z.discriminatedUnion("operation", [
     .object({
       operation: z.literal("upsert"),
       table: z.enum(tables),
-      rows: z.array(z.record(z.string(), z.unknown())).min(1).max(500),
+      rows: z.array(z.record(z.string(), z.unknown())).min(1).max(2000),
     })
     .strict(),
   z

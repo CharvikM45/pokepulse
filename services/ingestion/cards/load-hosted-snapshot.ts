@@ -54,6 +54,7 @@ for (const table of [
   "card_artist_credits",
 ]) {
   let done = 0,
+    bytes = 0,
     rows: Record<string, unknown>[] = [];
   async function flush() {
     if (!rows.length) return;
@@ -65,13 +66,19 @@ for (const table of [
     }
     done += rows.length;
     rows = [];
+    bytes = 0;
   }
   for await (const line of createInterface({
     input: createReadStream(resolve(directory, `${table}.jsonl`)),
     crlfDelay: Infinity,
   })) {
-    if (line.trim()) rows.push(JSON.parse(line));
-    if (rows.length === 500) await flush();
+    if (line.trim()) {
+      const size = Buffer.byteLength(line);
+      if (rows.length && bytes + size > 1800000) await flush();
+      rows.push(JSON.parse(line));
+      bytes += size;
+    }
+    if (rows.length === 2000) await flush();
   }
   await flush();
 }
