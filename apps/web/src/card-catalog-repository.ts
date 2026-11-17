@@ -7,7 +7,15 @@ import {
   coverageSchema,
   cardIndexResult,
 } from "@pokepulse/contracts";
-import type { SupabaseClient } from "@supabase/supabase-js";
+import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+// These three RPCs already expose only permission-gated public metadata.
+function publicCatalogDb() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    { auth: { persistSession: false, autoRefreshToken: false } },
+  );
+}
 export const encodeCardCursor = (v: unknown) =>
   Buffer.from(JSON.stringify(v)).toString("base64url");
 export function decodeCardCursor<T extends z.ZodType>(
@@ -63,7 +71,7 @@ export async function searchCards(
       next: z.object({ key: z.string(), id: z.uuid() }).nullable(),
     })
     .parse(
-      await cardRpc(db ?? adminDb(), "c_search_cards", {
+      await cardRpc(db ?? publicCatalogDb(), "c_search_cards", {
         p_filters: filters,
         p_limit: limit,
         p_after: after ? { key: after.key, id: after.id } : null,
@@ -105,7 +113,9 @@ export async function catalogCoverage() {
       art_enabled: false,
       measured_at: new Date().toISOString(),
     });
-  return coverageSchema.parse(await cardRpc(adminDb(), "c_catalog_coverage"));
+  return coverageSchema.parse(
+    await cardRpc(publicCatalogDb(), "c_catalog_coverage"),
+  );
 }
 export async function catalogIndex(
   kind: "sets" | "artists",
@@ -120,7 +130,7 @@ export async function catalogIndex(
   );
   if (!configured()) return { entries: [], next_cursor: null };
   const result = cardIndexResult.extend({ next: z.uuid().nullable() }).parse(
-    await cardRpc(adminDb(), "c_catalog_index", {
+    await cardRpc(publicCatalogDb(), "c_catalog_index", {
       p_kind: kind,
       p_q: q,
       p_after: after?.id ?? null,
