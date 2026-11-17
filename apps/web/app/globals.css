@@ -264,6 +264,7 @@ a:hover {
   top: 0;
   align-self: start;
   height: 100dvh;
+  overflow-y: auto;
   padding: 2rem 1.2rem;
   border-right: 1px solid var(--pp-border);
   background: color-mix(in srgb, var(--pp-surface) 85%, transparent);
@@ -361,9 +362,8 @@ a:hover {
   box-shadow: inset 3px 0 var(--pp-accent);
 }
 .pp-sidebar-bottom {
-  position: absolute;
-  bottom: 2rem;
-  left: 2rem;
+  position: static;
+  padding-inline: 0.8rem;
   color: var(--pp-muted);
   font-size: 0.72rem;
 }
