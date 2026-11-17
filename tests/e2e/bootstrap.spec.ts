@@ -1,9 +1,21 @@
 import { test, expect } from "@playwright/test";
-test("anonymous mobile catalog is explicitly demo", async ({ page }) => {
+test("collection-first home and separate retail demo stay clearly distinguished", async ({
+  page,
+}) => {
   await page.goto("/");
   await expect(
-    page.getByRole("heading", { name: /The hunt is half/ }),
+    page.getByRole("heading", { name: /A home for every/ }),
   ).toBeVisible();
+  await expect(
+    page.getByRole("textbox", { name: "Search Pokémon cards" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Browse all cards →" }),
+  ).toBeVisible();
+  await page
+    .getByRole("link", { name: "Sealed products", exact: true })
+    .last()
+    .click();
   await expect(
     page.getByText(
       "Preview catalog · Pokémon set names with simulated products and offers. Prices, configurations, and inventory are illustrative.",

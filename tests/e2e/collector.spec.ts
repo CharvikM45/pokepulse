@@ -300,7 +300,7 @@ test("records local production-build timing without claiming staging Core Web Vi
   });
   await page.goto("/");
   await expect(
-    page.getByRole("link", { name: "View all products →" }),
+    page.getByRole("link", { name: "Browse all cards →" }),
   ).toBeVisible();
   await page.waitForTimeout(300);
   const observed = await page.evaluate(() => {

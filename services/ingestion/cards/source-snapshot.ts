@@ -120,7 +120,15 @@ for (const file of globSync(["data/**/*.ts", "data-asia/**/*.ts"], {
             ? c.hp
             : null,
         types: Array.isArray(c.types) ? c.types : [],
-        pokedex_numbers: Array.isArray(c.dexId) ? c.dexId : [],
+        pokedex_numbers: Array.isArray(c.dexId)
+          ? c.dexId.filter(
+              (n) =>
+                typeof n === "number" &&
+                Number.isInteger(n) &&
+                n > 0 &&
+                n < 10000,
+            )
+          : [],
         artists: illustrator ? [illustrator] : [],
         rarity_original: rarity,
         rarity_normalized: normalizedRarity(rarity),
@@ -128,6 +136,7 @@ for (const file of globSync(["data/**/*.ts", "data-asia/**/*.ts"], {
         synchronized_at: now,
         metadata: {
           source_revision: revision,
+          provider_pokedex_ids: c.dexId ?? [],
           source_file: file,
           regulation: local(c.regulationMark, language),
           variant_availability: Array.isArray(c.variants)
