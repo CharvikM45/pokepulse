@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useMemo, useRef, useState } from "react";
 import { z } from "zod";
 import { ApiError } from "@pokepulse/contracts";
@@ -29,6 +30,7 @@ async function allSets(signal?: AbortSignal) {
 }
 async function allCards(setId: string, signal?: AbortSignal) {
   let result: z.infer<typeof c.cardsSchema> | undefined;
+  const seen = new Set<string>();
   let cursor: string | null | undefined;
   do {
     const query = new URLSearchParams({
@@ -47,11 +49,24 @@ async function allCards(setId: string, signal?: AbortSignal) {
       ? { ...result, variants: [...result.variants, ...page.data.variants] }
       : page.data;
     cursor = page.meta.next_cursor;
+    if (cursor) {
+      if (seen.has(cursor) || seen.size >= 200)
+        throw new Error("Set pagination cannot complete.");
+      seen.add(cursor);
+    }
   } while (cursor);
   return result!;
 }
 
-function savedView(data: z.infer<typeof c.openingSchema>): SavedOpening {
+async function savedView(
+  data: z.infer<typeof c.openingSchema>,
+): Promise<SavedOpening> {
+  let metadata: z.infer<typeof c.cardsSchema>["variants"] = [];
+  try {
+    metadata = (await allCards(data.set_id)).variants;
+  } catch {
+    /* Historical outcomes remain readable after metadata or image revocation. */
+  }
   return {
     openingId: data.id,
     setId: data.set_id,
@@ -64,6 +79,8 @@ function savedView(data: z.infer<typeof c.openingSchema>): SavedOpening {
       ...card,
       name: card.card_name,
       number: card.card_number,
+      set_id: data.set_id,
+      presentation: metadata.find((v) => v.id === card.card_variant_id),
     })),
   };
 }
@@ -98,7 +115,7 @@ export function LabPage() {
         try {
           return {
             status: "committed",
-            opening: savedView(
+            opening: await savedView(
               (
                 await c.collectorRequest("packs/open", c.openingSchema, {
                   method: "POST",
@@ -153,6 +170,12 @@ export function CollectionPage({ setId }: { setId?: string }) {
   return (
     <>
       <p className="pp-eyebrow">COLLECT</p>
+      <div className="pp-row">
+        <Link href="/collection/portfolio">
+          Physical collection dashboard →
+        </Link>
+        <Link href="/cards">Add cards from Pokédex →</Link>
+      </div>
       <h1>Your binder</h1>
       <p>
         Virtual simulation results and manually recorded physical ownership stay

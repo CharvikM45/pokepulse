@@ -1059,3 +1059,292 @@ a {
     height: 160px;
   }
 }
+
+/* Card Pokédex and physical collection: a distinct archive alongside retail. */
+.pp-dex-hero {
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border-radius: 1.5rem;
+  margin-bottom: 2rem;
+  color: #f2f6e7;
+  background:
+    radial-gradient(ellipse at 90% 10%, #48683988, transparent 60%), #1c3e2c;
+}
+.pp-dex-hero .pp-eyebrow {
+  color: #cdddab;
+}
+.pp-dex-hero h1 {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  letter-spacing: -0.06em;
+  max-width: 16ch;
+  margin: 1rem 0;
+}
+.pp-dex-hero p {
+  max-width: 62ch;
+}
+.pp-dex-hero a {
+  color: #d6e7af;
+}
+.pp-dex-counts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.pp-dex-counts > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+}
+.pp-dex-counts strong {
+  font-size: clamp(1.3rem, 2vw, 2rem);
+  letter-spacing: -0.04em;
+  overflow-wrap: anywhere;
+}
+.pp-dex-counts span {
+  font-size: 0.72rem;
+}
+.pp-dex-filters {
+  display: grid;
+  gap: 1.2rem;
+}
+.pp-dex-filters label,
+.pp-copy-form label {
+  display: grid;
+  gap: 0.45rem;
+  font-size: 0.8rem;
+}
+.pp-dex-filters details summary {
+  margin-bottom: 1rem;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.pp-dex-filters fieldset {
+  border: 1px solid var(--pp-border);
+  border-radius: 0.6rem;
+  margin-block: 1rem;
+  padding: 0.8rem;
+}
+.pp-dex-filters .pp-inline-check {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 1rem;
+  min-height: 44px;
+  gap: 0.5rem;
+}
+.pp-inline-check input {
+  min-height: 0;
+  height: 18px;
+  width: 18px;
+}
+.pp-pokedex-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+  gap: 1.25rem;
+}
+.pp-pokedex-tile {
+  padding: 1rem;
+}
+.pp-pokedex-tile .pp-card-image-link {
+  display: block;
+  padding: 1rem;
+  border-radius: 0.8rem;
+  background: radial-gradient(ellipse, #b5c69d25, transparent);
+}
+.pp-pokedex-tile .pp-foil-surface {
+  max-width: 240px;
+  margin-inline: auto;
+}
+.pp-pokedex-tile h2 {
+  font-size: 1.15rem;
+}
+.pp-pokedex-tile h2 a {
+  color: var(--pp-text);
+  text-decoration: none;
+}
+.pp-pokedex-tile h2 small {
+  color: var(--pp-muted);
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+.pp-pokedex-tile > p {
+  font-size: 0.78rem;
+}
+.pp-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.65rem;
+}
+.pp-card-actions > span {
+  width: 100%;
+  font-size: 0.75rem;
+}
+.pp-dex-empty {
+  padding: 3rem 2rem;
+  text-align: center;
+  margin-block: 2rem;
+}
+.pp-dex-empty > span {
+  font-size: 4rem;
+  color: var(--pp-accent);
+}
+.pp-dex-empty p {
+  max-width: 65ch;
+  margin-inline: auto;
+}
+.pp-card-detail-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 3rem;
+  margin: 2rem 0 3rem;
+  align-items: start;
+}
+.pp-card-detail-surface {
+  max-width: 380px;
+  width: 100%;
+  margin-inline: auto;
+  position: sticky;
+  top: 2rem;
+  padding: 1.5rem;
+  border-radius: 1.5rem;
+  background: var(--pp-info-bg);
+}
+.pp-card-detail-grid h1 {
+  margin: 0.5rem 0;
+}
+.pp-card-number {
+  font-size: 1.15rem;
+  color: var(--pp-muted);
+}
+.pp-card-facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-block: 2rem;
+}
+.pp-card-facts dt {
+  font-size: 0.7rem;
+  color: var(--pp-muted);
+}
+.pp-card-facts dd {
+  margin: 0;
+  font-size: 0.85rem;
+}
+.pp-related-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+.pp-copy-form {
+  display: grid;
+  gap: 1.2rem;
+}
+.pp-portfolio-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 1rem;
+  margin-block: 1.5rem;
+}
+.pp-portfolio-metrics article {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.pp-portfolio-metrics span,
+.pp-portfolio-metrics small {
+  font-size: 0.75rem;
+  color: var(--pp-muted);
+}
+.pp-portfolio-metrics strong {
+  font-size: 2rem;
+  letter-spacing: -0.05em;
+}
+.pp-price-chart {
+  margin: 0;
+  color: var(--pp-accent);
+}
+.pp-price-chart svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.pp-price-chart figcaption {
+  color: var(--pp-muted);
+  font-size: 0.72rem;
+}
+.pp-price-chart table {
+  width: 100%;
+  color: var(--pp-text);
+  font-size: 0.8rem;
+  text-align: left;
+}
+.pp-chart-empty {
+  display: grid;
+  place-items: center;
+  text-align: center;
+  min-height: 200px;
+  border: 1px dashed var(--pp-border);
+  border-radius: 0.8rem;
+  padding: 2rem;
+  color: var(--pp-muted);
+}
+.pp-copy-lot {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--pp-border);
+}
+.pp-copy-lot p {
+  font-size: 0.8rem;
+}
+.pp-index-entry {
+  text-decoration: none;
+  color: var(--pp-text);
+  transition: transform 0.2s;
+}
+.pp-index-entry:hover {
+  transform: translateY(-3px);
+}
+.pp-metadata {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 0.75rem;
+  padding: 1rem;
+  border-radius: 0.6rem;
+  background: var(--pp-info-bg);
+  color: var(--pp-info-text);
+}
+@media (max-width: 700px) {
+  .pp-card-detail-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .pp-card-detail-surface {
+    position: static;
+    max-width: 280px;
+  }
+  .pp-pokedex-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem;
+  }
+  .pp-pokedex-tile {
+    padding: 0.65rem;
+  }
+  .pp-pokedex-tile .pp-card-image-link {
+    padding: 0.25rem;
+  }
+  .pp-pokedex-tile h2 {
+    font-size: 1rem;
+  }
+  .pp-card-actions .pp-button {
+    padding: 0.6rem;
+    font-size: 0.7rem;
+  }
+}
+.pp-price-freshness {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.65rem;
+  color: var(--pp-muted);
+}

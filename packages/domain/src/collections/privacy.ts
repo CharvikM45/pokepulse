@@ -6,21 +6,25 @@ export function collectorPrivacy(db: SupabaseClient): PrivacyParticipant[] {
     const output: unknown[] = [];
     for (let offset = 0; ; offset += 1000) {
       const order =
-        table === "b_real_edit_requests"
-          ? "idempotency_key"
-          : table === "wallets"
-            ? "user_id"
-            : table.endsWith("inventory")
-              ? "card_variant_id"
-              : table === "sighting_confirmations"
-                ? "sighting_id"
-                : "id";
-      const { data, error } = await db
+        table === "card_actions"
+          ? "card_id"
+          : table === "b_real_edit_requests"
+            ? "idempotency_key"
+            : table === "wallets"
+              ? "user_id"
+              : table.endsWith("inventory")
+                ? "card_variant_id"
+                : table === "sighting_confirmations"
+                  ? "sighting_id"
+                  : "id";
+      let query = db
         .from(table)
         .select("*")
         .eq(column, userId)
         .order(order)
         .range(offset, offset + 999);
+      if (table === "card_actions") query = query.order("kind");
+      const { data, error } = await query;
       if (error) throw new Error("B_EXPORT_FAILED");
       output.push(...(data ?? []));
       if (!data || data.length < 1000) return output;
@@ -50,6 +54,13 @@ export function collectorPrivacy(db: SupabaseClient): PrivacyParticipant[] {
       name: "binder",
       export: async (userId) => ({
         real: await rows("real_inventory", "user_id", userId),
+        physical_copy_lots: await rows("physical_copy_lots", "user_id", userId),
+        card_actions: await rows("card_actions", "user_id", userId),
+        portfolio_snapshots: await rows(
+          "portfolio_snapshots",
+          "user_id",
+          userId,
+        ),
         virtual: await rows("virtual_inventory", "user_id", userId),
         edit_requests: await rows("b_real_edit_requests", "user_id", userId),
       }),

@@ -9,13 +9,16 @@ const demoScans: Readonly<Record<string, string>> = {
 };
 export function CardArtwork({
   variant,
+  allowDemoScan = true,
 }: {
+  allowDemoScan?: boolean;
   variant: Pick<
     Variant,
     "id" | "set_id" | "card_name" | "image_url" | "image_rights_cleared"
   >;
 }) {
   const sample =
+    allowDemoScan &&
     variant.set_id === "10000000-0000-4000-8000-000000000001" &&
     Object.hasOwn(demoScans, variant.id)
       ? demoScans[variant.id]

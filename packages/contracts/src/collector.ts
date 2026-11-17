@@ -14,6 +14,7 @@ export const variantSchema = z
     id: uuid,
     set_id: uuid,
     card_number: z.string(),
+    card_id: z.uuid().optional(),
     card_name: z.string(),
     rarity: z.string().nullable().default(null),
     image_url: z
@@ -26,6 +27,8 @@ export const variantSchema = z
       .default(null),
     image_rights_cleared: z.boolean().default(false),
     finish: z.string(),
+    edition: z.string().optional(),
+    print_markers: z.record(z.string(), z.unknown()).optional(),
     eligible_for_packs: z.boolean(),
   })
   .refine(

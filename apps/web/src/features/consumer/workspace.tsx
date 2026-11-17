@@ -9,6 +9,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AppShell } from "@pokepulse/ui";
+import { CardUserProvider } from "../cards/card-user";
 
 export function Workspace({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -26,44 +27,46 @@ export function Workspace({ children }: { children: ReactNode }) {
     return () => clearTimeout(timer);
   }, []);
   return (
-    <AppShell pathname={pathname}>
-      <header className="pp-topbar">
-        <Link href="/">Pokémon TCG / Collector studio</Link>
-        <div>
-          <label>
-            Appearance{" "}
-            <select
-              value={theme}
-              onChange={(event) => {
-                const value = event.target.value;
-                setTheme(value);
-                document.documentElement.dataset.theme = value;
-                try {
-                  localStorage.setItem("pokepulse-theme", value);
-                } catch {
-                  /* Optional preference. */
-                }
-              }}
-            >
-              <option value="system">System</option>
-              <option value="light">Light</option>
-              <option value="dark">Dark</option>
-            </select>
-          </label>
-          <a href="/dashboard">Trainer profile ↗</a>
-        </div>
-      </header>
-      {children}
-      <footer className="pp-muted">
-        <p>
-          PokéPulse · An independent Pokémon collecting companion. Pokémon and
-          character names are trademarks of Nintendo, Creatures, and GAME FREAK.
-          Not affiliated with or endorsed by The Pokémon Company.
-        </p>
-        Check source, seller, region and observation time before visiting or
-        buying. Community reports and simulations carry separate labels.
-      </footer>
-    </AppShell>
+    <CardUserProvider>
+      <AppShell pathname={pathname}>
+        <header className="pp-topbar">
+          <Link href="/">Pokémon TCG / Collector studio</Link>
+          <div>
+            <label>
+              Appearance{" "}
+              <select
+                value={theme}
+                onChange={(event) => {
+                  const value = event.target.value;
+                  setTheme(value);
+                  document.documentElement.dataset.theme = value;
+                  try {
+                    localStorage.setItem("pokepulse-theme", value);
+                  } catch {
+                    /* Optional preference. */
+                  }
+                }}
+              >
+                <option value="system">System</option>
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+              </select>
+            </label>
+            <a href="/dashboard">Trainer profile ↗</a>
+          </div>
+        </header>
+        {children}
+        <footer className="pp-muted">
+          <p>
+            PokéPulse · An independent Pokémon collecting companion. Pokémon and
+            character names are trademarks of Nintendo, Creatures, and GAME
+            FREAK. Not affiliated with or endorsed by The Pokémon Company.
+          </p>
+          Check source, seller, region and observation time before visiting or
+          buying. Community reports and simulations carry separate labels.
+        </footer>
+      </AppShell>
+    </CardUserProvider>
   );
 }
 

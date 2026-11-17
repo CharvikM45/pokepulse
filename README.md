@@ -50,3 +50,10 @@ Developer B's integration amendments are in [CONTRACT-02](docs/adr/0003-collecto
 The shared workspace now uses a Pokémon-focused visual system, local character artwork, responsive discovery cards, theme-aware surfaces, and reduced-motion support. Public preview catalog entries reference Pokémon expansion names but remain synthetic product configurations and offers. The binder's Pokémon Discovery Demo uses unofficial card numbering and invented simulation odds, not an official expansion or physical pack odds.
 
 Catalog reads fail closed above 50,000 rows per source table. Client catalog aggregation rejects repeating cursors and stops after 200 pages. Security headers disable framing, prevent content sniffing, restrict referrer disclosure, and disable unused camera/microphone access. Production retailer adapters, Supabase authentication, notification credentials, and permission-gated simulations still require deployment configuration and operational verification.
+
+
+## Card archive, physical portfolio and saved pack presentation
+
+The additive card archive lives at `/cards` (`/pokedex` redirects there), with `/card-sets`, `/artists`, `/market` and `/collection/portfolio`. It uses database-side keyset search, explicit provider/locale printing identities, physical acquisition lots, condition-aware reference prices, favorites/wishlists and CSV review/import/export. It preserves the separate retail product catalog and virtual inventory. Pack animations present the existing immutable server receipt; they do not generate or replace results.
+
+Apply `20261117000000_card_pokedex_and_market.sql` after existing migrations. See [provider permissions and worker setup](docs/implementation/POKEDEX_PROVIDERS.md), [architecture audit](docs/implementation/POKEDEX_PACKS_AUDIT.md), and [acceptance report](docs/implementation/POKEDEX_ACCEPTANCE.md). New metadata and pricing providers remain disabled until reviewed. An empty archive is an explicit unavailable state, not evidence of complete worldwide coverage.

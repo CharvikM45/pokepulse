@@ -19,3 +19,7 @@ A preliminary provider comparison was checked against primary documentation on 2
 Only server-approved image URLs should leave the asset provider. Reject unapproved remote hosts; use original placeholder when rights are absent. Do not proxy arbitrary submitted URLs. Expiry or revocation must disable rendering and pack configuration without deleting immutable historical opening facts.
 
 No paid coins, transfers, redemptions, cash value, wagering, prizes, physical ownership claims or report-filing rewards. No payment SDK. No client-controlled production random seed. Sample odds describe the configured fictional distribution only.
+
+## Card archive extension (2026-11-16)
+
+The current retail and illustrative binder presentation predates this extension and includes user-requested, attributed local imagery; the historical handoff paragraph above does not describe those later assets. The new global card archive does **not** infer clearance from those files. Its imported imagery requires `licensed_card_art`, approved card-provider artwork use, an exact permitted image hostname, and per-variant clearance. Metadata and retention approvals are independent. New archive and saved-opening surfaces render original placeholders when any image gate is absent or revoked. See `docs/implementation/POKEDEX_PROVIDERS.md` for the current provider review and default-disabled state.

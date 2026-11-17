@@ -9,6 +9,8 @@ export interface Variant {
   image_url?: string | null;
   image_rights_cleared?: boolean;
   finish: string;
+  edition?: string;
+  print_markers?: Record<string, unknown>;
   rarity?: string | null;
   eligible_for_packs: boolean;
 }

@@ -5,6 +5,50 @@ const uuid = z.uuid();
 const id = z.object({ id: uuid });
 const job = z.object({ id: uuid, status: z.string() });
 const models: Record<string, z.ZodType> = {
+  CardPrinting: c.singleCardSchema,
+  CardSearch: c.cardSearchResult,
+  CardIndex: c.cardIndexResult,
+  CardCoverage: c.coverageSchema,
+  CardPrices: c.pricesSchema,
+  PhysicalLot: c.lotSchema,
+  PhysicalLotInput: c.lotInputSchema,
+  PhysicalImport: z.union([
+    z.object({
+      mode: z.literal("add").default("add"),
+      lots: z.array(c.lotInputSchema).min(1).max(100),
+    }),
+    z.object({
+      mode: z.literal("update"),
+      lots: z
+        .array(c.lotInputSchema.safeExtend({ id: z.uuid() }))
+        .min(1)
+        .max(100),
+    }),
+  ]),
+  CardAction: c.actionInputSchema,
+  PhysicalPortfolio: c.portfolioSchema,
+  PortfolioSnapshotInput: z.object({
+    currency: z.string().regex(/^[A-Z]{3}$/),
+    statistic: z.enum(["market", "median", "low"]),
+  }),
+  CardActions: z.object({
+    card_id: z.uuid(),
+    kind: z.enum(["favorite", "wishlist"]),
+  }),
+  CardHoldings: z.object({
+    physical: z.array(
+      z.object({ card_variant_id: z.uuid(), quantity: z.number() }),
+    ),
+    virtual: z.array(
+      z.object({ card_variant_id: z.uuid(), quantity: z.number() }),
+    ),
+    lots: z.array(c.lotSchema),
+  }),
+  CardCatalogAdmin: z.object({
+    providers: z.array(z.record(z.string(), z.unknown())),
+    runs: z.array(z.record(z.string(), z.unknown())),
+    coverage: c.coverageSchema,
+  }),
   Product: c.productRecordSchema,
   Listing: c.listingSchema,
   ProductDetail: c.detailSchema,
@@ -411,6 +455,96 @@ const csv = spec.paths["/api/v1/me/collections/missing-export"].get as {
 csv.responses[200] = {
   description: "Private mode/version-bound checklist",
   content: { "text/csv": { schema: { type: "string" } } },
+};
+
+add("/api/v1/cards", "get", "CardSearch", false, undefined, true);
+add("/api/v1/cards/coverage", "get", "CardCoverage", false, undefined, true);
+add("/api/v1/cards/{id}", "get", "CardPrinting", false, undefined, true);
+add("/api/v1/cards/{id}/prices", "get", "CardPrices", false, undefined, true);
+for (const path of ["/api/v1/card-sets", "/api/v1/artists"]) {
+  add(path, "get", "CardIndex", false, undefined, true);
+  add(path + "/{id}", "get", "CardSearch", false, undefined, true);
+  queryParameters(path, {
+    ...pagination,
+    cursor: { type: "string", maxLength: 4096 },
+    q: { type: "string", maxLength: 100 },
+  });
+  queryParameters(path + "/{id}", {
+    ...pagination,
+    cursor: { type: "string", maxLength: 4096 },
+  });
+}
+queryParameters(
+  "/api/v1/cards",
+  (z.toJSONSchema(c.cardSearchQuery) as { properties: Record<string, unknown> })
+    .properties,
+);
+queryParameters(
+  "/api/v1/cards/{id}/prices",
+  {
+    variant: { type: "string", format: "uuid" },
+    range: { enum: ["7D", "30D", "90D", "1Y", "ALL"] },
+    currency: { type: "string", pattern: "^[A-Z]{3}$" },
+    condition: { enum: c.cardConditions },
+    statistic: { enum: ["market", "median", "low"] },
+    grading_company: { type: "string", maxLength: 40 },
+    grade: { type: "string", maxLength: 20 },
+    provider: { type: "string", maxLength: 40 },
+    limit: { type: "integer", minimum: 1, maximum: 366 },
+    cursor: { type: "string", maxLength: 4096 },
+  },
+  ["variant"],
+);
+add("/api/v1/me/portfolio", "get", "PhysicalPortfolio");
+add(
+  "/api/v1/me/portfolio/snapshots",
+  "post",
+  "Id",
+  false,
+  "PortfolioSnapshotInput",
+);
+add("/api/v1/me/card-holdings", "get", "CardHoldings");
+add("/api/v1/me/card-actions", "get", "CardActions", true);
+queryParameters(
+  "/api/v1/me/card-actions",
+  { card_id: { type: "string", format: "uuid" } },
+  ["card_id"],
+);
+queryParameters(
+  "/api/v1/me/card-holdings",
+  { card_id: { type: "string", format: "uuid" } },
+  ["card_id"],
+);
+for (const kind of ["favorite", "wishlist"])
+  add("/api/v1/me/card-actions/" + kind, "post", "Id", false, "CardAction");
+add("/api/v1/me/collection-lots", "get", "PhysicalLot", true);
+add("/api/v1/me/collection-lots", "post", "Id", false, "PhysicalLotInput");
+add(
+  "/api/v1/me/collection-lots/{id}",
+  "patch",
+  "Id",
+  false,
+  "PhysicalLotInput",
+);
+add("/api/v1/me/collection-lots/{id}", "delete", "Id");
+add("/api/v1/me/collection-import", "post", "Id", false, "PhysicalImport");
+add("/api/v1/me/collection-export", "get", "Id");
+add("/api/v1/admin/card-catalog", "get", "CardCatalogAdmin");
+queryParameters("/api/v1/me/portfolio", {
+  currency: { type: "string", pattern: "^[A-Z]{3}$" },
+  statistic: { enum: ["market", "median", "low"] },
+});
+spec.paths["/api/v1/me/collection-export"].get = {
+  ...(spec.paths["/api/v1/me/collection-export"].get as Record<
+    string,
+    unknown
+  >),
+  responses: {
+    200: {
+      description: "Private physical-copy CSV with formula-safe cells",
+      content: { "text/csv": { schema: { type: "string" } } },
+    },
+  },
 };
 writeFileSync(
   "packages/contracts/openapi.json",

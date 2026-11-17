@@ -507,7 +507,12 @@ function SessionLab({
                 state.balance + state.welcome_grant_on_first_open >=
                   set.coin_cost));
           return (
-            <article className="pp-card" key={set.id}>
+            <article className="pp-card pp-pack-selection-tile" key={set.id}>
+              <div className="pp-pack-tile-art" aria-hidden="true">
+                <span>POKÉPULSE</span>
+                <strong>✦</strong>
+                <small>ORIGINAL SIMULATION WRAPPER</small>
+              </div>
               {set.is_demo && (
                 <StatusBadge tone="warning">DEMO DATA</StatusBadge>
               )}

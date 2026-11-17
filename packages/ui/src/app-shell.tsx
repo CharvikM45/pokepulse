@@ -3,13 +3,16 @@ import type { ReactNode } from "react";
 const discovery = [
   { href: "/", label: "Overview" },
   { href: "/drops", label: "Drops" },
-  { href: "/products", label: "Explore" },
+  { href: "/products", label: "Sealed products" },
+  { href: "/cards", label: "Card Pokédex" },
+  { href: "/market", label: "Singles market" },
   { href: "/local", label: "Local Radar" },
   { href: "/calendar", label: "Calendar" },
 ];
 const collecting = [
   { href: "/lab", label: "Pack Lab" },
   { href: "/collection", label: "Collection" },
+  { href: "/collection/portfolio", label: "Physical portfolio" },
   { href: "/watchlist", label: "Watchlist" },
   { href: "/alerts", label: "Alerts & inbox" },
   { href: "/settings", label: "Settings" },
@@ -24,7 +27,14 @@ export function AppShell({
   sourceNotice?: string;
 }) {
   const isCurrent = (href: string) =>
-    pathname === href || pathname.startsWith(href + "/");
+    pathname === href ||
+    (pathname.startsWith(href + "/") &&
+      ![...discovery, ...collecting].some(
+        (link) =>
+          link.href !== href &&
+          link.href.startsWith(href + "/") &&
+          pathname.startsWith(link.href),
+      ));
   return (
     <div className="pp-shell">
       <a className="pp-skip" href="#main-content">
@@ -95,6 +105,7 @@ export function AppShell({
           { href: "/local", label: "Radar" },
           { href: "/watchlist", label: "Watchlist" },
           { href: "/collection", label: "Collection" },
+          { href: "/collection/portfolio", label: "Physical portfolio" },
         ].map((link) => (
           <a
             key={link.href}

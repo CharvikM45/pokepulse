@@ -1,3 +1,14 @@
+import {
+  cardSearchQuery,
+  cardSearchResult,
+  singleCardSchema,
+  cardIndexResult,
+  coverageSchema,
+  portfolioSchema,
+  lotInputSchema,
+  pricesSchema,
+  actionInputSchema,
+} from "./cards";
 import { z } from "zod";
 import { listingSchema, successSchema, errorResponseSchema } from "./schemas";
 import {
@@ -50,7 +61,7 @@ export function createApiClient(
       throw new ApiError(response.status, errorResponseSchema.parse(payload));
     return successSchema(schema).parse(payload);
   }
-  const query = (q: Partial<CatalogQuery> = {}) => {
+  const query = (q: object = {}) => {
     const params = new URLSearchParams();
     for (const [k, v] of Object.entries(q))
       if (v !== undefined) params.set(k, String(v));
@@ -59,6 +70,55 @@ export function createApiClient(
   const idResult = z.object({ id: z.uuid() });
   const jobResult = z.object({ id: z.uuid(), status: z.string() });
   return {
+    cards: (q: z.input<typeof cardSearchQuery> = {}) =>
+      request(
+        "/api/v1/cards" + query(cardSearchQuery.parse(q)),
+        cardSearchResult,
+      ),
+    card: (id: string) =>
+      request("/api/v1/cards/" + z.uuid().parse(id), singleCardSchema),
+    cardCoverage: () => request("/api/v1/cards/coverage", coverageSchema),
+    cardSets: (q: { q?: string; limit?: number; cursor?: string } = {}) =>
+      request("/api/v1/card-sets" + query(q), cardIndexResult),
+    artists: (q: { q?: string; limit?: number; cursor?: string } = {}) =>
+      request("/api/v1/artists" + query(q), cardIndexResult),
+    cardPrices: (
+      id: string,
+      q: {
+        variant: string;
+        range?: string;
+        currency?: string;
+        condition?: string;
+        provider?: string;
+        cursor?: string;
+      },
+    ) =>
+      request(
+        "/api/v1/cards/" + z.uuid().parse(id) + "/prices" + query(q),
+        pricesSchema,
+      ),
+    physicalPortfolio: (currency = "USD") =>
+      request("/api/v1/me/portfolio" + query({ currency }), portfolioSchema),
+    addPhysicalCopies: (body: z.input<typeof lotInputSchema>, key?: string) =>
+      request(
+        "/api/v1/me/collection-lots",
+        idResult,
+        "POST",
+        lotInputSchema.parse(body),
+        key,
+      ),
+    cardAction: (
+      kind: "favorite" | "wishlist",
+      body: z.input<typeof actionInputSchema>,
+      key?: string,
+    ) =>
+      request(
+        "/api/v1/me/card-actions/" + kind,
+        idResult,
+        "POST",
+        actionInputSchema.parse(body),
+        key,
+      ),
     products: (q?: Partial<CatalogQuery>) =>
       request("/api/v1/products" + query(q), z.array(productRecordSchema)),
     drops: (q?: Partial<CatalogQuery>) =>

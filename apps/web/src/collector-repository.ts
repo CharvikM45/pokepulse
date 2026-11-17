@@ -225,26 +225,55 @@ export async function cardCatalog(setId: string, version?: string) {
   }
   const { data: set, error } = await adminDb()
     .from("tcg_sets")
-    .select("rights_status,public_metadata_allowed,is_demo,metadata_source")
+    .select(
+      "rights_status,public_metadata_allowed,is_demo,metadata_source,provider_id",
+    )
     .eq("id", setId)
     .maybeSingle();
   dbError(error);
   if (!set || set.rights_status === "disabled" || !set.public_metadata_allowed)
     throw new HttpError("RIGHTS_DISABLED", 403, "Set metadata is unavailable.");
+  let artAllowed = true;
+  let allowedHosts: string[] | null = null;
+  if (set.provider_id) {
+    const p = await adminDb()
+      .from("card_provider_permissions")
+      .select("enabled,metadata_approved,artwork_approved,allowed_image_hosts")
+      .eq("id", set.provider_id)
+      .single();
+    dbError(p.error);
+    if (!p.data?.enabled || !p.data.metadata_approved)
+      throw new HttpError(
+        "RIGHTS_DISABLED",
+        403,
+        "Card provider metadata is unavailable.",
+      );
+    artAllowed = p.data.artwork_approved && (await flag("licensed_card_art"));
+    allowedHosts = p.data.allowed_image_hosts;
+  }
   const cards = await allRows("cards", "id,card_name,card_number", {
     set_id: setId,
   });
   const variants = (
     await allRows(
       "card_variants",
-      "id,set_id,card_id,rarity,finish,eligible_for_packs,image_url,image_rights_cleared",
+      "id,set_id,card_id,rarity,finish,eligible_for_packs,image_url,image_rights_cleared,edition,print_markers",
       { set_id: setId },
     )
   ).map((v) => {
     const card = cards.find((c) => c.id === v.card_id);
     return {
       ...v,
-      image_url: v.image_rights_cleared === true ? v.image_url : null,
+      image_url:
+        artAllowed &&
+        v.image_rights_cleared === true &&
+        (allowedHosts === null ||
+          (typeof v.image_url === "string" &&
+            allowedHosts.some((host) =>
+              v.image_url?.toString().startsWith(`https://${host}/`),
+            )))
+          ? v.image_url
+          : null,
       card_name: card?.card_name,
       card_number: card?.card_number,
     };

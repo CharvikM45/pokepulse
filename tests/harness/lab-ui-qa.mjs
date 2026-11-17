@@ -197,7 +197,10 @@ try {
     true,
   );
   await page
-    .getByRole("button", { name: "Open Pokémon Discovery Demo simulation", exact: true })
+    .getByRole("button", {
+      name: "Open Pokémon Discovery Demo simulation",
+      exact: true,
+    })
     .dblclick();
   await page
     .getByRole("heading", { name: "Pending opening request", exact: true })
@@ -228,7 +231,10 @@ try {
   );
   assert.equal(
     await page
-      .getByRole("button", { name: "Open Pokémon Discovery Demo simulation", exact: true })
+      .getByRole("button", {
+        name: "Open Pokémon Discovery Demo simulation",
+        exact: true,
+      })
       .isDisabled(),
     true,
   );
@@ -276,8 +282,7 @@ try {
   );
   assert.ok(
     cache.every(
-      ([, value]) =>
-        !value.includes("Pikachu") && !value.includes("cards"),
+      ([, value]) => !value.includes("Pikachu") && !value.includes("cards"),
     ),
   );
   checks.push(
@@ -298,7 +303,10 @@ try {
   );
   rejectNext = true;
   await page
-    .getByRole("button", { name: "Open Pokémon Discovery Demo simulation", exact: true })
+    .getByRole("button", {
+      name: "Open Pokémon Discovery Demo simulation",
+      exact: true,
+    })
     .click();
   await page
     .getByText("Simulation disabled by the test server.", { exact: true })
@@ -319,7 +327,10 @@ try {
     .waitFor();
   ambiguousNext = true;
   await page
-    .getByRole("button", { name: "Open Pokémon Discovery Demo simulation", exact: true })
+    .getByRole("button", {
+      name: "Open Pokémon Discovery Demo simulation",
+      exact: true,
+    })
     .click();
   await page.getByText(/The opening response was not acknowledged/).waitFor();
   assert.equal(models.get(B).openings.length, 1);
@@ -354,7 +365,10 @@ try {
     .click();
   failState = true;
   await page
-    .getByRole("button", { name: "Open Pokémon Discovery Demo simulation", exact: true })
+    .getByRole("button", {
+      name: "Open Pokémon Discovery Demo simulation",
+      exact: true,
+    })
     .click();
   await page
     .getByRole("heading", {
