@@ -1,5 +1,11 @@
-import { createHash, timingSafeEqual } from "node:crypto";
+import {
+  createHash,
+  timingSafeEqual,
+  randomUUID,
+  randomBytes,
+} from "node:crypto";
 import { z } from "zod";
+import { createClient } from "@supabase/supabase-js";
 import { adminDb, readJsonBody } from "../../../../src/server";
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
@@ -13,6 +19,7 @@ const tables = [
 ] as const;
 const bodySchema = z.discriminatedUnion("operation", [
   z.object({ operation: z.literal("check") }).strict(),
+  z.object({ operation: z.literal("verify_collection") }).strict(),
   z
     .object({
       operation: z.literal("upsert"),
@@ -61,6 +68,108 @@ export async function POST(request: Request) {
       !permission.data.retention_approved
     )
       return Response.json({ error: "PROVIDER_NOT_APPROVED" }, { status: 403 });
+    if (input.operation === "verify_collection") {
+      const ids: string[] = [];
+      try {
+        const variant = await db
+          .from("card_variants")
+          .select("id")
+          .limit(1)
+          .single();
+        if (variant.error) throw new Error("NO_IMPORTED_VARIANT");
+        async function account() {
+          const email = `qa-${randomUUID()}@pokepulse.invalid`,
+            password = randomBytes(32).toString("hex");
+          const created = await db.auth.admin.createUser({
+            email,
+            password,
+            email_confirm: true,
+            app_metadata: { pokepulse_acceptance: revision },
+          });
+          if (created.error || !created.data.user)
+            throw new Error("ACCEPTANCE_ACCOUNT_CREATE_FAILED");
+          ids.push(created.data.user.id);
+          const client = createClient(
+            process.env.NEXT_PUBLIC_SUPABASE_URL!,
+            process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+            { auth: { persistSession: false, autoRefreshToken: false } },
+          );
+          const signed = await client.auth.signInWithPassword({
+            email,
+            password,
+          });
+          if (signed.error) throw new Error("ACCEPTANCE_SIGN_IN_FAILED");
+          return client;
+        }
+        const a = await account(),
+          b = await account(),
+          key = randomUUID();
+        const args = {
+          p_operation: "lot_add",
+          p_key: key,
+          p_input: {
+            variant_id: variant.data.id,
+            quantity: 1,
+            condition: "unknown",
+            grading_company: "",
+            grade: "",
+            cost_minor: null,
+            currency: null,
+            notes: "Temporary release acceptance",
+            binder: "",
+            page: null,
+            position: null,
+            acquired_on: null,
+          },
+        };
+        const first = await a.rpc("c_collection_write", args),
+          replay = await a.rpc("c_collection_write", args);
+        if (
+          first.error ||
+          replay.error ||
+          JSON.stringify(first.data) !== JSON.stringify(replay.data)
+        )
+          throw new Error("ACCEPTANCE_WRITE_OR_REPLAY_FAILED");
+        const portfolio = await a.rpc("c_portfolio", {
+          p_currency: "USD",
+          p_statistic: "market",
+        });
+        const other = await b.rpc("c_portfolio", {
+          p_currency: "USD",
+          p_statistic: "market",
+        });
+        const isolated = await b
+          .from("physical_copy_lots")
+          .select("id")
+          .eq("user_id", ids[0]);
+        const virtual = await a.from("virtual_inventory").select("quantity");
+        if (
+          portfolio.error ||
+          other.error ||
+          isolated.error ||
+          virtual.error ||
+          portfolio.data.copies !== 1 ||
+          other.data.copies !== 0 ||
+          isolated.data.length ||
+          virtual.data.length
+        )
+          throw new Error("ACCEPTANCE_ISOLATION_FAILED");
+        return Response.json({
+          ok: true,
+          authenticated: true,
+          physicalCopies: portfolio.data.copies,
+          unpricedCopies: portfolio.data.unpriced_copies,
+          replayPreserved: true,
+          userIsolation: true,
+          virtualCopies: 0,
+        });
+      } finally {
+        for (const id of ids) {
+          const result = await db.auth.admin.deleteUser(id);
+          if (result.error) throw new Error("ACCEPTANCE_CLEANUP_FAILED");
+        }
+      }
+    }
     if (input.operation === "check")
       return Response.json({ ok: true, revision });
     if (input.operation === "publish") {
@@ -100,12 +209,10 @@ export async function POST(request: Request) {
       )
         throw new Error("INVALID_VARIANT_SOURCE");
     }
-    const result = await db
-      .from(input.table)
-      .upsert(input.rows, {
-        onConflict:
-          input.table === "card_artist_credits" ? "card_id,artist_id" : "id",
-      });
+    const result = await db.from(input.table).upsert(input.rows, {
+      onConflict:
+        input.table === "card_artist_credits" ? "card_id,artist_id" : "id",
+    });
     if (result.error)
       return Response.json(
         {
