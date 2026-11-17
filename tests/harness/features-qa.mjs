@@ -54,9 +54,9 @@ try {
   );
   assert.equal(
     await page
-      .getByRole("link", { name: "View virtual collection" })
+      .getByRole("link", { name: "View saved openings" })
       .getAttribute("href"),
-    "/collection?mode=virtual",
+    "/lab#opening-history",
   );
   checks.push(
     "Reduced motion, pause/resume/skip, ordered server-result presentation",

@@ -8,7 +8,7 @@ import { CardTile } from "./card-explorer";
 export function CollectorHome() {
   const catalog = useResource(async (signal) => {
     const [cards, coverage] = await Promise.all([
-      cardRequest("cards?sort=release&limit=8&language=en", cardSearchResult, {
+      cardRequest("cards?sort=popular&limit=8&language=en", cardSearchResult, {
         signal,
       }),
       cardRequest("cards/coverage", coverageSchema, { signal }),
@@ -35,7 +35,7 @@ export function CollectorHome() {
           <input
             id="home-card-search"
             name="q"
-            placeholder="Search Pokémon, cards or sets"
+            placeholder="Search Pokémon cards"
             maxLength={100}
           />
           <button className="pp-button">Search</button>
@@ -59,22 +59,6 @@ export function CollectorHome() {
           </span>
         </div>
       </header>
-      <section className="pp-library-links" aria-label="Start collecting">
-        <Link href="/collection/portfolio">
-          <span>YOUR CARDS</span>
-          <strong>
-            My collection <span aria-hidden="true">↗</span>
-          </strong>
-          <p>Every copy, organized in one place.</p>
-        </Link>
-        <Link href="/card-sets">
-          <span>THE CHECKLIST</span>
-          <strong>
-            Explore sets <span aria-hidden="true">↗</span>
-          </strong>
-          <p>From the earliest releases to your next chase.</p>
-        </Link>
-      </section>
       <section>
         <div className="pp-section-heading">
           <div>
@@ -113,12 +97,6 @@ export function CollectorHome() {
         . Coverage varies by language and printing. Artwork and prices appear
         only when available and cleared.
       </p>
-      <div className="pp-library-more">
-        <Link href="/products">Sealed products</Link>
-        <Link href="/drops">Retail drops</Link>
-        <Link href="/lab">Pack simulator</Link>
-        <Link href="/local">Local Radar</Link>
-      </div>
     </>
   );
 }

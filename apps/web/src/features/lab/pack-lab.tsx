@@ -433,8 +433,10 @@ function SessionLab({
           shown below, remains committed.
         </StateCard>
       ) : (
-        state && (
-          <section className="pp-card">
+        state &&
+        sets.some((set) => (set.coin_cost ?? 0) > 0) && (
+          <details className="pp-card pp-wallet-details" open>
+            <summary>Free resources & daily allowance</summary>
             <h2>Free-only wallet</h2>
             <p>
               {processing || pending
@@ -461,7 +463,7 @@ function SessionLab({
               />
               <span>Use an available free opening allowance</span>
             </label>
-          </section>
+          </details>
         )
       )}
       {pending && validScope && (
@@ -517,13 +519,13 @@ function SessionLab({
                 <StatusBadge tone="warning">DEMO DATA</StatusBadge>
               )}
               <h2>{set.name}</h2>
-              {set.metadata_source && (
-                <p>Metadata source: {set.metadata_source}</p>
-              )}
+
               <p>
                 {set.coin_cost === null
                   ? "Free coin cost unavailable"
-                  : `${set.coin_cost} free-only coins, or an available free allowance`}
+                  : set.coin_cost === 0
+                    ? "Free · saves to your virtual collection"
+                    : `${set.coin_cost} free-only coins, or an available free allowance`}
               </p>
               {odds && (
                 <details>
@@ -630,7 +632,7 @@ function SessionLab({
         </p>
       )}
       {validScope && phase === "ready" && state && (
-        <section className="pp-stack">
+        <section className="pp-stack" id="opening-history">
           <h2>Saved opening history</h2>
           {!state.history.length ? (
             <p>No saved openings yet.</p>

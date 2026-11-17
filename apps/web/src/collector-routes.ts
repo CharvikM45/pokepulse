@@ -161,10 +161,17 @@ export async function collectorRoute(request: Request): Promise<Response> {
     }
     if (method === "GET" && path === "sets") {
       const q = pageQuery
-        .extend({ cursor: c.uuid.optional() })
+        .extend({
+          cursor: c.uuid.optional(),
+          simulation: z.enum(["true", "false"]).optional(),
+        })
         .strict()
         .parse(query);
-      const result = await setCatalog(q.limit, q.cursor);
+      const result = await setCatalog(
+        q.limit,
+        q.cursor,
+        q.simulation === "true",
+      );
       return ok(result, c.setsSchema, 200, result.next_cursor);
     }
     const cardPath = /^sets\/([^/]+)\/cards$/.exec(path);

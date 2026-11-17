@@ -1722,3 +1722,31 @@ body,
     font-size: 0.85rem;
   }
 }
+.pp-section-nav {
+  display: flex;
+  gap: 1.5rem;
+  border-bottom: 1px solid var(--pp-border);
+  margin: -0.5rem 0 2rem;
+}
+.pp-section-nav a {
+  padding: 0.8rem 0.1rem;
+  color: var(--pp-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  border-bottom: 2px solid transparent;
+}
+.pp-section-nav a[aria-current="page"] {
+  border-bottom-color: var(--pp-accent);
+  color: var(--pp-text);
+  font-weight: 650;
+}
+.pp-wallet-details > summary {
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.pp-card-scan img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}

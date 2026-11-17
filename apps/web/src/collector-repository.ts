@@ -53,7 +53,11 @@ export async function flag(name: string) {
   dbError(error);
   return data?.enabled === true;
 }
-export async function setCatalog(limit = 20, after?: string) {
+export async function setCatalog(
+  limit = 20,
+  after?: string,
+  simulation = false,
+) {
   if (!configured() && after) {
     if (after !== ids.set)
       throw new HttpError("VALIDATION_ERROR", 400, "Unknown set cursor.");
@@ -125,83 +129,88 @@ export async function setCatalog(limit = 20, after?: string) {
     .neq("rights_status", "disabled")
     .order("id")
     .limit(limit + 1);
+  if (simulation) query = query.eq("enabled_for_simulation", true);
   if (after) query = query.gt("id", uuid.parse(after));
   const page = await query;
   dbError(page.error);
   const availableSets = page.data ?? [];
   const sets = availableSets.slice(0, limit);
-  const output = [];
-  for (const set of sets) {
-    if (set.rights_status === "disabled") continue;
-    const odds = await allRows("pack_odds_versions", "*", {
-      set_id: String(set.id),
-      active: true,
-    });
-    const oddsRow = odds[0];
-    let model = null;
-    if (oddsRow) {
-      const rules = await allRows(
-        "pack_slot_rules",
-        "*",
-        { odds_id: String(oddsRow.id) },
-        "slot_index",
-      );
-      const cards = await cardCatalog(String(set.id));
-      const slots = [...new Set(rules.map((r) => Number(r.slot_index)))]
-        .sort((a, b) => a - b)
-        .map((index) => {
-          const pool = rules.filter((r) => Number(r.slot_index) === index),
-            total = pool.reduce((sum, r) => sum + Number(r.weight), 0);
-          return {
-            label: `Slot ${index + 1}`,
-            outcomes: pool.map((rule) => {
-              const card = cards.variants.find((v) => v.id === rule.variant_id);
-              return {
-                label: card
-                  ? `${card.card_name} · ${card.finish}`
-                  : "Unknown variant",
-                probability: `${((100 * Number(rule.weight)) / total).toFixed(2)}%`,
-              };
-            }),
-          };
-        });
-      model = {
-        version: oddsRow.version,
-        model: oddsRow.fictional ? "fictional" : "estimated",
-        methodology: oddsRow.methodology,
-        sample_size: oddsRow.sample_size,
-        source_url: oddsRow.source_url,
-        checked_label: oddsRow.checked_at,
-        uncertainty: oddsRow.uncertainty,
-        slots,
-      };
-    }
-    const published = await cardCatalog(String(set.id));
-    const available =
-      enabled &&
-      settings?.enabled === true &&
-      set.enabled_for_simulation === true &&
-      (!set.is_demo || settings?.allow_demo === true);
-    output.push({
-      id: set.id,
-      name: set.name,
-      metadata_source: set.metadata_source,
-      metadata_permission_checked_at: set.metadata_permission_checked_at,
-      release_date: set.release_date,
-      manifest_version: published.manifest?.version ?? null,
-      odds_version: oddsRow?.version ?? null,
-      enabled_for_simulation: available,
-      rights_status: set.rights_status,
-      is_demo: set.is_demo,
-      enabled:
+  const output = await Promise.all(
+    sets.map(async (set) => {
+      const [odds, published] = await Promise.all([
+        allRows("pack_odds_versions", "*", {
+          set_id: String(set.id),
+          active: true,
+        }),
+        cardCatalog(String(set.id)),
+      ]);
+      const oddsRow = odds[0];
+      let model = null;
+      if (oddsRow) {
+        const rules = await allRows(
+          "pack_slot_rules",
+          "*",
+          { odds_id: String(oddsRow.id) },
+          "slot_index",
+        );
+        const cards = published;
+        const slots = [...new Set(rules.map((r) => Number(r.slot_index)))]
+          .sort((a, b) => a - b)
+          .map((index) => {
+            const pool = rules.filter((r) => Number(r.slot_index) === index),
+              total = pool.reduce((sum, r) => sum + Number(r.weight), 0);
+            return {
+              label: `Slot ${index + 1}`,
+              outcomes: pool.map((rule) => {
+                const card = cards.variants.find(
+                  (v) => v.id === rule.variant_id,
+                );
+                return {
+                  label: card
+                    ? `${card.card_name} · ${card.finish}`
+                    : "Unknown variant",
+                  probability: `${((100 * Number(rule.weight)) / total).toFixed(2)}%`,
+                };
+              }),
+            };
+          });
+        model = {
+          version: oddsRow.version,
+          model: oddsRow.fictional ? "fictional" : "estimated",
+          methodology: oddsRow.methodology,
+          sample_size: oddsRow.sample_size,
+          source_url: oddsRow.source_url,
+          checked_label: oddsRow.checked_at,
+          uncertainty: oddsRow.uncertainty,
+          slots,
+        };
+      }
+      const available =
         enabled &&
         settings?.enabled === true &&
         set.enabled_for_simulation === true &&
-        (!set.is_demo || settings?.allow_demo === true),
-      coin_cost: oddsRow?.price_coins ?? null,
-      odds: model,
-    });
-  }
+        (!set.is_demo || settings?.allow_demo === true);
+      return {
+        id: set.id,
+        name: set.name,
+        metadata_source: set.metadata_source,
+        metadata_permission_checked_at: set.metadata_permission_checked_at,
+        release_date: set.release_date,
+        manifest_version: published.manifest?.version ?? null,
+        odds_version: oddsRow?.version ?? null,
+        enabled_for_simulation: available,
+        rights_status: set.rights_status,
+        is_demo: set.is_demo,
+        enabled:
+          enabled &&
+          settings?.enabled === true &&
+          set.enabled_for_simulation === true &&
+          (!set.is_demo || settings?.allow_demo === true),
+        coin_cost: oddsRow?.price_coins ?? null,
+        odds: model,
+      };
+    }),
+  );
   return {
     ...setsSchema.parse({
       enabled: enabled && settings?.enabled === true,

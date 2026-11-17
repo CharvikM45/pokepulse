@@ -31,7 +31,11 @@ export function CardTile({
   const price = prices[0];
   return (
     <article className="pp-card pp-pokedex-tile">
-      <Link href={`/cards/${card.id}`} className="pp-card-image-link">
+      <Link
+        href={`/cards/${card.id}`}
+        className="pp-card-image-link"
+        aria-label={`View ${card.name} · ${card.set_name} #${card.number}`}
+      >
         {variant ? (
           <CardSurface variant={variant} rarity={card.rarity} />
         ) : (
@@ -132,29 +136,6 @@ export function CardExplorer({ market = false }: { market?: boolean }) {
           Search real printings. Find your favorites. Make them part of your
           collection.
         </p>
-        <div className="pp-row">
-          <Link href="/card-sets">Browse sets ↗</Link>
-          <Link href="/artists">Explore illustrators ↗</Link>
-          <Link href="/collection/portfolio">Your physical portfolio ↗</Link>
-        </div>
-        <div className="pp-dex-counts">
-          <div>
-            <strong>{count?.printings ?? "—"}</strong>
-            <span>Indexed printings</span>
-          </div>
-          <div>
-            <strong>{count?.sets ?? "—"}</strong>
-            <span>Documented sets</span>
-          </div>
-          <div>
-            <strong>{count?.artists ?? "—"}</strong>
-            <span>Illustrators</span>
-          </div>
-          <div>
-            <strong>{count?.languages.length ?? "—"}</strong>
-            <span>Indexed languages</span>
-          </div>
-        </div>
       </header>
       <form className="pp-card pp-dex-filters" key={identity} onSubmit={filter}>
         <label>
@@ -164,7 +145,7 @@ export function CardExplorer({ market = false }: { market?: boolean }) {
             name="q"
             list="card-suggestions"
             defaultValue={params.get("q") ?? ""}
-            placeholder="Name, discovery, your next favorite…"
+            placeholder="Search card names…"
             maxLength={100}
             onChange={(e) => setTerm(e.target.value)}
           />

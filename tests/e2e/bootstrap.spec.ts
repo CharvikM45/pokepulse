@@ -12,10 +12,7 @@ test("collection-first home and separate retail demo stay clearly distinguished"
   await expect(
     page.getByRole("link", { name: "Browse all cards →" }),
   ).toBeVisible();
-  await page
-    .getByRole("link", { name: "Sealed products", exact: true })
-    .last()
-    .click();
+  await page.getByRole("link", { name: "Shop", exact: true }).click();
   await expect(
     page.getByText(
       "Preview catalog · Pokémon set names with simulated products and offers. Prices, configurations, and inventory are illustrative.",

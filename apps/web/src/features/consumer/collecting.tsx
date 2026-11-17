@@ -12,13 +12,13 @@ import { SignIn } from "./account";
 import { timestamp } from "./discovery";
 import { useResource } from "./workspace";
 
-async function allSets(signal?: AbortSignal) {
+async function allSets(signal?: AbortSignal, simulation = false) {
   const sets: z.infer<typeof c.setSchema>[] = [];
   let cursor: string | null | undefined;
   let enabled = true;
   do {
     const page = await c.collectorRequest(
-      `sets?limit=50${cursor ? `&cursor=${encodeURIComponent(cursor)}` : ""}`,
+      `sets?limit=50${simulation ? "&simulation=true" : ""}${cursor ? `&cursor=${encodeURIComponent(cursor)}` : ""}`,
       c.setsSchema,
       { signal },
     );
@@ -87,7 +87,10 @@ async function savedView(
 
 export function LabPage() {
   const session = useSession();
-  const catalog = useResource(allSets, "sets");
+  const catalog = useResource(
+    (signal) => allSets(signal, true),
+    "simulation-sets",
+  );
   const [signIn, setSignIn] = useState(false);
   const service = useMemo<LabService>(
     () => ({
@@ -158,7 +161,6 @@ export function LabPage() {
         />
       )}
       {signIn && !session.user && <SignIn />}
-      <a href="/collection">Open your binder →</a>
     </>
   );
 }

@@ -172,7 +172,14 @@ try {
       }
       const c = await db.from("cards").upsert(normalized.card);
       check(c.error);
-      const v = await db.from("card_variants").upsert(normalized.variants);
+      const v = await db.from("card_variants").upsert(
+        normalized.variants.map(
+          ({ eligible_for_packs: _configured, ...variant }) => {
+            void _configured;
+            return variant;
+          },
+        ),
+      );
       check(v.error);
       for (const name of normalized.card.artists) {
         const id = providerIdentity("tcgdex", language, "artist", name);

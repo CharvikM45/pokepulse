@@ -1,3 +1,5 @@
+"use client";
+import { useState } from "react";
 import type { Variant } from "../../../../../packages/domain/src/collections/policies";
 
 const demoScans: Readonly<Record<string, string>> = {
@@ -33,19 +35,45 @@ export function CardArtwork({
       <div className="pp-card-scan-unavailable">Card scan unavailable</div>
     );
   return (
+    <Scan
+      key={src}
+      src={src}
+      name={variant.card_name}
+      sample={Boolean(sample && !approved)}
+    />
+  );
+}
+function Scan({
+  src,
+  name,
+  sample,
+}: {
+  src: string;
+  name: string;
+  sample: boolean;
+}) {
+  const [failed, setFailed] = useState(false);
+  if (failed)
+    return (
+      <div className="pp-card-scan-unavailable">
+        Artwork unavailable for this printing
+      </div>
+    );
+  return (
     <figure className="pp-card-scan">
       {/* Native images support approved catalog hosts and the framework-independent binder harness. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={src}
-        alt={`${variant.card_name} card artwork`}
+        alt={`${name} card artwork`}
+        onError={() => setFailed(true)}
         width={245}
         height={337}
         loading="lazy"
         decoding="async"
         referrerPolicy="no-referrer"
       />
-      {sample && !approved && (
+      {sample && (
         <figcaption>Illustrative scan · demo numbering and finishes</figcaption>
       )}
     </figure>

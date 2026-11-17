@@ -42,7 +42,7 @@ function Opening({
   spentCoins,
   usedFreeOpen,
   cards,
-  binderHref = "/collection?mode=virtual",
+  binderHref = "/lab#opening-history",
 }: CommittedRevealProps) {
   const [revealed, setRevealed] = useState(0),
     [paused, setPaused] = useState(false),
@@ -110,7 +110,9 @@ function Opening({
         {openedAtLabel} · Odds version {oddsVersion} ·{" "}
         {usedFreeOpen
           ? "Free opening allowance used"
-          : `${spentCoins} free-only coins used`}
+          : spentCoins === 0
+            ? "Free opening"
+            : `${spentCoins} free-only coins used`}
       </p>
       <div className="pp-opening-theater" data-rarity={rarity ?? "unknown"}>
         {!opened && !complete ? (
@@ -289,7 +291,7 @@ function Opening({
             ))}
           </ul>
           <p>
-            All cards shown. <a href={binderHref}>View virtual collection</a>
+            All cards shown. <a href={binderHref}>View saved openings</a>
           </p>
         </section>
       )}
