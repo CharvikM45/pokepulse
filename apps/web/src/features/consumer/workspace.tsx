@@ -32,26 +32,29 @@ export function Workspace({ children }: { children: ReactNode }) {
         <header className="pp-topbar">
           <Link href="/">Pokémon TCG / Collector studio</Link>
           <div>
-            <label>
-              Appearance{" "}
-              <select
-                value={theme}
-                onChange={(event) => {
-                  const value = event.target.value;
-                  setTheme(value);
-                  document.documentElement.dataset.theme = value;
-                  try {
-                    localStorage.setItem("pokepulse-theme", value);
-                  } catch {
-                    /* Optional preference. */
-                  }
-                }}
-              >
-                <option value="system">System</option>
-                <option value="light">Light</option>
-                <option value="dark">Dark</option>
-              </select>
-            </label>
+            <details className="pp-display-menu">
+              <summary>Display</summary>
+              <label>
+                Appearance{" "}
+                <select
+                  value={theme}
+                  onChange={(event) => {
+                    const value = event.target.value;
+                    setTheme(value);
+                    document.documentElement.dataset.theme = value;
+                    try {
+                      localStorage.setItem("pokepulse-theme", value);
+                    } catch {
+                      /* Optional preference. */
+                    }
+                  }}
+                >
+                  <option value="system">System</option>
+                  <option value="light">Light</option>
+                  <option value="dark">Dark</option>
+                </select>
+              </label>
+            </details>
             <a href="/dashboard">Trainer profile ↗</a>
           </div>
         </header>

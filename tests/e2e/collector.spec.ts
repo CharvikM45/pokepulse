@@ -6,11 +6,10 @@ test("filters survive refresh and browser back, including channel and third-part
   page,
 }) => {
   await page.goto("/products");
-  await page.getByText("Filter products and offers", { exact: true }).click();
   await page
-    .getByRole("textbox", { name: "Search", exact: true })
+    .getByRole("textbox", { name: "Find a product", exact: true })
     .fill("Surging Sparks");
-  await page.getByRole("button", { name: "Apply filters" }).click();
+  await page.getByRole("button", { name: "Search catalog" }).click();
   await expect(page).toHaveURL(/q=Surging\+Sparks/);
   await expect(
     page
@@ -18,26 +17,25 @@ test("filters survive refresh and browser back, including channel and third-part
       .first(),
   ).toBeVisible();
   await page.reload();
-  await page.getByText("Filter products and offers", { exact: true }).click();
   await expect(
-    page.getByRole("textbox", { name: "Search", exact: true }),
+    page.getByRole("textbox", { name: "Find a product", exact: true }),
   ).toHaveValue("Surging Sparks");
   await page
-    .getByRole("textbox", { name: "Search", exact: true })
+    .getByRole("textbox", { name: "Find a product", exact: true })
     .fill("missing-product");
-  await page.getByRole("button", { name: "Apply filters" }).click();
+  await page.getByRole("button", { name: "Search catalog" }).click();
   await expect(
     page.getByRole("heading", { name: "No matching records" }),
   ).toBeVisible();
   await page.goBack();
   if (
     !(await page
-      .getByRole("textbox", { name: "Search", exact: true })
+      .getByRole("textbox", { name: "Find a product", exact: true })
       .isVisible())
   )
     await page.getByText("Filter products and offers", { exact: true }).click();
   await expect(
-    page.getByRole("textbox", { name: "Search", exact: true }),
+    page.getByRole("textbox", { name: "Find a product", exact: true }),
   ).toHaveValue("Surging Sparks");
   await page.goto("/drops?seller_type=third_party&channel=ship_to_home");
   await expect(page.getByText("Third-party marketplace seller")).toBeVisible();
@@ -253,6 +251,7 @@ test("keyboard skip link and persisted appearance are usable", async ({
   ).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(page.locator("#main-content")).toBeFocused();
+  await page.getByText("Display", { exact: true }).click();
   await page.getByLabel("Appearance").selectOption("dark");
   await page.reload();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");

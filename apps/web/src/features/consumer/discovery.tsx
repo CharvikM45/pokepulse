@@ -401,195 +401,192 @@ export function Discovery({ mode }: { mode: "home" | "products" | "drops" }) {
           </Link>
         </section>
       )}
-      {mode === "home" ? (
-        <form className="pp-quick-search" onSubmit={filter}>
+      <form
+        className="pp-card pp-search-form"
+        onSubmit={filter}
+        key={queryText}
+        aria-label="Catalog filters"
+      >
+        <div className="pp-quick-search">
           <label>
             Find a product
             <input
               className="pp-input"
               name="q"
-              placeholder="Search Pokémon sets, booster boxes, and more…"
+              defaultValue={params.get("q") ?? ""}
+              placeholder="Search sets, booster boxes, and more…"
               maxLength={100}
             />
           </label>
           <button className="pp-button">Search catalog</button>
-        </form>
-      ) : (
-        <details className="pp-filter-panel">
-          <summary>Filter products and offers</summary>
-          <form
-            className="pp-card pp-filters"
-            onSubmit={filter}
-            key={queryText}
-            aria-label="Catalog filters"
-          >
-            <label>
-              Search
-              <input
-                className="pp-input"
-                name="q"
-                defaultValue={params.get("q") ?? ""}
-                placeholder="Product or set name"
-                maxLength={100}
-              />
-            </label>
-            <label>
-              Set
-              <input
-                className="pp-input"
-                name="set_name"
-                defaultValue={params.get("set_name") ?? ""}
-              />
-            </label>
-            <label>
-              Format
-              <select
-                className="pp-input"
-                name="product_type"
-                defaultValue={params.get("product_type") ?? ""}
-              >
-                <option value="">All formats</option>
-                <option value="booster_box">Booster box</option>
-                <option value="multi_pack">Booster bundle</option>
-                <option value="elite_trainer_box">Elite Trainer Box</option>
-              </select>
-            </label>
-            <label>
-              Retailer
-              <select
-                className="pp-input"
-                name="retailer_id"
-                defaultValue={params.get("retailer_id") ?? ""}
-              >
-                <option value="">All retailers</option>
-                {data?.retailers.data.map((r) => (
-                  <option key={r.id} value={r.id}>
-                    {r.name}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label>
-              Seller
-              <select
-                className="pp-input"
-                name="seller_type"
-                defaultValue={params.get("seller_type") ?? ""}
-              >
-                <option value="">All sellers</option>
-                {["retailer", "third_party", "mixed", "unknown"].map((v) => (
-                  <option key={v} value={v}>
-                    {words(v)}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label>
-              Fulfillment channel
-              <select
-                className="pp-input"
-                name="channel"
-                defaultValue={params.get("channel") ?? ""}
-              >
-                <option value="">All channels</option>
-                {["ship_to_home", "pickup", "in_store_report", "unknown"].map(
-                  (v) => (
+        </div>
+        {mode !== "home" && (
+          <details className="pp-filter-panel">
+            <summary>Filter products and offers</summary>
+            <div className="pp-filters">
+              <label>
+                Set
+                <input
+                  className="pp-input"
+                  name="set_name"
+                  defaultValue={params.get("set_name") ?? ""}
+                />
+              </label>
+              <label>
+                Format
+                <select
+                  className="pp-input"
+                  name="product_type"
+                  defaultValue={params.get("product_type") ?? ""}
+                >
+                  <option value="">All formats</option>
+                  <option value="booster_box">Booster box</option>
+                  <option value="multi_pack">Booster bundle</option>
+                  <option value="elite_trainer_box">Elite Trainer Box</option>
+                </select>
+              </label>
+              <label>
+                Retailer
+                <select
+                  className="pp-input"
+                  name="retailer_id"
+                  defaultValue={params.get("retailer_id") ?? ""}
+                >
+                  <option value="">All retailers</option>
+                  {data?.retailers.data.map((r) => (
+                    <option key={r.id} value={r.id}>
+                      {r.name}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                Seller
+                <select
+                  className="pp-input"
+                  name="seller_type"
+                  defaultValue={params.get("seller_type") ?? ""}
+                >
+                  <option value="">All sellers</option>
+                  {["retailer", "third_party", "mixed", "unknown"].map((v) => (
                     <option key={v} value={v}>
                       {words(v)}
                     </option>
-                  ),
-                )}
-              </select>
-            </label>
-            <label>
-              Availability
-              <select
-                className="pp-input"
-                name="availability_status"
-                defaultValue={params.get("availability_status") ?? ""}
-              >
-                <option value="">Any status</option>
-                {["in_stock", "out_of_stock", "preorder", "unknown"].map(
-                  (v) => (
-                    <option key={v} value={v}>
-                      {words(v)}
-                    </option>
-                  ),
-                )}
-              </select>
-            </label>
-            <label>
-              Freshness
-              <select
-                className="pp-input"
-                name="freshness"
-                defaultValue={params.get("freshness") ?? ""}
-              >
-                <option value="">Any freshness</option>
-                {["fresh", "aging", "stale", "unavailable"].map((v) => (
-                  <option key={v}>{v}</option>
-                ))}
-              </select>
-            </label>
-            <label>
-              Maximum price (minor units)
-              <input
-                className="pp-input"
-                type="number"
-                min="0"
-                name="max_price_minor"
-                defaultValue={params.get("max_price_minor") ?? ""}
-              />
-            </label>
-            <label>
-              Currency
-              <select
-                className="pp-input"
-                name="currency"
-                defaultValue={params.get("currency") ?? ""}
-              >
-                <option value="">Any currency</option>
-                <option>USD</option>
-                <option>EUR</option>
-                <option>GBP</option>
-              </select>
-            </label>
-            <button className="pp-button">Apply filters</button>
-            <a href={`/${mode}`}>Reset filters</a>
-          </form>
-        </details>
-      )}
+                  ))}
+                </select>
+              </label>
+              <label>
+                Fulfillment channel
+                <select
+                  className="pp-input"
+                  name="channel"
+                  defaultValue={params.get("channel") ?? ""}
+                >
+                  <option value="">All channels</option>
+                  {["ship_to_home", "pickup", "in_store_report", "unknown"].map(
+                    (v) => (
+                      <option key={v} value={v}>
+                        {words(v)}
+                      </option>
+                    ),
+                  )}
+                </select>
+              </label>
+              <label>
+                Availability
+                <select
+                  className="pp-input"
+                  name="availability_status"
+                  defaultValue={params.get("availability_status") ?? ""}
+                >
+                  <option value="">Any status</option>
+                  {["in_stock", "out_of_stock", "preorder", "unknown"].map(
+                    (v) => (
+                      <option key={v} value={v}>
+                        {words(v)}
+                      </option>
+                    ),
+                  )}
+                </select>
+              </label>
+              <label>
+                Freshness
+                <select
+                  className="pp-input"
+                  name="freshness"
+                  defaultValue={params.get("freshness") ?? ""}
+                >
+                  <option value="">Any freshness</option>
+                  {["fresh", "aging", "stale", "unavailable"].map((v) => (
+                    <option key={v}>{v}</option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                Maximum price (minor units)
+                <input
+                  className="pp-input"
+                  type="number"
+                  min="0"
+                  name="max_price_minor"
+                  defaultValue={params.get("max_price_minor") ?? ""}
+                />
+              </label>
+              <label>
+                Currency
+                <select
+                  className="pp-input"
+                  name="currency"
+                  defaultValue={params.get("currency") ?? ""}
+                >
+                  <option value="">Any currency</option>
+                  <option>USD</option>
+                  <option>EUR</option>
+                  <option>GBP</option>
+                </select>
+              </label>
+            </div>
+            <div className="pp-actions">
+              <button className="pp-button">Apply filters</button>
+              <a href={`/${mode}`}>Reset filters</a>
+            </div>
+          </details>
+        )}
+      </form>
       <div className="pp-topbar">
         <h2>
           {mode === "drops"
             ? "Source observations on this page"
             : "Discover your next favorite"}
         </h2>
-        <div>
-          <label>
-            Sort this page{" "}
-            <select value={sort} onChange={(e) => setSort(e.target.value)}>
-              {mode === "drops" ? (
-                <>
-                  <option value="observed">Observation time</option>
-                  <option value="retailer">Retailer name</option>
-                </>
-              ) : (
-                <>
-                  <option value="name">Name</option>
-                  <option value="release">Release date</option>
-                </>
-              )}
-            </select>
-          </label>
-          <label>
-            View{" "}
-            <select value={view} onChange={(e) => setView(e.target.value)}>
-              <option value="grid">Grid</option>
-              <option value="list">List</option>
-            </select>
-          </label>
-        </div>
+        <details className="pp-display-menu">
+          <summary>View options</summary>
+          <div>
+            <label>
+              Sort this page{" "}
+              <select value={sort} onChange={(e) => setSort(e.target.value)}>
+                {mode === "drops" ? (
+                  <>
+                    <option value="observed">Observation time</option>
+                    <option value="retailer">Retailer name</option>
+                  </>
+                ) : (
+                  <>
+                    <option value="name">Name</option>
+                    <option value="release">Release date</option>
+                  </>
+                )}
+              </select>
+            </label>
+            <label>
+              View{" "}
+              <select value={view} onChange={(e) => setView(e.target.value)}>
+                <option value="grid">Grid</option>
+                <option value="list">List</option>
+              </select>
+            </label>
+          </div>
+        </details>
       </div>
       <div className="pp-provenance" aria-live="polite">
         {resource.loading ? (

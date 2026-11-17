@@ -85,25 +85,15 @@ export function SignIn() {
     }
   }
   return (
-    <section className="pp-card">
-      <h2>Sign in to your workspace</h2>
+    <section className="pp-card pp-auth-card">
+      <h2>
+        {mode === "sign-up"
+          ? "Join PokéPulse"
+          : mode === "recover"
+            ? "Reset your password"
+            : "Sign in to your workspace"}
+      </h2>
       <p>Public browsing is available without an account.</p>
-      <label>
-        Action
-        <select
-          className="pp-input"
-          value={mode}
-          onChange={(e) => {
-            setMode(e.target.value as typeof mode);
-            setMessage("");
-          }}
-        >
-          <option value="sign-in">Sign in</option>
-          <option value="sign-up">Create account</option>
-          <option value="recover">Recover password</option>
-          <option value="update-password">Set recovered password</option>
-        </select>
-      </label>
       <form onSubmit={submit} className="pp-stack">
         {mode !== "update-password" && (
           <label>
@@ -119,7 +109,9 @@ export function SignIn() {
         )}
         {mode !== "recover" && (
           <label>
-            Password (12–256 characters)
+            {mode === "sign-up"
+              ? "Password (at least 12 characters)"
+              : "Password"}
             <input
               className="pp-input"
               name="password"
@@ -134,9 +126,41 @@ export function SignIn() {
           </label>
         )}
         <button className="pp-button" disabled={busy}>
-          {busy ? "Working…" : "Continue"}
+          {busy
+            ? "Working…"
+            : mode === "sign-in"
+              ? "Sign in"
+              : mode === "sign-up"
+                ? "Create account"
+                : "Send reset link"}
         </button>
       </form>
+      <div className="pp-auth-links">
+        <button
+          type="button"
+          className="pp-text-button"
+          disabled={busy}
+          onClick={() => {
+            setMode(mode === "sign-up" ? "sign-in" : "sign-up");
+            setMessage("");
+          }}
+        >
+          {mode === "sign-up"
+            ? "Already have an account? Sign in"
+            : "Create an account"}
+        </button>
+        <button
+          type="button"
+          className="pp-text-button"
+          disabled={busy}
+          onClick={() => {
+            setMode(mode === "recover" ? "sign-in" : "recover");
+            setMessage("");
+          }}
+        >
+          {mode === "recover" ? "Back to sign in" : "Forgot password?"}
+        </button>
+      </div>
       <p role="status">{message}</p>
     </section>
   );
