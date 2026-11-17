@@ -1,51 +1,59 @@
-# PokéPulse expansion acceptance — November 17, 2026
+# PokéPulse live collection catalog — November 17, 2026
 
-## Delivered
+## Published functionality
 
-The existing Next.js/Supabase application is extended without replacing retail discovery, drops, radar, watchlists, calendar, account/privacy or the server-authoritative pack engine. Sealed products retain packaging images; individual cards use card artwork subject to the existing and new permission gates.
+The app is now collection-first, using a restrained black, white and red theme, compact primary navigation, a card-search home page, quieter card tiles and one add-to-collection action. Purchase, grade and binder fields are optional disclosures. Retail products, drops, Radar, calendar, watchlists, alerts, the original set binder and free pack simulator remain accessible. Sealed product packaging and individual card artwork remain separate.
 
-- `/cards`, `/pokedex`: database keyset search, gallery/list, set, artist, language, rarity, type, finish, era, ownership, Pokédex and reference-price filters; measured coverage.
-- `/cards/[id]`: printing and variant metadata, source attribution, illustrator, related cards, physical/virtual holdings, physical quick-add, favorites/wishlist and comparable price history.
-- `/card-sets`, `/card-sets/[id]`, `/artists`, `/artists/[id]`, `/market`: card-specific discovery.
-- `/collection/portfolio`: physical copy lots, condition/grade/acquisition/cost/binder notes, priced/unpriced/stale coverage, valuation breakdowns, observed snapshots and reviewed CSV import/export. Virtual cards never contribute to real valuation.
-- `/staff/card-catalog`: trusted staff coverage/provider/sync diagnostics.
-- Pack Lab: original simulated wrappers, keyboard/click/drag tear, saved card stack, reveal/skip/pause, rarity effects and result breakdown. Outcomes and request/debit idempotency remain server controlled.
+Live application: https://web-plum-alpha-64.vercel.app
 
-## Source and migration
+- `/`: collection overview, search and entry points.
+- `/cards`, `/cards/[id]`: real multilingual card metadata, exact printing/variant selection, physical collection saves, card details and personal card actions.
+- `/card-sets`, `/artists`, `/market`: set, illustrator and reference-price discovery.
+- `/collection/portfolio`: physical holdings, copy conditions, acquisition detail, CSV, snapshots and explicit price coverage.
 
-New modules: `apps/web/src/card-{routes,catalog-repository}.ts`, `features/cards/`, `features/collection/`, public card/artist/set/market/portfolio pages, `packages/contracts/src/cards.ts`, `packages/domain/src/cards/`, and `services/ingestion/cards/`. Existing collector, privacy, shell, styles, OpenAPI and pack presentation are extended. Tests add unit normalization/pricing/CSV, PostgreSQL integration/isolation/pagination and E2E archive coverage. Git records the complete changed-file list.
+## Real database, measured coverage
 
-Forward migration `supabase/migrations/20261117000000_card_pokedex_and_market.sql` adds provider approvals, normalized catalog metadata, artist credits, aliases/checkpoints, price observations, acquisition lots, actions, snapshots and SQL APIs. Applied successfully to dedicated Supabase project `ctfvqticypnigkglfnpi`. All 63 public application tables have RLS enabled. Previously applied migrations are unchanged.
+Dedicated Supabase project: PokéPulse (`ctfvqticypnigkglfnpi`). Vercel production is connected to this project. The integration keeps the service key sensitive and non-exportable.
 
-## Providers and limitations
+| Measurement            | Published count |
+| ---------------------- | --------------: |
+| Localized card records |         135,414 |
+| Documented variants    |         208,965 |
+| Localized set entries  |           1,148 |
+| Illustrators           |             419 |
+| Indexed languages      |              13 |
 
-TCGdex metadata adapter supports gated, bounded English/Japanese imports with stable identities, durable checkpoints, retries and source evidence. No production import has been authorized. Scrydex is a commercial pricing candidate; a validated provider-independent ingestion interface exists, but there is no subscribed or registered vendor adapter. Provider approval flags default false. Artwork needs separate global, provider, host and printing clearance.
+Languages: English, Japanese, French, German, Spanish, Latin American Spanish, Portuguese, Traditional Chinese, Simplified Chinese, Korean, Thai and Indonesian. Set counts include language-specific entries. These are verified source counts, not a claim that every worldwide card, error, stamp or translation has been documented. Digital-only Pokémon TCG Pocket cards are excluded from physical ownership.
 
-No worldwide completeness, historical prices, official pack odds or artwork rights are claimed. Missing/unapproved data remains unavailable. Existing illustrative demo binder data is labeled and separate from the new real-card archive. No paid services were purchased.
+Source: the MIT-licensed TCGdex metadata repository at revision `4218f64dcbf3de6e7b7548530f938fb0b9ebbe2a`. The source license is included in the repository. A literal-only parser reads data without executing downloaded TypeScript. Detailed variant language restrictions, stamps, subtype and foil are retained. Unknown variant declarations remain unspecified. Fractional provider Pokédex identifiers remain in provenance metadata; only valid whole-number IDs enter the searchable species field.
 
-## Verification
+## Verified behavior
 
-Commands use pinned pnpm 10.34.9 on Node 22.14.0.
+- The published database matches the prepared card, variant and set counts exactly. Publication is a service-only operation; anonymous callers cannot publish.
+- Hosted authentication succeeded with two disposable acceptance accounts.
+- Adding one physical copy succeeded; replaying the same request returned the same result and left exactly one copy.
+- The other account saw no private holdings, and virtual inventory remained unchanged.
+- Both test accounts were removed; a database query confirmed zero remaining acceptance accounts.
+- Live card search, set search, illustrator search, newest-card queries and coverage respond successfully. Coverage uses measured, invalidated aggregates rather than repeating a full-catalog count on every page load.
+- All application tables, including the aggregate snapshot, use row-level security.
+- The temporary import endpoint is removed, its Vercel token cleared, and the local token file deleted. The database service key never left Vercel.
 
-| Check                 | Result                                                                                                           |
-| --------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| `pnpm test`           | 124 tests passed across 10 files, including PostgreSQL integration                                               |
-| `pnpm test:collector` | 33 tests passed across 3 files                                                                                   |
-| `pnpm lint`           | Passed                                                                                                           |
-| `pnpm typecheck`      | Passed, including web application                                                                                |
-| `pnpm build`          | Production build passed                                                                                          |
-| `pnpm format:check`   | Passed                                                                                                           |
-| `git diff --check`    | Passed                                                                                                           |
-| `pnpm test:e2e` local | Five API checks passed; browser tests blocked before execution by macOS Chromium sandbox launch restriction      |
-| In-app browser        | Archive empty/coverage state, expanded filters and portfolio sign-in gate verified on production localhost build |
-| Supabase              | Forward migration applied; RLS confirmed on 63/63 public tables                                                  |
+## Tests and migrations
 
-GitHub CI supplies Linux Chromium and database/concurrency acceptance. Its result is tracked separately after push; a local build alone does not establish hosted authentication or provider operation.
+Local: 128 tests passed across 11 files, including PostgreSQL integration, multilingual identity, literal-source safety, tenant isolation, pricing, CSV and coverage-cache revocation/invalidation. TypeScript, ESLint, formatting and diff checks pass. Native macOS browser/build-worker sandbox restrictions were handled by running production browser/build checks in GitHub CI.
 
-## Deployment checklist
+GitHub run 44122520807 passed quality, database and collector-concurrency jobs, including the production build, 23 browser tests, seven component harness suites, database reset/SQL tests and authenticated HTTP acceptance. The final cleanup commit is checked separately.
 
-1. Deploy the committed source with Node 22.14.0 and pnpm 10.34.9; existing GitHub → Vercel integration builds the web project.
-2. Connect the dedicated Supabase project through server-side hosting settings: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, server-only `SUPABASE_SERVICE_ROLE_KEY`, and exact HTTPS `APP_ORIGIN`. Configure auth site/redirect URLs and verify actual signup/recovery/private writes. Never expose the service key. Vercel team access for this connector has returned 403, so environment wiring is not verified.
-3. Record provider metadata/retention evidence and approvals before enabling `CARD_CATALOG_SYNC_ENABLED=true`; choose `CARD_CATALOG_LANGUAGE` and `CARD_CATALOG_BATCH_SIZE`. Run `pnpm worker:catalog` as repeated bounded jobs on an authorized worker host. Deployment does not automatically schedule imports.
-4. Independently approve artwork and permitted hosts before enabling licensed card images. Pricing requires a selected licensed provider, concrete adapter and server credentials; do not derive singles values from sealed retail offers.
-5. Confirm live account isolation, CSV round trip, privacy export/deletion, opening recovery, mobile/reduced-motion and provider-revocation behavior in configured staging before enabling production sources. Existing retailer/push/map sources retain their own approvals and environment requirements.
+New forward-only operational migrations:
+
+- `20261117150000_catalog_snapshot_publication.sql`: service-only count-checked publication.
+- `20261117160000_catalog_coverage_scan.sql`: reuse a slim visible-card projection for aggregate scans.
+- `20261117170000_catalog_coverage_snapshot.sql`: measured aggregate snapshot, write invalidation and permission-aware reads.
+
+Previously applied migrations are unchanged.
+
+## Remaining coverage and launch limits
+
+Metadata is approved under the reviewed source license. Artwork remains separately gated; this import does not claim image redistribution rights. Live singles pricing and historical price feeds remain unavailable until a licensed provider is configured. No prices, official pack odds, or missing cards are fabricated. No new paid service was purchased.
+
+Future operator-run metadata refreshes use `catalog:snapshot` and `catalog:load`, followed by trusted aggregate refresh. An automatic import schedule is not configured. Authentication was verified for sign-in and private persistence; signup/recovery email delivery and the production Supabase redirect allowlist still need an actual email journey before a public launch.

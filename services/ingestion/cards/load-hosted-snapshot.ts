@@ -18,7 +18,7 @@ const checkpointPath = resolve(directory, "hosted-checkpoint.json");
 const progress: Record<string, number> = existsSync(checkpointPath)
   ? JSON.parse(readFileSync(checkpointPath, "utf8"))
   : {};
-async function send(body: unknown) {
+async function send(body: unknown): Promise<Record<string, unknown>> {
   for (let attempt = 0; attempt < 5; attempt++) {
     try {
       const r = await fetch(endpoint!, {
@@ -33,6 +33,19 @@ async function send(body: unknown) {
       });
       const text = await r.text();
       if (r.ok) return JSON.parse(text);
+      const payload = body as { operation?: string; rows?: unknown[] };
+      if (
+        r.status === 409 &&
+        text.includes('"code":"57014"') &&
+        payload.operation === "upsert" &&
+        payload.rows &&
+        payload.rows.length > 50
+      ) {
+        const split = Math.floor(payload.rows.length / 2);
+        await send({ ...payload, rows: payload.rows.slice(0, split) });
+        await send({ ...payload, rows: payload.rows.slice(split) });
+        return { ok: true, imported: payload.rows.length };
+      }
       if (r.status < 500 && r.status !== 429)
         throw new Error(`IMPORT_REJECTED:${r.status}:${text.slice(0, 800)}`);
       if (attempt === 4) throw new Error(`IMPORT_UNAVAILABLE:${r.status}`);

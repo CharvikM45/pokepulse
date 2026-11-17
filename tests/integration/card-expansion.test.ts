@@ -212,3 +212,37 @@ it("new writes pause for account deletion and conflicting idempotent payloads fa
     ]),
   ).rejects.toThrow("CONFLICT:DELETION_PENDING");
 });
+
+it("caches measured coverage, fails closed on provider revocation and invalidates on catalog writes", async () => {
+  await db.exec(
+    "reset role; update public.card_provider_permissions set enabled=true,metadata_approved=true,retention_approved=true where id='tcgdex'",
+  );
+  const measured = await value<{ printings: number }>(
+    "select public.c_refresh_catalog_coverage() result",
+  );
+  expect(measured.printings).toBeGreaterThan(0);
+  expect(await value("select public.c_catalog_coverage() result")).toEqual(
+    measured,
+  );
+  await db.exec("set role anon");
+  await expect(
+    db.query("select public.c_refresh_catalog_coverage()"),
+  ).rejects.toThrow(/permission denied/);
+  await db.exec(
+    "reset role; update public.card_provider_permissions set enabled=false where id='tcgdex'",
+  );
+  expect(
+    (
+      await value<{ printings: number }>(
+        "select public.c_catalog_coverage() result",
+      )
+    ).printings,
+  ).toBe(0);
+  await db.exec(
+    "update public.card_provider_permissions set enabled=true where id='tcgdex'; update public.cards set card_name=card_name",
+  );
+  expect(
+    (await db.query("select * from public.card_catalog_coverage_snapshot"))
+      .rows,
+  ).toHaveLength(0);
+});
