@@ -29,3 +29,9 @@ Primary reference: https://supabase.com/docs/guides/auth/auth-smtp
 Catalog/image requests, set indexes, individual cards and price endpoints were probed against production. Anonymous private/admin reads reject with 401; invalid bounds/cursors reject with 400. Disabled release/calendar sources return their intentional 503 rather than fabricated release data. Missing provider scans and unavailable prices remain explicit. This audit does not certify an exhaustive worldwide card database, hosted push delivery, market-pricing subscriptions, or scheduled privacy/notification worker operation.
 
 The automated suite includes database migrations and RLS, account isolation, idempotent pack commits, physical/virtual separation, browser adapters and accessibility/responsive scans. Public signup and recovery are exercised against a disposable local Supabase, not another user's account. Real production email delivery remains unverified until SMTP is configured.
+
+## Free authentication option
+
+The user declined domain purchases and Resend installation. No purchase or provider installation was made. GitHub OAuth is the free alternative: the code requests only `read:user user:email`, uses Supabase SSR PKCE and the existing safe callback, and shows its sign-in button only after the Supabase provider reports enabled. No repository permissions are requested. The OAuth registration form has been prepared with the production homepage and exact `https://ctfvqticypnigkglfnpi.supabase.co/auth/v1/callback` URL. Creating the OAuth app and connecting its credentials requires the user's explicit authorization; provider connection is not inferred from deployed code. Email/password accounts and email-confirmation requirements remain unchanged.
+
+Setup reference: https://supabase.com/docs/guides/auth/social-sign-in/auth-github

@@ -160,3 +160,28 @@ test("virtual cards page uses private paginated inventory without a set manifest
     ),
   ).toBe(true);
 });
+
+test("GitHub sign-in appears only when its provider is connected", async ({
+  page,
+}) => {
+  await page.route("**/api/v1/me/session", (route) =>
+    route.fulfill({
+      status: 401,
+      json: {
+        error: {
+          code: "UNAUTHENTICATED",
+          message: "Sign in required.",
+          details: {},
+        },
+        meta: { request_id: crypto.randomUUID() },
+      },
+    }),
+  );
+  await page.route("**/auth/providers", (route) =>
+    route.fulfill({ json: envelope({ github: true }) }),
+  );
+  await page.goto("/dashboard");
+  await expect(
+    page.getByRole("link", { name: "Continue with GitHub" }),
+  ).toHaveAttribute("href", "/auth/github");
+});

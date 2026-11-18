@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { authInput, authFailure } from "../../apps/web/src/auth/policy";
 const mocks = vi.hoisted(() => ({
   auth: {
+    signInWithOAuth: vi.fn(),
     signUp: vi.fn(),
     signInWithPassword: vi.fn(),
     resetPasswordForEmail: vi.fn(),
@@ -14,6 +15,7 @@ const mocks = vi.hoisted(() => ({
   rpc: vi.fn(),
 }));
 vi.mock("../../apps/web/src/server", () => ({
+  configured: () => true,
   sessionDb: async () => ({ auth: mocks.auth }),
   adminDb: () => ({ rpc: mocks.rpc }),
   requireSession: async () => ({ user: { id: "test" } }),
@@ -165,4 +167,38 @@ describe("authentication validation and provider failures", () => {
       "auth_error=expired",
     );
   });
+});
+
+it("offers GitHub only after the provider is enabled and starts a PKCE flow without repository scopes", async () => {
+  const provider = vi.spyOn(globalThis, "fetch");
+  provider.mockImplementation(async () =>
+    Response.json({ external: { github: false } }),
+  );
+  const get = (action: string) =>
+    GET(new Request(`https://app.example/auth/${action}`), {
+      params: Promise.resolve({ action }),
+    });
+  expect((await (await get("providers")).json()).data.github).toBe(false);
+  expect((await get("github")).headers.get("Location")).toContain(
+    "auth_error=provider_unavailable",
+  );
+  provider.mockImplementation(async () =>
+    Response.json({ external: { github: true } }),
+  );
+  mocks.auth.signInWithOAuth.mockResolvedValue({
+    data: { url: "https://auth.example/authorize?provider=github" },
+    error: null,
+  });
+  const response = await get("github");
+  expect(response.status).toBe(303);
+  expect(response.headers.get("Cache-Control")).toBe("no-store");
+  expect(mocks.auth.signInWithOAuth).toHaveBeenCalledWith({
+    provider: "github",
+    options: {
+      redirectTo: "https://app.example/auth/callback",
+      scopes: "read:user user:email",
+      skipBrowserRedirect: true,
+    },
+  });
+  provider.mockRestore();
 });

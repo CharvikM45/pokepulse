@@ -3,6 +3,7 @@ import { z } from "zod";
 import { type EmailOtpType } from "@supabase/supabase-js";
 import { successSchema, errorResponseSchema } from "@pokepulse/contracts";
 import {
+  configured,
   sessionDb,
   checkOrigin,
   safeRedirect,
@@ -28,6 +29,27 @@ function redirectTo(url: URL) {
     },
   });
 }
+async function githubEnabled() {
+  if (!configured()) return false;
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SUPABASE_URL}/auth/v1/settings`,
+    {
+      headers: { apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY! },
+      cache: "no-store",
+      signal: AbortSignal.timeout(5000),
+    },
+  );
+  if (!response.ok)
+    throw new HttpError(
+      "SOURCE_UNAVAILABLE",
+      503,
+      "Sign-in options are temporarily unavailable.",
+    );
+  const settings = z
+    .object({ external: z.object({ github: z.boolean() }) })
+    .parse(await response.json());
+  return settings.external.github;
+}
 async function handle(
   request: Request,
   { params }: { params: Promise<{ action: string }> },
@@ -39,7 +61,37 @@ async function handle(
     const { action: requestedAction } = await params;
     actionForLog = requestedAction;
     const url = new URL(request.url);
+    if (request.method === "GET" && requestedAction === "providers") {
+      return Response.json(
+        { data: { github: await githubEnabled() }, meta: { request_id } },
+        { headers: { "Cache-Control": "no-store" } },
+      );
+    }
     const db = await sessionDb();
+    if (request.method === "GET" && requestedAction === "github") {
+      if (!(await githubEnabled()))
+        return redirectTo(
+          new URL(
+            "/dashboard?auth_error=provider_unavailable",
+            process.env.APP_ORIGIN ?? url.origin,
+          ),
+        );
+      const { data, error } = await db.auth.signInWithOAuth({
+        provider: "github",
+        options: {
+          redirectTo: `${process.env.APP_ORIGIN ?? url.origin}/auth/callback`,
+          scopes: "read:user user:email",
+          skipBrowserRedirect: true,
+        },
+      });
+      if (error || !data.url)
+        throw new HttpError(
+          "SOURCE_UNAVAILABLE",
+          503,
+          "GitHub sign-in is temporarily unavailable.",
+        );
+      return redirectTo(new URL(data.url));
+    }
     if (request.method === "GET" && requestedAction === "callback") {
       const next = safeRedirect(
         url.searchParams.get("next") ??

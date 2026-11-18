@@ -308,6 +308,7 @@ const extraSchemas = {
   AuthEmailInput: z.object({ email: z.email() }),
   AuthPasswordInput: z.object({ password: z.string().min(12).max(256) }),
   AuthEmptyInput: z.object({}),
+  AuthProviders: z.object({ github: z.boolean() }),
   AuthAccepted: z.object({
     accepted: z.boolean(),
     next_step: z.enum([
@@ -357,6 +358,17 @@ for (const action of [
             : "AuthEmailInput",
     action !== "update-password",
   );
+add("/auth/providers", "get", "AuthProviders", false, undefined, true);
+spec.paths["/auth/github"] = {
+  get: {
+    summary: "Start configured GitHub OAuth with PKCE; profile and email only",
+    responses: {
+      303: {
+        description: "Redirect to Supabase OAuth or sign-in setup guidance",
+      },
+    },
+  },
+};
 spec.paths["/auth/callback"] = {
   get: {
     summary:

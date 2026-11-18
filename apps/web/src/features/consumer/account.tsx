@@ -53,6 +53,16 @@ export function SignIn() {
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
   const [canResend, setCanResend] = useState(false);
+  const providers = useResource(async (signal) => {
+    const response = await fetch("/auth/providers", {
+      cache: "no-store",
+      signal,
+    });
+    if (!response.ok) return { github: false };
+    return z
+      .object({ data: z.object({ github: z.boolean() }) })
+      .parse(await response.json()).data;
+  }, "public-auth-providers");
   useEffect(() => {
     const reason = new URLSearchParams(window.location.search).get(
       "auth_error",
@@ -115,6 +125,13 @@ export function SignIn() {
               : "Sign in to your workspace"}
       </h2>
       <p>Public browsing is available without an account.</p>
+      {providers.data?.github && (
+        <p>
+          <a className="pp-button" href="/auth/github">
+            Continue with GitHub
+          </a>
+        </p>
+      )}
       <form onSubmit={submit} className="pp-stack">
         <label>
           Email

@@ -114,6 +114,8 @@ export function authFailure(
   }
 }
 export const callbackMessages: Record<string, string> = {
+  provider_unavailable:
+    "GitHub sign-in is not connected yet. Please try again once setup is complete.",
   expired:
     "This authentication link is invalid or expired. Sign in or request a new email link.",
   missing: "This authentication link is incomplete. Request a new email link.",
