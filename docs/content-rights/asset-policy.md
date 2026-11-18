@@ -1,25 +1,13 @@
 # Asset, source and simulation policy
 
-All feature flags default off. `licensed_card_art` and real-set `pack_lab` remain off until reviewed rights and server configuration exist. A metadata API permission is not artwork permission. No official logos, card scans, pack designs, official trade dress or affiliation claims are included in this handoff.
+Updated 2026-11-17 for the user-requested card artwork and functional Pack Lab repair. This supersedes the original fixture-only handoff configuration.
 
-Original fixture set: **Lumen Grove**, cards Moss Courier, Harbor Lantern, Cloud Archivist. These are invented names and neutral geometric placeholders. Demo provenance must remain visible. The working product name requires separate public branding review.
+Card metadata comes from the pinned MIT-licensed TCGdex source with attribution and the preserved source notice. In response to the user’s explicit request, card surfaces display exact matching scans directly from the documented TCGdex asset service. The application enables its provider artwork setting and `licensed_card_art` flag, restricts the host to `assets.tcgdex.net`, and requires per-variant approval. These settings record project authorization, not an external copyright license, ownership, affiliation or endorsement. Artwork copyrights remain with their respective owners.
 
-| Asset/data                          | Default                                    | Clearance record needed                                                   |
-| ----------------------------------- | ------------------------------------------ | ------------------------------------------------------------------------- |
-| Original CSS geometric placeholders | Internal demo permitted                    | Author/origin, revision, review                                           |
-| Official card/pack/logo imagery     | Disabled                                   | Licensor, permitted use/territory, expiry, attribution, proof             |
-| Third-party metadata                | No fetch configured                        | Provider terms, fields permitted, attribution, retention, checked date    |
-| Map tiles and store data            | No provider configured; text-list fallback | Provider license, attribution, caching/rate limits, access evidence       |
-| Real-set simulated odds             | Disabled                                   | Methodology, sample size/date/source/uncertainty and legal/content review |
-| Fixture pack rules                  | Internal only                              | Fictional distribution label, version, pools, validated manifest          |
-| Release dates                       | No fabricated seed dates                   | HTTPS source, region, precision, verified date, editor audit              |
+The provider availability inventory maps 100,584 localized card records and 160,626 documented variants to scans. Missing scans and failed image requests show an honest unavailable-scan fallback. No generic Pokémon image substitutes for a card. Product and sealed-set artwork uses packaging rather than chase-card art. Revocation disables rendering without rewriting saved opening facts. Arbitrary user-submitted remote URLs are not proxied.
 
-A preliminary provider comparison was checked against primary documentation on 2026-11-07; see `metadata-provider-comparison.md`. Actual application access/terms and asset clearance remain unapproved, and no vendor was selected or recommended. Keep provider metadata adapters entirely separate from A's stock providers.
+Pack Lab contains three free custom scenarios: Base Set, 151 and Evolving Skies. Each performs ten independent uniform draws with replacement from its configured artwork-backed pool. These fictional game rules are disclosed and do not claim official booster contents or real pull rates. See [custom simulation configuration](custom-simulation.md).
 
-Only server-approved image URLs should leave the asset provider. Reject unapproved remote hosts; use original placeholder when rights are absent. Do not proxy arbitrary submitted URLs. Expiry or revocation must disable rendering and pack configuration without deleting immutable historical opening facts.
+Server-committed results and idempotent retries remain mandatory. Virtual results stay separate from physical ownership and portfolio valuation. There are no purchases, paid currency, transfers, cash value, redemptions or prizes. No client-controlled production random seed is accepted.
 
-No paid coins, transfers, redemptions, cash value, wagering, prizes, physical ownership claims or report-filing rewards. No payment SDK. No client-controlled production random seed. Sample odds describe the configured fictional distribution only.
-
-## Card archive extension (2026-11-16)
-
-The current retail and illustrative binder presentation predates this extension and includes user-requested, attributed local imagery; the historical handoff paragraph above does not describe those later assets. The new global card archive does **not** infer clearance from those files. Its imported imagery requires `licensed_card_art`, approved card-provider artwork use, an exact permitted image hostname, and per-variant clearance. Metadata and retention approvals are independent. New archive and saved-opening surfaces render original placeholders when any image gate is absent or revoked. See `docs/implementation/POKEDEX_PROVIDERS.md` for the current provider review and default-disabled state.
+Pricing, maps and other external integrations retain their independent provider approval requirements. Metadata permission does not imply pricing or artwork ownership. Read [provider operations](../implementation/POKEDEX_PROVIDERS.md) for source counts, attribution, refresh behavior and coverage limits.
