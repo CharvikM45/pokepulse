@@ -12,18 +12,39 @@ import {
   requireSession,
   readJsonBody,
 } from "../../../src/server";
+import {
+  authActionSchema,
+  authInput,
+  authFailure,
+} from "../../../src/auth/policy";
 export const dynamic = "force-dynamic";
 async function handle(
   request: Request,
   { params }: { params: Promise<{ action: string }> },
 ) {
   const request_id = crypto.randomUUID();
+  let retryAfter: number | undefined;
+  let actionForLog = "unknown";
   try {
-    const { action } = await params;
+    const { action: requestedAction } = await params;
+    actionForLog = requestedAction;
     const url = new URL(request.url);
     const db = await sessionDb();
-    if (request.method === "GET" && action === "callback") {
-      const next = safeRedirect(url.searchParams.get("next"));
+    if (request.method === "GET" && requestedAction === "callback") {
+      const next = safeRedirect(
+        url.searchParams.get("next") ??
+          (url.searchParams.get("type") === "recovery"
+            ? "/settings"
+            : "/collection/portfolio"),
+      );
+      const failed = (reason: string) =>
+        Response.redirect(
+          new URL(
+            `/dashboard?auth_error=${reason}`,
+            process.env.APP_ORIGIN ?? url.origin,
+          ),
+          303,
+        );
       const code = url.searchParams.get("code");
       const token = url.searchParams.get("token_hash");
       const type = url.searchParams.get("type");
@@ -38,18 +59,8 @@ async function handle(
           token_hash: token,
           type: type as EmailOtpType,
         }));
-      } else
-        throw new HttpError(
-          "VALIDATION_ERROR",
-          400,
-          "Invalid authentication callback.",
-        );
-      if (error)
-        throw new HttpError(
-          "UNAUTHENTICATED",
-          401,
-          "Authentication link is invalid or expired.",
-        );
+      } else return failed("missing");
+      if (error) return failed("expired");
       return Response.redirect(
         new URL(next, process.env.APP_ORIGIN ?? url.origin),
         303,
@@ -57,16 +68,17 @@ async function handle(
     }
     if (request.method !== "POST")
       throw new HttpError("NOT_FOUND", 404, "Endpoint not found.");
+    const actionResult = authActionSchema.safeParse(requestedAction);
+    if (!actionResult.success)
+      throw new HttpError("NOT_FOUND", 404, "Endpoint not found.");
+    const action = actionResult.data;
     checkOrigin(request);
     z.uuid().parse(request.headers.get("Idempotency-Key"));
     const body = await readJsonBody(request, 4096);
-    const input = z
-      .object({
-        email: z.email().max(254).optional(),
-        password: z.string().min(12).max(256).optional(),
-      })
-      .strict()
-      .parse(body);
+    const input = authInput(action, body) as {
+      email?: string;
+      password?: string;
+    };
     const subject = createHash("sha256")
       .update(input.email?.toLowerCase() ?? "session-action")
       .digest("hex");
@@ -87,6 +99,7 @@ async function handle(
     }
     const redirect = `${process.env.APP_ORIGIN ?? url.origin}/auth/callback`;
     let error;
+    let next_step = "signed_in";
     switch (action) {
       case "sign-in":
         if (!input.email || !input.password)
@@ -107,40 +120,62 @@ async function handle(
             400,
             "Email and password required.",
           );
-        ({ error } = await db.auth.signUp({
-          email: input.email,
-          password: input.password,
-          options: { emailRedirectTo: redirect },
-        }));
+        {
+          const result = await db.auth.signUp({
+            email: input.email,
+            password: input.password,
+            options: { emailRedirectTo: redirect },
+          });
+          error = result.error;
+          next_step = result.data.session ? "signed_in" : "confirm_email";
+        }
         break;
       case "recover":
         if (!input.email)
           throw new HttpError("VALIDATION_ERROR", 400, "Email required.");
-        await db.auth.resetPasswordForEmail(input.email, {
+        ({ error } = await db.auth.resetPasswordForEmail(input.email, {
           redirectTo: `${redirect}?next=/settings`,
-        });
+        }));
+        next_step = "recovery_email_sent";
+        break;
+      case "resend":
+        ({ error } = await db.auth.resend({
+          type: "signup",
+          email: input.email!,
+          options: { emailRedirectTo: redirect },
+        }));
+        next_step = "confirm_email";
         break;
       case "update-password":
         await requireSession();
         if (!input.password)
           throw new HttpError("VALIDATION_ERROR", 400, "Password required.");
         ({ error } = await db.auth.updateUser({ password: input.password }));
+        next_step = "password_updated";
         break;
       case "sign-out":
         ({ error } = await db.auth.signOut());
+        next_step = "signed_out";
         break;
       default:
         throw new HttpError("NOT_FOUND", 404, "Endpoint not found.");
     }
-    if (error)
-      throw new HttpError(
-        "UNAUTHENTICATED",
-        401,
-        "Authentication could not be completed.",
-      );
+    if (error) {
+      const failure = authFailure(error, action);
+      retryAfter = failure.retryAfter;
+      console.warn("auth_provider_failure", {
+        request_id,
+        action,
+        code: error.code ?? "unknown",
+        status: error.status,
+      });
+      throw new HttpError(failure.code, failure.status, failure.message);
+    }
     return Response.json(
-      successSchema(z.object({ accepted: z.boolean() })).parse({
-        data: { accepted: true },
+      successSchema(
+        z.object({ accepted: z.boolean(), next_step: z.string() }),
+      ).parse({
+        data: { accepted: true, next_step },
         meta: { request_id },
       }),
       { headers: { "Cache-Control": "no-store" } },
@@ -150,12 +185,22 @@ async function handle(
       e instanceof HttpError
         ? e
         : e instanceof z.ZodError
-          ? new HttpError("VALIDATION_ERROR", 400, "Invalid request.")
+          ? new HttpError(
+              "VALIDATION_ERROR",
+              400,
+              e.issues[0]?.message ?? "Invalid request.",
+            )
           : new HttpError(
               "INTERNAL_ERROR",
               500,
               "Authentication could not be completed.",
             );
+    if (err.status >= 500)
+      console.error("auth_request_failure", {
+        request_id,
+        action: actionForLog,
+        code: err.code,
+      });
     return Response.json(
       errorResponseSchema.parse({
         error: { code: err.code, message: err.message, details: {} },
@@ -165,7 +210,9 @@ async function handle(
         status: err.status,
         headers: {
           "Cache-Control": "no-store",
-          ...(err.status === 429 ? { "Retry-After": "300" } : {}),
+          ...(err.status === 429
+            ? { "Retry-After": String(retryAfter ?? 300) }
+            : {}),
         },
       },
     );

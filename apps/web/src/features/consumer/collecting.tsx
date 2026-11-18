@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { useMemo, useRef, useState } from "react";
 import { z } from "zod";
 import { ApiError } from "@pokepulse/contracts";
@@ -9,6 +8,7 @@ import * as c from "../../collector-contracts";
 import { PackLab, type LabService, type SavedOpening } from "../lab/pack-lab";
 import { Binder } from "../binder/binder";
 import { SignIn } from "./account";
+import { PrivateCardLibrary } from "../collection/card-library";
 import { timestamp } from "./discovery";
 import { useResource } from "./workspace";
 
@@ -166,54 +166,13 @@ export function LabPage() {
 }
 
 export function CollectionPage({ setId }: { setId?: string }) {
-  const sets = useResource(allSets, "sets");
-  const [selected, setSelected] = useState(setId ?? "");
-  const active = setId ?? (selected || sets.data?.sets[0]?.id);
-  return (
-    <>
-      <p className="pp-eyebrow">COLLECT</p>
-      <div className="pp-row">
-        <Link href="/collection/portfolio">
-          Physical collection dashboard →
-        </Link>
-        <Link href="/cards">Add cards from Pokédex →</Link>
-      </div>
-      <h1>Your binder</h1>
-      <p>
-        Virtual simulation results and manually recorded physical ownership stay
-        separate. Collections are private.
-      </p>
-      {sets.loading && <Skeleton label="Loading sets" />}
-      {sets.error && (
-        <StateCard error title="Sets unavailable" retry={sets.retry}>
-          {sets.error}
-        </StateCard>
-      )}
-      {!setId && sets.data && (
-        <label>
-          Set
-          <select
-            className="pp-input"
-            value={active ?? ""}
-            onChange={(e) => setSelected(e.target.value)}
-          >
-            {sets.data.sets.map((set) => (
-              <option key={set.id} value={set.id}>
-                {set.name}
-                {set.is_demo ? " · fictional demo" : ""}
-              </option>
-            ))}
-          </select>
-        </label>
-      )}
-      {active ? (
-        <SetBinder key={active} setId={active} />
-      ) : (
-        !sets.loading && <p>No cleared set metadata available.</p>
-      )}
-    </>
+  return setId ? (
+    <SetBinder setId={setId} />
+  ) : (
+    <PrivateCardLibrary kind="virtual" />
   );
 }
+
 function SetBinder({ setId }: { setId: string }) {
   const session = useSession();
   const catalog = useResource((signal) => allCards(setId, signal), setId);

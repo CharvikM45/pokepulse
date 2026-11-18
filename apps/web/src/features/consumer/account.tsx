@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { z } from "zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -13,6 +13,7 @@ import {
 } from "@pokepulse/contracts";
 import { collectorRequest } from "../../collector-contracts";
 import { Skeleton, StateCard, useNow } from "@pokepulse/ui";
+import { callbackMessages } from "../../auth/policy";
 import { authAction, useSession } from "../../auth/use-session";
 import { subscribePush } from "../../auth/push";
 import {
@@ -47,35 +48,53 @@ async function accountPages<T extends z.ZodType>(
 export function SignIn() {
   const router = useRouter();
   const [mode, setMode] = useState<
-    "sign-in" | "sign-up" | "recover" | "update-password"
+    "sign-in" | "sign-up" | "recover" | "resend"
   >("sign-in");
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
+  const [canResend, setCanResend] = useState(false);
+  useEffect(() => {
+    const reason = new URLSearchParams(window.location.search).get(
+      "auth_error",
+    );
+    if (reason && callbackMessages[reason]) {
+      const timer = setTimeout(() => setMessage(callbackMessages[reason]), 0);
+      return () => clearTimeout(timer);
+    }
+  }, []);
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (busy) return;
     setBusy(true);
+    setMessage("");
     const form = new FormData(e.currentTarget);
     try {
       const response = await authAction(mode, {
-        ...(mode !== "update-password"
-          ? { email: String(form.get("email")) }
-          : {}),
-        ...(mode !== "recover"
-          ? { password: String(form.get("password")) }
+        email: String(form.get("email") ?? "").trim(),
+        ...(["sign-in", "sign-up"].includes(mode)
+          ? { password: String(form.get("password") ?? "") }
           : {}),
       });
-      if (!response.ok)
+      const body = await response.json();
+      if (!response.ok) {
+        if (body.error?.message?.includes("Confirm your email"))
+          setCanResend(true);
         throw new Error(
-          "Authentication could not be completed. Check your details or try again later.",
+          body.error?.message ??
+            "Authentication is temporarily unavailable. Please try again.",
         );
-      if (mode === "sign-in") router.push("/dashboard");
-      else
+      }
+      if (mode === "sign-in" || body.data?.next_step === "signed_in") {
+        router.push("/collection/portfolio");
+        router.refresh();
+      } else {
+        setCanResend(mode !== "recover");
         setMessage(
-          mode === "update-password"
-            ? "Password updated."
-            : "Check your email for the next step if your address is eligible.",
+          mode === "recover"
+            ? "If this address has an account, check your email for a reset link."
+            : "Check your email to confirm your account, then sign in. If you already have an account, sign in or reset your password.",
         );
+      }
     } catch (error) {
       setMessage(
         error instanceof Error ? error.message : "Authentication unavailable.",
@@ -91,23 +110,23 @@ export function SignIn() {
           ? "Join PokéPulse"
           : mode === "recover"
             ? "Reset your password"
-            : "Sign in to your workspace"}
+            : mode === "resend"
+              ? "Confirm your email"
+              : "Sign in to your workspace"}
       </h2>
       <p>Public browsing is available without an account.</p>
       <form onSubmit={submit} className="pp-stack">
-        {mode !== "update-password" && (
-          <label>
-            Email
-            <input
-              className="pp-input"
-              name="email"
-              type="email"
-              autoComplete="email"
-              required
-            />
-          </label>
-        )}
-        {mode !== "recover" && (
+        <label>
+          Email
+          <input
+            className="pp-input"
+            name="email"
+            type="email"
+            autoComplete="email"
+            required
+          />
+        </label>
+        {["sign-in", "sign-up"].includes(mode) && (
           <label>
             {mode === "sign-up"
               ? "Password (at least 12 characters)"
@@ -116,7 +135,7 @@ export function SignIn() {
               className="pp-input"
               name="password"
               type="password"
-              minLength={12}
+              minLength={mode === "sign-up" ? 12 : 1}
               maxLength={256}
               autoComplete={
                 mode === "sign-in" ? "current-password" : "new-password"
@@ -132,10 +151,25 @@ export function SignIn() {
               ? "Sign in"
               : mode === "sign-up"
                 ? "Create account"
-                : "Send reset link"}
+                : mode === "resend"
+                  ? "Resend confirmation"
+                  : "Send reset link"}
         </button>
       </form>
       <div className="pp-auth-links">
+        {canResend && mode !== "resend" && (
+          <button
+            type="button"
+            className="pp-text-button"
+            disabled={busy}
+            onClick={() => {
+              setMode("resend");
+              setMessage("");
+            }}
+          >
+            Resend confirmation email
+          </button>
+        )}
         <button
           type="button"
           className="pp-text-button"
@@ -161,7 +195,9 @@ export function SignIn() {
           {mode === "recover" ? "Back to sign in" : "Forgot password?"}
         </button>
       </div>
-      <p role="status">{message}</p>
+      <p role="status" aria-live="polite">
+        {message}
+      </p>
     </section>
   );
 }
@@ -299,7 +335,10 @@ function PrivateAccount({ page, userId }: { page: string; userId: string }) {
               </article>
               <article className="pp-card">
                 <h2>Your collection</h2>
-                <a href="/collection">Open real / virtual binder →</a>
+                <a href="/collection/portfolio">Open physical collection →</a>
+                <p>
+                  <a href="/collection?mode=virtual">View virtual cards →</a>
+                </p>
               </article>
             </div>
             <h2>Followed products and offers</h2>

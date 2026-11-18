@@ -64,7 +64,13 @@ export function useSession() {
   return { user, loading, error, refresh };
 }
 export async function authAction(
-  action: "sign-in" | "sign-up" | "recover" | "update-password" | "sign-out",
+  action:
+    | "sign-in"
+    | "sign-up"
+    | "recover"
+    | "resend"
+    | "update-password"
+    | "sign-out",
   body: { email?: string; password?: string },
 ) {
   const response = await fetch(`/auth/${action}`, {
@@ -74,6 +80,7 @@ export async function authAction(
       "Idempotency-Key": crypto.randomUUID(),
     },
     body: JSON.stringify(body),
+    signal: AbortSignal.timeout(20000),
   });
   if (response.ok) window.dispatchEvent(new Event("pokepulse-auth-change"));
   return response;

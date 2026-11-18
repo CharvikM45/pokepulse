@@ -269,3 +269,14 @@ export const portfolioSchema = z.object({
 });
 export type SingleCard = z.infer<typeof singleCardSchema>;
 export type PhysicalLotInput = z.infer<typeof lotInputSchema>;
+
+export const privateCardLibrarySchema = z.object({
+  entries: z.array(
+    z.object({
+      id: z.uuid(),
+      quantity: z.number().int().positive(),
+      card: singleCardSchema.nullable(),
+    }),
+  ),
+  next_cursor: z.string().nullable(),
+});

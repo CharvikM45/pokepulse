@@ -212,6 +212,82 @@ export async function cardRoute(request: Request) {
       );
     }
     const { db, user } = await requireSession();
+    if (method === "GET" && path === "me/card-library") {
+      const q = z
+        .object({
+          kind: z.enum(["virtual", "favorite", "wishlist"]),
+          cursor: z.string().max(4096).optional(),
+          limit: z.coerce.number().int().min(1).max(50).default(24),
+        })
+        .strict()
+        .parse(query);
+      const after = decodeCardCursor(
+        q.cursor,
+        z.object({ id: z.uuid(), kind: z.literal(q.kind) }),
+      );
+      const virtual = q.kind === "virtual";
+      const key = virtual ? "card_variant_id" : "card_id";
+      let selection = virtual
+        ? db
+            .from("virtual_inventory")
+            .select("card_variant_id,quantity")
+            .eq("user_id", user.id)
+        : db
+            .from("card_actions")
+            .select("card_id")
+            .eq("user_id", user.id)
+            .eq("kind", q.kind);
+      selection = selection.order(key).limit(q.limit + 1);
+      if (after) selection = selection.gt(key, after.id);
+      const rows = await selection;
+      dbError(rows.error);
+      const selected = (rows.data ?? []) as unknown as {
+        card_id?: string;
+        card_variant_id?: string;
+        quantity?: number;
+      }[];
+      const page = selected.slice(0, q.limit);
+      const entries = await Promise.all(
+        page.map(async (row) => {
+          let cardId = row.card_id;
+          if (virtual) {
+            const variant = await adminDb()
+              .from("card_variants")
+              .select("card_id")
+              .eq("id", row.card_variant_id!)
+              .maybeSingle();
+            dbError(variant.error);
+            cardId = variant.data?.card_id;
+          }
+          const data = cardId
+            ? await cardRpc(adminDb(), "c_card_json", { p_id: cardId })
+            : null;
+          const card = data ? c.singleCardSchema.parse(data) : null;
+          if (card && virtual)
+            card.variants = card.variants.filter(
+              (v) => v.id === row.card_variant_id,
+            );
+          return {
+            id: (virtual ? row.card_variant_id : row.card_id)!,
+            quantity: row.quantity ?? 1,
+            card,
+          };
+        }),
+      );
+      const last = page.at(-1);
+      const next =
+        selected.length > q.limit && last
+          ? encodeCardCursor({
+              id: virtual ? last.card_variant_id : last.card_id,
+              kind: q.kind,
+            })
+          : null;
+      return ok(
+        { entries, next_cursor: next },
+        c.privateCardLibrarySchema,
+        next,
+      );
+    }
     if (method === "GET" && path === "me/card-holdings") {
       const q = z.object({ card_id: z.uuid() }).strict().parse(query);
       const variants = await adminDb()

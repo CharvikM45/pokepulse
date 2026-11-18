@@ -67,6 +67,7 @@ function actor() {
       expected = 200,
       requestOrigin = origin,
       raw = false,
+      responseOnly = false,
     } = {},
   ) => {
     const response = await fetch(origin + path, {
@@ -91,6 +92,7 @@ function actor() {
       expected,
       `${method} ${path} returned ${response.status}, expected ${expected}`,
     );
+    if (responseOnly) return response;
     if (raw) return response.text();
     const result = await response.json();
     assert(result.meta?.request_id, `${path} missing response envelope`);
@@ -200,6 +202,113 @@ try {
       });
     },
   );
+  await check(
+    "public signup, PKCE email confirmation, recovery and password change",
+    async () => {
+      const email = `signup-${crypto.randomUUID()}@example.test`;
+      const password = `Public-signup-${crypto.randomUUID()}-9z!`;
+      const call = actor();
+      const signup = await call("/auth/sign-up", {
+        method: "POST",
+        body: { email, password },
+      });
+      assert.equal(signup.next_step, "confirm_email");
+      await call("/api/v1/me/session", { expected: 401 });
+      const row = (
+        await pool.query(
+          "select id,confirmation_token from auth.users where email=$1",
+          [email],
+        )
+      ).rows[0];
+      assert(
+        row?.confirmation_token,
+        "Signup must generate a confirmation token",
+      );
+      users.push({ id: row.id });
+      const verify = await fetch(
+        status.API_URL +
+          "/auth/v1/verify?" +
+          new URLSearchParams({
+            token: row.confirmation_token,
+            type: "signup",
+            redirect_to: origin + "/auth/callback",
+          }),
+        { redirect: "manual" },
+      );
+      assert([302, 303].includes(verify.status));
+      const destination = new URL(verify.headers.get("location"));
+      assert.equal(destination.origin, origin);
+      assert(
+        destination.searchParams.get("code"),
+        "Email verification must return a PKCE code",
+      );
+      const callback = await call(destination.pathname + destination.search, {
+        expected: 303,
+        responseOnly: true,
+      });
+      assert.equal(
+        new URL(callback.headers.get("location")).pathname,
+        "/collection/portfolio",
+      );
+      assert.equal((await call("/api/v1/me/session")).id, row.id);
+      await call("/auth/sign-out", { method: "POST", body: {} });
+      await call("/auth/sign-in", {
+        method: "POST",
+        body: { email, password },
+      });
+      await call("/auth/sign-out", { method: "POST", body: {} });
+      const recovery = await call("/auth/recover", {
+        method: "POST",
+        body: { email },
+      });
+      assert.equal(recovery.next_step, "recovery_email_sent");
+      const token = (
+        await pool.query("select recovery_token from auth.users where id=$1", [
+          row.id,
+        ])
+      ).rows[0].recovery_token;
+      assert(token, "Recovery must generate a real token");
+      const reset = await fetch(
+        status.API_URL +
+          "/auth/v1/verify?" +
+          new URLSearchParams({
+            token,
+            type: "recovery",
+            redirect_to: origin + "/auth/callback?next=/settings",
+          }),
+        { redirect: "manual" },
+      );
+      const resetDestination = new URL(reset.headers.get("location"));
+      assert.equal(resetDestination.origin, origin);
+      assert(resetDestination.searchParams.get("code"));
+      const resetCallback = await call(
+        resetDestination.pathname + resetDestination.search,
+        { expected: 303, responseOnly: true },
+      );
+      assert.equal(
+        new URL(resetCallback.headers.get("location")).pathname,
+        "/settings",
+      );
+      const newPassword = `Recovered-${crypto.randomUUID()}-9z!`;
+      await call("/auth/update-password", {
+        method: "POST",
+        body: { password: newPassword },
+      });
+      await call("/auth/sign-out", { method: "POST", body: {} });
+      await call("/auth/sign-in", {
+        method: "POST",
+        body: { email, password: newPassword },
+      });
+      const expired = await anonymous("/auth/callback?code=expired", {
+        expected: 303,
+        responseOnly: true,
+      });
+      assert.equal(
+        new URL(expired.headers.get("location")).searchParams.get("auth_error"),
+        "expired",
+      );
+    },
+  );
   const products = await anonymous("/api/v1/products?limit=50");
   const productId = products[0].id;
   await check(
@@ -242,6 +351,30 @@ try {
       );
       const read = (mode, user = a) =>
         user.call(`/api/v1/me/collections?set_id=${setId}&mode=${mode}`);
+      const library = await a.call(
+        "/api/v1/me/card-library?kind=virtual&limit=1",
+      );
+      assert(library.entries.length > 0);
+      assert.equal(
+        (await b.call("/api/v1/me/card-library?kind=virtual")).entries.length,
+        0,
+      );
+      await anonymous("/api/v1/me/card-library?kind=virtual", {
+        expected: 401,
+      });
+      const libraryIds = new Set(library.entries.map((entry) => entry.id));
+      if (library.next_cursor) {
+        const next = await a.call(
+          "/api/v1/me/card-library?kind=virtual&limit=1&cursor=" +
+            encodeURIComponent(library.next_cursor),
+        );
+        assert(next.entries.every((entry) => !libraryIds.has(entry.id)));
+        await a.call(
+          "/api/v1/me/card-library?kind=favorite&cursor=" +
+            encodeURIComponent(library.next_cursor),
+          { expected: 400 },
+        );
+      }
       const virtual = await read("virtual");
       assert.equal(
         virtual.entries.reduce((sum, entry) => sum + entry.quantity, 0),

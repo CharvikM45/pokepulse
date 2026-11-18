@@ -35,6 +35,7 @@ const models: Record<string, z.ZodType> = {
     card_id: z.uuid(),
     kind: z.enum(["favorite", "wishlist"]),
   }),
+  PrivateCardLibrary: c.privateCardLibrarySchema,
   CardHoldings: z.object({
     physical: z.array(
       z.object({ card_variant_id: z.uuid(), quantity: z.number() }),
@@ -294,9 +295,29 @@ const extraSchemas = {
   Flag: z.object({ name: z.string(), enabled: z.boolean() }),
   AuthInput: z.object({
     email: z.email().optional(),
-    password: z.string().min(12).max(256).optional(),
+    password: z.string().min(1).max(256).optional(),
   }),
-  AuthAccepted: z.object({ accepted: z.boolean() }),
+  AuthSignupInput: z.object({
+    email: z.email(),
+    password: z.string().min(12).max(256),
+  }),
+  AuthSigninInput: z.object({
+    email: z.email(),
+    password: z.string().min(1).max(256),
+  }),
+  AuthEmailInput: z.object({ email: z.email() }),
+  AuthPasswordInput: z.object({ password: z.string().min(12).max(256) }),
+  AuthEmptyInput: z.object({}),
+  AuthAccepted: z.object({
+    accepted: z.boolean(),
+    next_step: z.enum([
+      "signed_in",
+      "confirm_email",
+      "recovery_email_sent",
+      "password_updated",
+      "signed_out",
+    ]),
+  }),
 };
 Object.assign(
   spec.components.schemas as object,
@@ -316,6 +337,7 @@ for (const action of [
   "sign-up",
   "sign-in",
   "recover",
+  "resend",
   "update-password",
   "sign-out",
 ])
@@ -324,7 +346,15 @@ for (const action of [
     "post",
     "AuthAccepted",
     false,
-    "AuthInput",
+    action === "sign-up"
+      ? "AuthSignupInput"
+      : action === "sign-in"
+        ? "AuthSigninInput"
+        : action === "sign-out"
+          ? "AuthEmptyInput"
+          : action === "update-password"
+            ? "AuthPasswordInput"
+            : "AuthEmailInput",
     action !== "update-password",
   );
 spec.paths["/auth/callback"] = {
@@ -337,8 +367,10 @@ spec.paths["/auth/callback"] = {
       schema: { type: "string" },
     })),
     responses: {
-      303: { description: "Safe same-origin redirect" },
-      401: { description: "Invalid or expired link" },
+      303: {
+        description:
+          "Safe same-origin redirect to collection/settings, or sign-in with recovery instructions for invalid links",
+      },
     },
   },
 };
@@ -505,6 +537,16 @@ add(
   "Id",
   false,
   "PortfolioSnapshotInput",
+);
+add("/api/v1/me/card-library", "get", "PrivateCardLibrary");
+queryParameters(
+  "/api/v1/me/card-library",
+  {
+    kind: { type: "string", enum: ["virtual", "favorite", "wishlist"] },
+    cursor: { type: "string" },
+    limit: { type: "integer", minimum: 1, maximum: 50, default: 24 },
+  },
+  ["kind"],
 );
 add("/api/v1/me/card-holdings", "get", "CardHoldings");
 add("/api/v1/me/card-actions", "get", "CardActions", true);

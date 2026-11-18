@@ -59,7 +59,12 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "enum": ["retailer", "third_party", "mixed", "unknown"]
+              "enum": [
+                "retailer",
+                "third_party",
+                "mixed",
+                "unknown"
+              ]
             }
           },
           {
@@ -67,7 +72,12 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "enum": ["ship_to_home", "pickup", "in_store_report", "unknown"]
+              "enum": [
+                "ship_to_home",
+                "pickup",
+                "in_store_report",
+                "unknown"
+              ]
             }
           },
           {
@@ -101,7 +111,12 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "enum": ["in_stock", "out_of_stock", "preorder", "unknown"]
+              "enum": [
+                "in_stock",
+                "out_of_stock",
+                "preorder",
+                "unknown"
+              ]
             }
           },
           {
@@ -122,7 +137,12 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "enum": ["fresh", "aging", "stale", "unavailable"]
+              "enum": [
+                "fresh",
+                "aging",
+                "stale",
+                "unavailable"
+              ]
             }
           }
         ],
@@ -133,7 +153,10 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "type": "array",
@@ -143,14 +166,19 @@
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -295,7 +323,12 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "enum": ["retailer", "third_party", "mixed", "unknown"]
+              "enum": [
+                "retailer",
+                "third_party",
+                "mixed",
+                "unknown"
+              ]
             }
           },
           {
@@ -303,7 +336,12 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "enum": ["ship_to_home", "pickup", "in_store_report", "unknown"]
+              "enum": [
+                "ship_to_home",
+                "pickup",
+                "in_store_report",
+                "unknown"
+              ]
             }
           },
           {
@@ -337,7 +375,12 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "enum": ["in_stock", "out_of_stock", "preorder", "unknown"]
+              "enum": [
+                "in_stock",
+                "out_of_stock",
+                "preorder",
+                "unknown"
+              ]
             }
           },
           {
@@ -358,7 +401,12 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "enum": ["fresh", "aging", "stale", "unavailable"]
+              "enum": [
+                "fresh",
+                "aging",
+                "stale",
+                "unavailable"
+              ]
             }
           }
         ],
@@ -369,7 +417,10 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "type": "array",
@@ -379,14 +430,19 @@
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -509,7 +565,10 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "type": "array",
@@ -519,14 +578,19 @@
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -640,21 +704,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/ProductDetail"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -781,7 +853,10 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "type": "array",
@@ -791,14 +866,19 @@
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -923,21 +1003,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/Watch"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -1072,21 +1160,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/Id"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -1223,7 +1319,10 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "type": "array",
@@ -1233,14 +1332,19 @@
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -1365,21 +1469,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/Rule"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -1514,21 +1626,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/Id"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -1663,21 +1783,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/Rule"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -1814,7 +1942,10 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "type": "array",
@@ -1824,14 +1955,19 @@
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -1956,21 +2092,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/Notification"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -2088,21 +2232,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/Preferences"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -2227,21 +2379,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/Preferences"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -2378,7 +2538,10 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "type": "array",
@@ -2388,14 +2551,19 @@
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -2522,21 +2690,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/JobAccepted"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -2674,21 +2850,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/JobAccepted"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -2826,21 +3010,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/Id"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -2975,21 +3167,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/Id"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -3107,21 +3307,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/Session"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -3239,21 +3447,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/Export"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -3361,21 +3577,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/Operator"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -3500,21 +3724,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/SourceResult"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -3651,21 +3883,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/Flag"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -3798,21 +4038,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/AuthAccepted"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -3907,7 +4155,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AuthInput"
+                "$ref": "#/components/schemas/AuthSignupInput"
               }
             }
           }
@@ -3945,21 +4193,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/AuthAccepted"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -4054,7 +4310,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AuthInput"
+                "$ref": "#/components/schemas/AuthSigninInput"
               }
             }
           }
@@ -4092,21 +4348,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/AuthAccepted"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -4201,7 +4465,162 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AuthInput"
+                "$ref": "#/components/schemas/AuthEmailInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/resend": {
+      "post": {
+        "summary": "POST /auth/resend",
+        "security": [],
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Must match APP_ORIGIN."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/AuthAccepted"
+                    },
+                    "meta": {
+                      "type": "object",
+                      "required": [
+                        "request_id"
+                      ],
+                      "properties": {
+                        "request_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "next_cursor": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Typed safe error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Typed safe error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Typed safe error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Typed safe error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Typed safe error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Typed safe error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Typed safe error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Typed safe error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthEmailInput"
               }
             }
           }
@@ -4243,21 +4662,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/AuthAccepted"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -4352,7 +4779,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AuthInput"
+                "$ref": "#/components/schemas/AuthPasswordInput"
               }
             }
           }
@@ -4390,21 +4817,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/AuthAccepted"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -4499,7 +4934,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AuthInput"
+                "$ref": "#/components/schemas/AuthEmptyInput"
               }
             }
           }
@@ -4541,10 +4976,7 @@
         ],
         "responses": {
           "303": {
-            "description": "Safe same-origin redirect"
-          },
-          "401": {
-            "description": "Invalid or expired link"
+            "description": "Safe same-origin redirect to collection/settings, or sign-in with recovery instructions for invalid links"
           }
         }
       }
@@ -4579,7 +5011,10 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "enum": ["true", "false"]
+              "enum": [
+                "true",
+                "false"
+              ]
             },
             "required": false
           }
@@ -4591,21 +5026,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/CollectorSets"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -4748,21 +5191,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/CollectorCards"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -4906,21 +5357,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/StoreResults"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -5024,21 +5483,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/MapConfiguration"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -5172,7 +5639,10 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "type": "array",
@@ -5182,14 +5652,19 @@
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -5316,21 +5791,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/SightingReceipt"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -5467,21 +5950,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/Id"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -5616,7 +6107,12 @@
             "name": "state",
             "in": "query",
             "schema": {
-              "enum": ["pending", "approved", "rejected", "expired"]
+              "enum": [
+                "pending",
+                "approved",
+                "rejected",
+                "expired"
+              ]
             },
             "required": true
           }
@@ -5628,21 +6124,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/ReviewQueue"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -5778,21 +6282,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/ReviewReceipt"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -5910,21 +6422,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/CollectorAdmin"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -6051,21 +6571,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/EditableRelease"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -6205,7 +6733,11 @@
             "name": "event_type",
             "in": "query",
             "schema": {
-              "enum": ["release", "preorder", "announcement"]
+              "enum": [
+                "release",
+                "preorder",
+                "announcement"
+              ]
             },
             "required": false
           }
@@ -6217,7 +6749,10 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "type": "array",
@@ -6227,14 +6762,19 @@
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -6361,21 +6901,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/PackOpening"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -6493,21 +7041,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/LabState"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -6636,21 +7192,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/OpeningHistory"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -6768,21 +7332,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/PackOpening"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -6896,7 +7468,10 @@
             "name": "mode",
             "in": "query",
             "schema": {
-              "enum": ["real", "virtual"]
+              "enum": [
+                "real",
+                "virtual"
+              ]
             },
             "required": true
           },
@@ -6917,21 +7492,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/CollectionSnapshot"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -7045,7 +7628,10 @@
             "name": "mode",
             "in": "query",
             "schema": {
-              "enum": ["real", "virtual"]
+              "enum": [
+                "real",
+                "virtual"
+              ]
             },
             "required": true
           },
@@ -7066,21 +7652,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/CollectionProgress"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -7207,21 +7801,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/Id"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -7345,7 +7947,10 @@
             "name": "mode",
             "in": "query",
             "schema": {
-              "enum": ["real", "virtual"]
+              "enum": [
+                "real",
+                "virtual"
+              ]
             },
             "required": true
           },
@@ -7362,7 +7967,11 @@
             "name": "goal",
             "in": "query",
             "schema": {
-              "enum": ["base", "master", "extended"]
+              "enum": [
+                "base",
+                "master",
+                "extended"
+              ]
             },
             "required": true
           }
@@ -7589,7 +8198,11 @@
             "schema": {
               "default": "all",
               "type": "string",
-              "enum": ["all", "owned", "missing"]
+              "enum": [
+                "all",
+                "owned",
+                "missing"
+              ]
             },
             "required": false
           },
@@ -7599,7 +8212,12 @@
             "schema": {
               "default": "name",
               "type": "string",
-              "enum": ["name", "release", "price", "popular"]
+              "enum": [
+                "name",
+                "release",
+                "price",
+                "popular"
+              ]
             },
             "required": false
           },
@@ -7661,21 +8279,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/CardSearch"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -7779,21 +8405,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/CardCoverage"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -7907,21 +8541,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/CardPrinting"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -8040,7 +8682,13 @@
             "name": "range",
             "in": "query",
             "schema": {
-              "enum": ["7D", "30D", "90D", "1Y", "ALL"]
+              "enum": [
+                "7D",
+                "30D",
+                "90D",
+                "1Y",
+                "ALL"
+              ]
             },
             "required": false
           },
@@ -8072,7 +8720,11 @@
             "name": "statistic",
             "in": "query",
             "schema": {
-              "enum": ["market", "median", "low"]
+              "enum": [
+                "market",
+                "median",
+                "low"
+              ]
             },
             "required": false
           },
@@ -8130,21 +8782,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/CardPrices"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -8278,21 +8938,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/CardIndex"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -8426,21 +9094,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/CardSearch"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -8574,21 +9250,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/CardIndex"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -8722,21 +9406,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/CardSearch"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -8850,7 +9542,11 @@
             "name": "statistic",
             "in": "query",
             "schema": {
-              "enum": ["market", "median", "low"]
+              "enum": [
+                "market",
+                "median",
+                "low"
+              ]
             },
             "required": false
           }
@@ -8862,21 +9558,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/PhysicalPortfolio"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -9003,21 +9707,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/Id"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -9119,6 +9831,169 @@
         }
       }
     },
+    "/api/v1/me/card-library": {
+      "get": {
+        "summary": "GET /api/v1/me/card-library",
+        "security": [
+          {
+            "supabaseSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "kind",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "virtual",
+                "favorite",
+                "wishlist"
+              ]
+            },
+            "required": true
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50,
+              "default": 24
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/PrivateCardLibrary"
+                    },
+                    "meta": {
+                      "type": "object",
+                      "required": [
+                        "request_id"
+                      ],
+                      "properties": {
+                        "request_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "next_cursor": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Typed safe error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Typed safe error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Typed safe error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Typed safe error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Typed safe error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Typed safe error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Typed safe error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Typed safe error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/me/card-holdings": {
       "get": {
         "summary": "GET /api/v1/me/card-holdings",
@@ -9145,21 +10020,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/CardHoldings"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -9277,7 +10160,10 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "type": "array",
@@ -9287,14 +10173,19 @@
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -9421,21 +10312,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/Id"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -9572,21 +10471,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/Id"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -9723,7 +10630,10 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "type": "array",
@@ -9733,14 +10643,19 @@
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -9865,21 +10780,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/Id"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -10025,21 +10948,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/Id"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -10183,21 +11114,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/Id"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -10324,21 +11263,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/Id"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -10479,21 +11426,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data", "meta"],
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/CardCatalogAdmin"
                     },
                     "meta": {
                       "type": "object",
-                      "required": ["request_id"],
+                      "required": [
+                        "request_id"
+                      ],
                       "properties": {
                         "request_id": {
                           "type": "string",
                           "format": "uuid"
                         },
                         "next_cursor": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       }
                     }
@@ -11310,7 +12265,9 @@
             }
           }
         },
-        "required": ["cards"],
+        "required": [
+          "cards"
+        ],
         "additionalProperties": false
       },
       "CardIndex": {
@@ -11366,12 +12323,18 @@
                   "maximum": 9007199254740991
                 }
               },
-              "required": ["id", "name", "count"],
+              "required": [
+                "id",
+                "name",
+                "count"
+              ],
               "additionalProperties": false
             }
           }
         },
-        "required": ["entries"],
+        "required": [
+          "entries"
+        ],
         "additionalProperties": false
       },
       "CardCoverage": {
@@ -11995,7 +12958,10 @@
                 }
               }
             },
-            "required": ["mode", "lots"],
+            "required": [
+              "mode",
+              "lots"
+            ],
             "additionalProperties": false
           },
           {
@@ -12133,7 +13099,10 @@
                 }
               }
             },
-            "required": ["mode", "lots"],
+            "required": [
+              "mode",
+              "lots"
+            ],
             "additionalProperties": false
           }
         ]
@@ -12151,7 +13120,10 @@
             "type": "boolean"
           }
         },
-        "required": ["card_id", "active"],
+        "required": [
+          "card_id",
+          "active"
+        ],
         "additionalProperties": false
       },
       "PhysicalPortfolio": {
@@ -12227,7 +13199,10 @@
                     "maximum": 9007199254740991
                   }
                 },
-                "required": ["label", "copies"],
+                "required": [
+                  "label",
+                  "copies"
+                ],
                 "additionalProperties": false
               }
             }
@@ -12342,7 +13317,12 @@
                   "maximum": 9007199254740991
                 }
               },
-              "required": ["id", "name", "copies", "variants"],
+              "required": [
+                "id",
+                "name",
+                "copies",
+                "variants"
+              ],
               "additionalProperties": false
             }
           },
@@ -12506,7 +13486,11 @@
                   "maximum": 9007199254740991
                 }
               },
-              "required": ["name", "value_minor", "quantity"],
+              "required": [
+                "name",
+                "value_minor",
+                "quantity"
+              ],
               "additionalProperties": false
             }
           },
@@ -12522,13 +13506,20 @@
                 },
                 "kind": {
                   "type": "string",
-                  "enum": ["favorite", "wishlist"]
+                  "enum": [
+                    "favorite",
+                    "wishlist"
+                  ]
                 },
                 "name": {
                   "type": "string"
                 }
               },
-              "required": ["card_id", "kind", "name"],
+              "required": [
+                "card_id",
+                "kind",
+                "name"
+              ],
               "additionalProperties": false
             }
           },
@@ -12611,10 +13602,17 @@
           },
           "statistic": {
             "type": "string",
-            "enum": ["market", "median", "low"]
+            "enum": [
+              "market",
+              "median",
+              "low"
+            ]
           }
         },
-        "required": ["currency", "statistic"],
+        "required": [
+          "currency",
+          "statistic"
+        ],
         "additionalProperties": false
       },
       "CardActions": {
@@ -12628,10 +13626,423 @@
           },
           "kind": {
             "type": "string",
-            "enum": ["favorite", "wishlist"]
+            "enum": [
+              "favorite",
+              "wishlist"
+            ]
           }
         },
-        "required": ["card_id", "kind"],
+        "required": [
+          "card_id",
+          "kind"
+        ],
+        "additionalProperties": false
+      },
+      "PrivateCardLibrary": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "entries": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                },
+                "quantity": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "card": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid",
+                          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "number": {
+                          "type": "string"
+                        },
+                        "set_id": {
+                          "type": "string",
+                          "format": "uuid",
+                          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                        },
+                        "set_name": {
+                          "type": "string"
+                        },
+                        "language": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "region": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "series": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "release_date": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "artists": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "types": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "pokedex_numbers": {
+                          "type": "array",
+                          "items": {
+                            "type": "integer",
+                            "minimum": -9007199254740991,
+                            "maximum": 9007199254740991
+                          }
+                        },
+                        "rarity": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "rarity_original": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "category": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "stage": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "hp": {
+                          "anyOf": [
+                            {
+                              "type": "number"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "metadata": {
+                          "type": "object",
+                          "propertyNames": {
+                            "type": "string"
+                          },
+                          "additionalProperties": {}
+                        },
+                        "source_url": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "format": "uri"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "synchronized_at": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "favorites": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "reference_prices": {
+                          "default": [],
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid",
+                                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                              },
+                              "variant_id": {
+                                "type": "string",
+                                "format": "uuid",
+                                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                              },
+                              "provider_id": {
+                                "type": "string"
+                              },
+                              "condition": {
+                                "type": "string",
+                                "enum": [
+                                  "unknown",
+                                  "near_mint",
+                                  "lightly_played",
+                                  "moderately_played",
+                                  "heavily_played",
+                                  "damaged"
+                                ]
+                              },
+                              "grading_company": {
+                                "type": "string"
+                              },
+                              "grade": {
+                                "type": "string"
+                              },
+                              "currency": {
+                                "type": "string"
+                              },
+                              "statistic": {
+                                "type": "string"
+                              },
+                              "amount_minor": {
+                                "type": "number",
+                                "minimum": 0
+                              },
+                              "observed_at": {
+                                "type": "string",
+                                "format": "date-time",
+                                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                              },
+                              "captured_at": {
+                                "type": "string",
+                                "format": "date-time",
+                                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                              },
+                              "source_url": {
+                                "type": "string",
+                                "format": "uri"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "variant_id",
+                              "provider_id",
+                              "condition",
+                              "grading_company",
+                              "grade",
+                              "currency",
+                              "statistic",
+                              "amount_minor",
+                              "observed_at",
+                              "captured_at",
+                              "source_url"
+                            ],
+                            "additionalProperties": false
+                          }
+                        },
+                        "variants": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid",
+                                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                              },
+                              "set_id": {
+                                "type": "string",
+                                "format": "uuid",
+                                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                              },
+                              "card_number": {
+                                "type": "string"
+                              },
+                              "card_id": {
+                                "type": "string",
+                                "format": "uuid",
+                                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                              },
+                              "card_name": {
+                                "type": "string"
+                              },
+                              "rarity": {
+                                "default": null,
+                                "anyOf": [
+                                  {
+                                    "type": "string"
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              },
+                              "image_url": {
+                                "default": null,
+                                "anyOf": [
+                                  {
+                                    "type": "string",
+                                    "format": "uri"
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              },
+                              "image_rights_cleared": {
+                                "default": false,
+                                "type": "boolean"
+                              },
+                              "finish": {
+                                "type": "string"
+                              },
+                              "edition": {
+                                "type": "string"
+                              },
+                              "print_markers": {
+                                "type": "object",
+                                "propertyNames": {
+                                  "type": "string"
+                                },
+                                "additionalProperties": {}
+                              },
+                              "eligible_for_packs": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "set_id",
+                              "card_number",
+                              "card_name",
+                              "rarity",
+                              "image_url",
+                              "image_rights_cleared",
+                              "finish",
+                              "eligible_for_packs"
+                            ],
+                            "additionalProperties": false
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "name",
+                        "number",
+                        "set_id",
+                        "set_name",
+                        "language",
+                        "region",
+                        "series",
+                        "release_date",
+                        "artists",
+                        "types",
+                        "pokedex_numbers",
+                        "rarity",
+                        "rarity_original",
+                        "category",
+                        "stage",
+                        "hp",
+                        "metadata",
+                        "source_url",
+                        "synchronized_at",
+                        "favorites",
+                        "reference_prices",
+                        "variants"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "id",
+                "quantity",
+                "card"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "entries",
+          "next_cursor"
+        ],
         "additionalProperties": false
       },
       "CardHoldings": {
@@ -12652,7 +14063,10 @@
                   "type": "number"
                 }
               },
-              "required": ["card_variant_id", "quantity"],
+              "required": [
+                "card_variant_id",
+                "quantity"
+              ],
               "additionalProperties": false
             }
           },
@@ -12670,7 +14084,10 @@
                   "type": "number"
                 }
               },
-              "required": ["card_variant_id", "quantity"],
+              "required": [
+                "card_variant_id",
+                "quantity"
+              ],
               "additionalProperties": false
             }
           },
@@ -12818,7 +14235,11 @@
             }
           }
         },
-        "required": ["physical", "virtual", "lots"],
+        "required": [
+          "physical",
+          "virtual",
+          "lots"
+        ],
         "additionalProperties": false
       },
       "CardCatalogAdmin": {
@@ -12900,7 +14321,11 @@
             "additionalProperties": false
           }
         },
-        "required": ["providers", "runs", "coverage"],
+        "required": [
+          "providers",
+          "runs",
+          "coverage"
+        ],
         "additionalProperties": false
       },
       "Product": {
@@ -13103,11 +14528,21 @@
           },
           "seller_type": {
             "type": "string",
-            "enum": ["retailer", "third_party", "mixed", "unknown"]
+            "enum": [
+              "retailer",
+              "third_party",
+              "mixed",
+              "unknown"
+            ]
           },
           "channel": {
             "type": "string",
-            "enum": ["ship_to_home", "pickup", "in_store_report", "unknown"]
+            "enum": [
+              "ship_to_home",
+              "pickup",
+              "in_store_report",
+              "unknown"
+            ]
           },
           "region_code": {
             "anyOf": [
@@ -13145,7 +14580,12 @@
           },
           "availability_status": {
             "type": "string",
-            "enum": ["in_stock", "out_of_stock", "preorder", "unknown"]
+            "enum": [
+              "in_stock",
+              "out_of_stock",
+              "preorder",
+              "unknown"
+            ]
           },
           "evidence_type": {
             "type": "string",
@@ -13158,7 +14598,12 @@
           },
           "freshness": {
             "type": "string",
-            "enum": ["fresh", "aging", "stale", "unavailable"]
+            "enum": [
+              "fresh",
+              "aging",
+              "stale",
+              "unavailable"
+            ]
           },
           "observed_at": {
             "anyOf": [
@@ -13465,7 +14910,12 @@
                 },
                 "seller_type": {
                   "type": "string",
-                  "enum": ["retailer", "third_party", "mixed", "unknown"]
+                  "enum": [
+                    "retailer",
+                    "third_party",
+                    "mixed",
+                    "unknown"
+                  ]
                 },
                 "channel": {
                   "type": "string",
@@ -13512,7 +14962,12 @@
                 },
                 "availability_status": {
                   "type": "string",
-                  "enum": ["in_stock", "out_of_stock", "preorder", "unknown"]
+                  "enum": [
+                    "in_stock",
+                    "out_of_stock",
+                    "preorder",
+                    "unknown"
+                  ]
                 },
                 "evidence_type": {
                   "type": "string",
@@ -13525,7 +14980,12 @@
                 },
                 "freshness": {
                   "type": "string",
-                  "enum": ["fresh", "aging", "stale", "unavailable"]
+                  "enum": [
+                    "fresh",
+                    "aging",
+                    "stale",
+                    "unavailable"
+                  ]
                 },
                 "observed_at": {
                   "anyOf": [
@@ -13646,11 +15106,21 @@
                 },
                 "previous_status": {
                   "type": "string",
-                  "enum": ["in_stock", "out_of_stock", "preorder", "unknown"]
+                  "enum": [
+                    "in_stock",
+                    "out_of_stock",
+                    "preorder",
+                    "unknown"
+                  ]
                 },
                 "current_status": {
                   "type": "string",
-                  "enum": ["in_stock", "out_of_stock", "preorder", "unknown"]
+                  "enum": [
+                    "in_stock",
+                    "out_of_stock",
+                    "preorder",
+                    "unknown"
+                  ]
                 },
                 "observed_at": {
                   "type": "string"
@@ -13709,7 +15179,11 @@
             }
           }
         },
-        "required": ["product", "offers", "history"],
+        "required": [
+          "product",
+          "offers",
+          "history"
+        ],
         "additionalProperties": false
       },
       "Retailer": {
@@ -13735,7 +15209,13 @@
             "type": "string"
           }
         },
-        "required": ["id", "name", "website", "is_demo", "coverage"],
+        "required": [
+          "id",
+          "name",
+          "website",
+          "is_demo",
+          "coverage"
+        ],
         "additionalProperties": false
       },
       "Rule": {
@@ -13818,7 +15298,12 @@
             "type": "array",
             "items": {
               "type": "string",
-              "enum": ["retailer", "third_party", "mixed", "unknown"]
+              "enum": [
+                "retailer",
+                "third_party",
+                "mixed",
+                "unknown"
+              ]
             }
           },
           "channels": {
@@ -13826,7 +15311,12 @@
             "type": "array",
             "items": {
               "type": "string",
-              "enum": ["ship_to_home", "pickup", "in_store_report", "unknown"]
+              "enum": [
+                "ship_to_home",
+                "pickup",
+                "in_store_report",
+                "unknown"
+              ]
             }
           },
           "evidence_types": {
@@ -13918,7 +15408,10 @@
             "type": "array",
             "items": {
               "type": "string",
-              "enum": ["in_app", "web_push"]
+              "enum": [
+                "in_app",
+                "web_push"
+              ]
             }
           },
           "quiet_hours": {
@@ -13938,7 +15431,11 @@
                     "type": "string"
                   }
                 },
-                "required": ["start", "end", "time_zone"],
+                "required": [
+                  "start",
+                  "end",
+                  "time_zone"
+                ],
                 "additionalProperties": false
               },
               {
@@ -14055,7 +15552,12 @@
             "type": "array",
             "items": {
               "type": "string",
-              "enum": ["retailer", "third_party", "mixed", "unknown"]
+              "enum": [
+                "retailer",
+                "third_party",
+                "mixed",
+                "unknown"
+              ]
             }
           },
           "channels": {
@@ -14063,7 +15565,12 @@
             "type": "array",
             "items": {
               "type": "string",
-              "enum": ["ship_to_home", "pickup", "in_store_report", "unknown"]
+              "enum": [
+                "ship_to_home",
+                "pickup",
+                "in_store_report",
+                "unknown"
+              ]
             }
           },
           "evidence_types": {
@@ -14155,7 +15662,10 @@
             "type": "array",
             "items": {
               "type": "string",
-              "enum": ["in_app", "web_push"]
+              "enum": [
+                "in_app",
+                "web_push"
+              ]
             }
           },
           "quiet_hours": {
@@ -14175,7 +15685,11 @@
                     "type": "string"
                   }
                 },
-                "required": ["start", "end", "time_zone"],
+                "required": [
+                  "start",
+                  "end",
+                  "time_zone"
+                ],
                 "additionalProperties": false
               },
               {
@@ -14253,7 +15767,12 @@
             "type": "string"
           }
         },
-        "required": ["id", "product_id", "listing_id", "created_at"],
+        "required": [
+          "id",
+          "product_id",
+          "listing_id",
+          "created_at"
+        ],
         "additionalProperties": false
       },
       "WatchInput": {
@@ -14287,7 +15806,10 @@
             ]
           }
         },
-        "required": ["product_id", "listing_id"],
+        "required": [
+          "product_id",
+          "listing_id"
+        ],
         "additionalProperties": false
       },
       "Preferences": {
@@ -14331,7 +15853,11 @@
                     "type": "string"
                   }
                 },
-                "required": ["start", "end", "time_zone"],
+                "required": [
+                  "start",
+                  "end",
+                  "time_zone"
+                ],
                 "additionalProperties": false
               },
               {
@@ -14396,7 +15922,11 @@
                     "type": "string"
                   }
                 },
-                "required": ["start", "end", "time_zone"],
+                "required": [
+                  "start",
+                  "end",
+                  "time_zone"
+                ],
                 "additionalProperties": false
               },
               {
@@ -14447,7 +15977,10 @@
           },
           "channel": {
             "type": "string",
-            "enum": ["in_app", "web_push"]
+            "enum": [
+              "in_app",
+              "web_push"
+            ]
           },
           "created_at": {
             "type": "string"
@@ -14531,11 +16064,20 @@
           },
           "kind": {
             "type": "string",
-            "enum": ["export", "delete"]
+            "enum": [
+              "export",
+              "delete"
+            ]
           },
           "status": {
             "type": "string",
-            "enum": ["pending", "running", "completed", "blocked", "failed"]
+            "enum": [
+              "pending",
+              "running",
+              "completed",
+              "blocked",
+              "failed"
+            ]
           },
           "created_at": {
             "type": "string"
@@ -14595,7 +16137,10 @@
             "type": "string"
           }
         },
-        "required": ["id", "status"],
+        "required": [
+          "id",
+          "status"
+        ],
         "additionalProperties": false
       },
       "Id": {
@@ -14608,7 +16153,9 @@
             "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
           }
         },
-        "required": ["id"],
+        "required": [
+          "id"
+        ],
         "additionalProperties": false
       },
       "Error": {
@@ -14643,7 +16190,11 @@
                 "additionalProperties": {}
               }
             },
-            "required": ["code", "message", "details"],
+            "required": [
+              "code",
+              "message",
+              "details"
+            ],
             "additionalProperties": false
           },
           "meta": {
@@ -14655,11 +16206,16 @@
                 "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
               }
             },
-            "required": ["request_id"],
+            "required": [
+              "request_id"
+            ],
             "additionalProperties": false
           }
         },
-        "required": ["error", "meta"],
+        "required": [
+          "error",
+          "meta"
+        ],
         "additionalProperties": false
       },
       "LocalSightingEvent": {
@@ -14822,11 +16378,17 @@
                 "maxLength": 256
               }
             },
-            "required": ["p256dh", "auth"],
+            "required": [
+              "p256dh",
+              "auth"
+            ],
             "additionalProperties": false
           }
         },
-        "required": ["endpoint", "keys"],
+        "required": [
+          "endpoint",
+          "keys"
+        ],
         "additionalProperties": false
       },
       "CollectorSets": {
@@ -14897,7 +16459,11 @@
                 },
                 "rights_status": {
                   "type": "string",
-                  "enum": ["approved", "metadata_only", "disabled"]
+                  "enum": [
+                    "approved",
+                    "metadata_only",
+                    "disabled"
+                  ]
                 },
                 "enabled": {
                   "type": "boolean"
@@ -14927,7 +16493,10 @@
                         },
                         "model": {
                           "type": "string",
-                          "enum": ["fictional", "estimated"]
+                          "enum": [
+                            "fictional",
+                            "estimated"
+                          ]
                         },
                         "methodology": {
                           "type": "string"
@@ -14994,12 +16563,18 @@
                                       "type": "string"
                                     }
                                   },
-                                  "required": ["label", "probability"],
+                                  "required": [
+                                    "label",
+                                    "probability"
+                                  ],
                                   "additionalProperties": false
                                 }
                               }
                             },
-                            "required": ["label", "outcomes"],
+                            "required": [
+                              "label",
+                              "outcomes"
+                            ],
                             "additionalProperties": false
                           }
                         }
@@ -15041,7 +16616,10 @@
             }
           }
         },
-        "required": ["enabled", "sets"],
+        "required": [
+          "enabled",
+          "sets"
+        ],
         "additionalProperties": false
       },
       "CollectorCards": {
@@ -15152,7 +16730,11 @@
                     "type": "array",
                     "items": {
                       "type": "string",
-                      "enum": ["base", "master", "extended"]
+                      "enum": [
+                        "base",
+                        "master",
+                        "extended"
+                      ]
                     }
                   },
                   "requirements": {
@@ -15170,7 +16752,11 @@
                         },
                         "scope": {
                           "type": "string",
-                          "enum": ["base", "master", "extended"]
+                          "enum": [
+                            "base",
+                            "master",
+                            "extended"
+                          ]
                         },
                         "rationale": {
                           "type": "string"
@@ -15207,7 +16793,12 @@
             "type": "string"
           }
         },
-        "required": ["variants", "manifest", "is_demo", "metadata_source"],
+        "required": [
+          "variants",
+          "manifest",
+          "is_demo",
+          "metadata_source"
+        ],
         "additionalProperties": false
       },
       "PackOpening": {
@@ -15318,7 +16909,12 @@
                   "type": "string"
                 }
               },
-              "required": ["id", "set_name", "opened_at_label", "odds_version"],
+              "required": [
+                "id",
+                "set_name",
+                "opened_at_label",
+                "odds_version"
+              ],
               "additionalProperties": false
             }
           },
@@ -15333,7 +16929,10 @@
             ]
           }
         },
-        "required": ["openings", "next_cursor"],
+        "required": [
+          "openings",
+          "next_cursor"
+        ],
         "additionalProperties": false
       },
       "LabState": {
@@ -15376,7 +16975,12 @@
                   "type": "string"
                 }
               },
-              "required": ["id", "set_name", "opened_at_label", "odds_version"],
+              "required": [
+                "id",
+                "set_name",
+                "opened_at_label",
+                "odds_version"
+              ],
               "additionalProperties": false
             }
           },
@@ -15421,7 +17025,10 @@
                   "maximum": 9007199254740991
                 }
               },
-              "required": ["variant_id", "quantity"],
+              "required": [
+                "variant_id",
+                "quantity"
+              ],
               "additionalProperties": false
             }
           },
@@ -15436,7 +17043,10 @@
           },
           "mode": {
             "type": "string",
-            "enum": ["real", "virtual"]
+            "enum": [
+              "real",
+              "virtual"
+            ]
           },
           "progress": {
             "anyOf": [
@@ -15450,7 +17060,10 @@
                   },
                   "mode": {
                     "type": "string",
-                    "enum": ["real", "virtual"]
+                    "enum": [
+                      "real",
+                      "virtual"
+                    ]
                   },
                   "base_collected": {
                     "type": "integer",
@@ -15533,7 +17146,12 @@
             ]
           }
         },
-        "required": ["entries", "realNotes", "mode", "progress"],
+        "required": [
+          "entries",
+          "realNotes",
+          "mode",
+          "progress"
+        ],
         "additionalProperties": false
       },
       "CollectionProgress": {
@@ -15547,7 +17165,10 @@
           },
           "mode": {
             "type": "string",
-            "enum": ["real", "virtual"]
+            "enum": [
+              "real",
+              "virtual"
+            ]
           },
           "base_collected": {
             "type": "integer",
@@ -15723,7 +17344,10 @@
             ]
           }
         },
-        "required": ["stores", "next_cursor"],
+        "required": [
+          "stores",
+          "next_cursor"
+        ],
         "additionalProperties": false
       },
       "Sighting": {
@@ -15754,7 +17378,10 @@
           },
           "report_type": {
             "type": "string",
-            "enum": ["found_stock", "shelf_empty"]
+            "enum": [
+              "found_stock",
+              "shelf_empty"
+            ]
           },
           "submitted_at": {
             "type": "string"
@@ -15767,7 +17394,12 @@
           },
           "moderation": {
             "type": "string",
-            "enum": ["pending", "approved", "rejected", "expired"]
+            "enum": [
+              "pending",
+              "approved",
+              "rejected",
+              "expired"
+            ]
           },
           "independent_confirmations": {
             "type": "integer",
@@ -15832,7 +17464,10 @@
           },
           "report_type": {
             "type": "string",
-            "enum": ["found_stock", "shelf_empty"]
+            "enum": [
+              "found_stock",
+              "shelf_empty"
+            ]
           },
           "observed_at": {
             "type": "string",
@@ -15867,7 +17502,10 @@
             "const": "pending"
           }
         },
-        "required": ["id", "moderation"],
+        "required": [
+          "id",
+          "moderation"
+        ],
         "additionalProperties": false
       },
       "ReviewInput": {
@@ -15876,7 +17514,10 @@
         "properties": {
           "decision": {
             "type": "string",
-            "enum": ["approved", "rejected"]
+            "enum": [
+              "approved",
+              "rejected"
+            ]
           },
           "reason": {
             "type": "string",
@@ -15900,7 +17541,12 @@
             "maximum": 9007199254740991
           }
         },
-        "required": ["decision", "reason", "public_notes", "expected_revision"],
+        "required": [
+          "decision",
+          "reason",
+          "public_notes",
+          "expected_revision"
+        ],
         "additionalProperties": false
       },
       "ReviewReceipt": {
@@ -15914,7 +17560,10 @@
           },
           "moderation": {
             "type": "string",
-            "enum": ["approved", "rejected"]
+            "enum": [
+              "approved",
+              "rejected"
+            ]
           },
           "revision": {
             "type": "integer",
@@ -15922,7 +17571,11 @@
             "maximum": 9007199254740991
           }
         },
-        "required": ["id", "moderation", "revision"],
+        "required": [
+          "id",
+          "moderation",
+          "revision"
+        ],
         "additionalProperties": false
       },
       "Release": {
@@ -15961,11 +17614,19 @@
           },
           "date_precision": {
             "type": "string",
-            "enum": ["day", "month", "unconfirmed"]
+            "enum": [
+              "day",
+              "month",
+              "unconfirmed"
+            ]
           },
           "event_type": {
             "type": "string",
-            "enum": ["release", "preorder", "announcement"]
+            "enum": [
+              "release",
+              "preorder",
+              "announcement"
+            ]
           },
           "region": {
             "anyOf": [
@@ -16052,11 +17713,19 @@
               },
               "date_precision": {
                 "type": "string",
-                "enum": ["day", "month", "unconfirmed"]
+                "enum": [
+                  "day",
+                  "month",
+                  "unconfirmed"
+                ]
               },
               "event_type": {
                 "type": "string",
-                "enum": ["release", "preorder", "announcement"]
+                "enum": [
+                  "release",
+                  "preorder",
+                  "announcement"
+                ]
               },
               "region": {
                 "anyOf": [
@@ -16079,7 +17748,10 @@
               },
               "status": {
                 "type": "string",
-                "enum": ["published", "withdrawn"]
+                "enum": [
+                  "published",
+                  "withdrawn"
+                ]
               }
             },
             "required": [
@@ -16102,7 +17774,12 @@
             "maxLength": 500
           }
         },
-        "required": ["release_id", "expected_revision", "entry", "reason"],
+        "required": [
+          "release_id",
+          "expected_revision",
+          "entry",
+          "reason"
+        ],
         "additionalProperties": false
       },
       "EditableRelease": {
@@ -16136,11 +17813,19 @@
           },
           "date_precision": {
             "type": "string",
-            "enum": ["day", "month", "unconfirmed"]
+            "enum": [
+              "day",
+              "month",
+              "unconfirmed"
+            ]
           },
           "event_type": {
             "type": "string",
-            "enum": ["release", "preorder", "announcement"]
+            "enum": [
+              "release",
+              "preorder",
+              "announcement"
+            ]
           },
           "region": {
             "anyOf": [
@@ -16163,7 +17848,10 @@
           },
           "status": {
             "type": "string",
-            "enum": ["published", "withdrawn"]
+            "enum": [
+              "published",
+              "withdrawn"
+            ]
           },
           "id": {
             "type": "string",
@@ -16214,7 +17902,11 @@
                     "type": "string"
                   }
                 },
-                "required": ["template", "attribution", "host"],
+                "required": [
+                  "template",
+                  "attribution",
+                  "host"
+                ],
                 "additionalProperties": false
               },
               {
@@ -16223,7 +17915,10 @@
             ]
           }
         },
-        "required": ["enabled", "config"],
+        "required": [
+          "enabled",
+          "config"
+        ],
         "additionalProperties": false
       },
       "PackInput": {
@@ -16240,7 +17935,10 @@
             "type": "boolean"
           }
         },
-        "required": ["set_id", "use_free_open"],
+        "required": [
+          "set_id",
+          "use_free_open"
+        ],
         "additionalProperties": false
       },
       "RealInventoryInput": {
@@ -16262,7 +17960,10 @@
             "maxLength": 500
           }
         },
-        "required": ["card_variant_id", "quantity"],
+        "required": [
+          "card_variant_id",
+          "quantity"
+        ],
         "additionalProperties": false
       },
       "ReviewQueue": {
@@ -16294,11 +17995,19 @@
                 },
                 "report_type": {
                   "type": "string",
-                  "enum": ["found_stock", "shelf_empty"]
+                  "enum": [
+                    "found_stock",
+                    "shelf_empty"
+                  ]
                 },
                 "moderation": {
                   "type": "string",
-                  "enum": ["pending", "approved", "rejected", "expired"]
+                  "enum": [
+                    "pending",
+                    "approved",
+                    "rejected",
+                    "expired"
+                  ]
                 },
                 "observed_at": {
                   "type": "string"
@@ -16359,7 +18068,10 @@
             ]
           }
         },
-        "required": ["reports", "next_cursor"],
+        "required": [
+          "reports",
+          "next_cursor"
+        ],
         "additionalProperties": false
       },
       "CollectorAdmin": {
@@ -16390,7 +18102,10 @@
                   "type": "string"
                 }
               },
-              "required": ["id", "name"],
+              "required": [
+                "id",
+                "name"
+              ],
               "additionalProperties": false
             }
           },
@@ -16426,11 +18141,19 @@
                 },
                 "date_precision": {
                   "type": "string",
-                  "enum": ["day", "month", "unconfirmed"]
+                  "enum": [
+                    "day",
+                    "month",
+                    "unconfirmed"
+                  ]
                 },
                 "event_type": {
                   "type": "string",
-                  "enum": ["release", "preorder", "announcement"]
+                  "enum": [
+                    "release",
+                    "preorder",
+                    "announcement"
+                  ]
                 },
                 "region": {
                   "anyOf": [
@@ -16453,7 +18176,10 @@
                 },
                 "status": {
                   "type": "string",
-                  "enum": ["published", "withdrawn"]
+                  "enum": [
+                    "published",
+                    "withdrawn"
+                  ]
                 },
                 "id": {
                   "type": "string",
@@ -16484,7 +18210,12 @@
             }
           }
         },
-        "required": ["authorized", "hosts", "products", "releases"],
+        "required": [
+          "authorized",
+          "hosts",
+          "products",
+          "releases"
+        ],
         "additionalProperties": false
       },
       "Session": {
@@ -16497,7 +18228,9 @@
             "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
           }
         },
-        "required": ["id"],
+        "required": [
+          "id"
+        ],
         "additionalProperties": false
       },
       "Export": {
@@ -16528,10 +18261,16 @@
           },
           "status": {
             "type": "string",
-            "enum": ["suspended", "denied", "candidate"]
+            "enum": [
+              "suspended",
+              "denied",
+              "candidate"
+            ]
           }
         },
-        "required": ["id"],
+        "required": [
+          "id"
+        ],
         "additionalProperties": false
       },
       "SourceResult": {
@@ -16548,7 +18287,11 @@
             "type": "string"
           }
         },
-        "required": ["id", "enabled", "status"],
+        "required": [
+          "id",
+          "enabled",
+          "status"
+        ],
         "additionalProperties": false
       },
       "Flag": {
@@ -16562,10 +18305,30 @@
             "type": "boolean"
           }
         },
-        "required": ["name", "enabled"],
+        "required": [
+          "name",
+          "enabled"
+        ],
         "additionalProperties": false
       },
       "AuthInput": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "additionalProperties": false
+      },
+      "AuthSignupInput": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "type": "object",
         "properties": {
@@ -16580,6 +18343,67 @@
             "maxLength": 256
           }
         },
+        "required": [
+          "email",
+          "password"
+        ],
+        "additionalProperties": false
+      },
+      "AuthSigninInput": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ],
+        "additionalProperties": false
+      },
+      "AuthEmailInput": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+          }
+        },
+        "required": [
+          "email"
+        ],
+        "additionalProperties": false
+      },
+      "AuthPasswordInput": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "password": {
+            "type": "string",
+            "minLength": 12,
+            "maxLength": 256
+          }
+        },
+        "required": [
+          "password"
+        ],
+        "additionalProperties": false
+      },
+      "AuthEmptyInput": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {},
         "additionalProperties": false
       },
       "AuthAccepted": {
@@ -16588,9 +18412,22 @@
         "properties": {
           "accepted": {
             "type": "boolean"
+          },
+          "next_step": {
+            "type": "string",
+            "enum": [
+              "signed_in",
+              "confirm_email",
+              "recovery_email_sent",
+              "password_updated",
+              "signed_out"
+            ]
           }
         },
-        "required": ["accepted"],
+        "required": [
+          "accepted",
+          "next_step"
+        ],
         "additionalProperties": false
       }
     },

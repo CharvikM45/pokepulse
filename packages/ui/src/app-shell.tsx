@@ -37,8 +37,9 @@ export function AppShell({
           : pathname === href;
   const sections = collection
     ? [
-        { href: "/collection/portfolio", label: "Overview" },
-        { href: "/watchlist", label: "Saved" },
+        { href: "/collection/portfolio", label: "Physical" },
+        { href: "/collection", label: "Virtual" },
+        { href: "/collection/saved", label: "Saved" },
         { href: "/alerts", label: "Activity" },
       ]
     : play || utility
@@ -55,7 +56,9 @@ export function AppShell({
         )
       : href === "/products"
         ? ["/products", "/drops"].some((p) => pathname.startsWith(p))
-        : pathname === href || pathname.startsWith(href + "/");
+        : href === "/collection"
+          ? pathname === "/collection"
+          : pathname === href || pathname.startsWith(href + "/");
   return (
     <div className="pp-shell">
       <a className="pp-skip" href="#main-content">
