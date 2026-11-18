@@ -4573,6 +4573,15 @@
               "maxLength": 512
             },
             "required": false
+          },
+          {
+            "name": "simulation",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["true", "false"]
+            },
+            "required": false
           }
         ],
         "responses": {

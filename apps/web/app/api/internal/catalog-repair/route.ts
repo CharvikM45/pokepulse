@@ -6,6 +6,7 @@ import {
 } from "node:crypto";
 import { createClient } from "@supabase/supabase-js";
 import { z } from "zod";
+import { Client } from "pg";
 import { adminDb, readJsonBody } from "../../../../src/server";
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
@@ -43,6 +44,33 @@ export async function POST(request: Request) {
       ),
       db = adminDb();
     if (input.operation === "setup") {
+      const raw =
+        process.env.POSTGRES_URL ?? process.env.POSTGRES_URL_NON_POOLING;
+      if (!raw) throw new Error("MISSING_DATABASE_OPERATOR_CONNECTION");
+      const connection = new URL(raw);
+      connection.searchParams.delete("sslmode");
+      const client = new Client({
+        connectionString: connection.toString(),
+        ssl: { rejectUnauthorized: true },
+        connectionTimeoutMillis: 10000,
+        statement_timeout: 30000,
+      });
+      await client.connect();
+      try {
+        const source = await client.query(
+          "select 1 from public.cards where provider_id='tcgdex' limit 1",
+        );
+        if (!source.rows.length) throw new Error("WRONG_CATALOG_DATABASE");
+        const sql =
+          "create or replace function public.c_invalidate_catalog_coverage() returns trigger language plpgsql security definer set search_path='' as $$begin delete from public.card_catalog_coverage_snapshot where id=true;return null;end $$;";
+        await client.query(sql);
+        await client.query(
+          "insert into supabase_migrations.schema_migrations(version,name,statements) values($1,$2,$3) on conflict(version) do nothing",
+          ["20261117230000", "coverage_safe_updates", [sql]],
+        );
+      } finally {
+        await client.end();
+      }
       const p = await db
         .from("card_provider_permissions")
         .update({
@@ -128,22 +156,20 @@ export async function POST(request: Request) {
         checked(existing.error);
         if (!existing.data) {
           const oddsId = randomUUID();
-          const o = await db
-            .from("pack_odds_versions")
-            .insert({
-              id: oddsId,
-              set_id: set.id,
-              version: "pp-uniform-ten-v1",
-              active: false,
-              fictional: true,
-              methodology:
-                "Custom game: ten independent uniform draws from one artwork-backed variant per card in this set, with replacement. This is not the distribution of a physical booster.",
-              price_coins: 0,
-              source_url: `https://api.tcgdex.net/v2/en/sets/${external}`,
-              checked_at: new Date().toISOString(),
-              uncertainty:
-                "Fictional custom configuration; no official pull-rate claim.",
-            });
+          const o = await db.from("pack_odds_versions").insert({
+            id: oddsId,
+            set_id: set.id,
+            version: "pp-uniform-ten-v1",
+            active: false,
+            fictional: true,
+            methodology:
+              "Custom game: ten independent uniform draws from one artwork-backed variant per card in this set, with replacement. This is not the distribution of a physical booster.",
+            price_coins: 0,
+            source_url: `https://api.tcgdex.net/v2/en/sets/${external}`,
+            checked_at: new Date().toISOString(),
+            uncertainty:
+              "Fictional custom configuration; no official pull-rate claim.",
+          });
           checked(o.error);
           const rules = Array.from({ length: 10 }, (_, slot) =>
             pool.map((variant_id) => ({
@@ -292,14 +318,12 @@ export async function POST(request: Request) {
       art_enabled: true,
       measured_at: new Date().toISOString(),
     };
-    const cached = await db
-      .from("card_catalog_coverage_snapshot")
-      .upsert({
-        id: true,
-        metrics,
-        permission_key: key.data,
-        observed_at: new Date().toISOString(),
-      });
+    const cached = await db.from("card_catalog_coverage_snapshot").upsert({
+      id: true,
+      metrics,
+      permission_key: key.data,
+      observed_at: new Date().toISOString(),
+    });
     checked(cached.error);
     return Response.json({ ok: true, coverage: metrics });
   } catch (e) {

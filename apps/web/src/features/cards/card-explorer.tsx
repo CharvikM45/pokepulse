@@ -321,10 +321,19 @@ export function CardExplorer({ market = false }: { market?: boolean }) {
               </label>
             ))}
           </fieldset>
+          <label>
+            View{" "}
+            <select value={view} onChange={(e) => setView(e.target.value)}>
+              <option value="gallery">Gallery</option>
+              <option value="list">List</option>
+            </select>
+          </label>
         </details>
         <div className="pp-row">
           <button className="pp-button">Explore cards</button>
-          <Link href={market ? "/market" : "/cards"}>Reset filters</Link>
+          {identity && (
+            <Link href={market ? "/market" : "/cards"}>Reset filters</Link>
+          )}
         </div>
       </form>
       <div className="pp-topbar">
@@ -333,13 +342,6 @@ export function CardExplorer({ market = false }: { market?: boolean }) {
             ? `${count.variants.toLocaleString()} indexed physical variants · measured coverage`
             : "Loading catalog coverage…"}
         </p>
-        <label>
-          View{" "}
-          <select value={view} onChange={(e) => setView(e.target.value)}>
-            <option value="gallery">Gallery</option>
-            <option value="list">List</option>
-          </select>
-        </label>
       </div>
       {resource.loading ? (
         <Skeleton label="Searching the card archive" />
@@ -387,10 +389,9 @@ export function CardExplorer({ market = false }: { market?: boolean }) {
         </Link>
       )}
       <p className="pp-muted">
-        Singles prices are independent from sealed-product offers. Missing
-        prices remain unavailable; artwork may be withheld while metadata
-        remains searchable. Coverage is measured, not a claim of worldwide
-        completeness.
+        Card data and available artwork from{" "}
+        <a href="https://tcgdex.dev">TCGdex</a>. Missing scans use a fallback.
+        Market references are separate from sealed-product offers.
       </p>
     </>
   );

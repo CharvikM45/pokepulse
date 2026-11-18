@@ -403,7 +403,10 @@ const pagination = {
   limit: { type: "integer", minimum: 1, maximum: 50, default: 20 },
   cursor: { type: "string", maxLength: 512 },
 };
-queryParameters("/api/v1/sets", pagination);
+queryParameters("/api/v1/sets", {
+  ...pagination,
+  simulation: { type: "string", enum: ["true", "false"] },
+});
 queryParameters("/api/v1/sets/{id}/cards", {
   ...pagination,
   manifest_version: { type: "string", maxLength: 80 },
