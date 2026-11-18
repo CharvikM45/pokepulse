@@ -133,47 +133,54 @@ export function SignIn() {
           </a>
         </p>
       )}
-      <form onSubmit={submit} className="pp-stack">
-        <label>
-          Email
-          <input
-            className="pp-input"
-            name="email"
-            type="email"
-            autoComplete="email"
-            required
-          />
-        </label>
-        {["sign-in", "sign-up"].includes(mode) && (
+      {mode === "sign-up" && providers.data?.github ? (
+        <p>
+          Create your account with GitHub. No signup email or extra password is
+          needed.
+        </p>
+      ) : (
+        <form onSubmit={submit} className="pp-stack">
           <label>
-            {mode === "sign-up"
-              ? "Password (at least 12 characters)"
-              : "Password"}
+            Email
             <input
               className="pp-input"
-              name="password"
-              type="password"
-              minLength={mode === "sign-up" ? 12 : 1}
-              maxLength={256}
-              autoComplete={
-                mode === "sign-in" ? "current-password" : "new-password"
-              }
+              name="email"
+              type="email"
+              autoComplete="email"
               required
             />
           </label>
-        )}
-        <button className="pp-button" disabled={busy}>
-          {busy
-            ? "Working…"
-            : mode === "sign-in"
-              ? "Sign in"
-              : mode === "sign-up"
-                ? "Create account"
-                : mode === "resend"
-                  ? "Resend confirmation"
-                  : "Send reset link"}
-        </button>
-      </form>
+          {["sign-in", "sign-up"].includes(mode) && (
+            <label>
+              {mode === "sign-up"
+                ? "Password (at least 12 characters)"
+                : "Password"}
+              <input
+                className="pp-input"
+                name="password"
+                type="password"
+                minLength={mode === "sign-up" ? 12 : 1}
+                maxLength={256}
+                autoComplete={
+                  mode === "sign-in" ? "current-password" : "new-password"
+                }
+                required
+              />
+            </label>
+          )}
+          <button className="pp-button" disabled={busy}>
+            {busy
+              ? "Working…"
+              : mode === "sign-in"
+                ? "Sign in"
+                : mode === "sign-up"
+                  ? "Create account"
+                  : mode === "resend"
+                    ? "Resend confirmation"
+                    : "Send reset link"}
+          </button>
+        </form>
+      )}
       <div className="pp-auth-links">
         {canResend && mode !== "resend" && (
           <button

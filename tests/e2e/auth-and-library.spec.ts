@@ -184,4 +184,15 @@ test("GitHub sign-in appears only when its provider is connected", async ({
   await expect(
     page.getByRole("link", { name: "Continue with GitHub" }),
   ).toHaveAttribute("href", "/auth/github");
+  await page
+    .getByRole("button", { name: "Create an account", exact: true })
+    .click();
+  await expect(
+    page.getByText(
+      "Create your account with GitHub. No signup email or extra password is needed.",
+    ),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("textbox", { name: "Email", exact: true }),
+  ).toHaveCount(0);
 });
