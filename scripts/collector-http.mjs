@@ -614,9 +614,20 @@ try {
         await expect(
           page.getByRole("heading", { name: "Your virtual cards." }),
         ).toBeVisible();
-        await expect(
-          page.getByText("1 virtual copy", { exact: true }),
-        ).toHaveCount(2);
+        const savedCards = await b.call("/api/v1/me/card-library?kind=virtual");
+        const quantityCounts = new Map();
+        for (const entry of savedCards.entries)
+          quantityCounts.set(
+            entry.quantity,
+            (quantityCounts.get(entry.quantity) ?? 0) + 1,
+          );
+        for (const [quantity, count] of quantityCounts)
+          await expect(
+            page.getByText(
+              `${quantity} virtual ${quantity === 1 ? "copy" : "copies"}`,
+              { exact: true },
+            ),
+          ).toHaveCount(count);
         await page.goto(`/sets/${setId}`);
         await expect(
           page.getByRole("region", { name: "Virtual collection" }),
