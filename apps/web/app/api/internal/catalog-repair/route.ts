@@ -5,6 +5,7 @@ import {
   randomBytes,
 } from "node:crypto";
 import { createClient } from "@supabase/supabase-js";
+import { createServerClient } from "@supabase/ssr";
 import { z } from "zod";
 import { Client } from "pg";
 import { supabaseRootCa } from "../../../../src/database-ca";
@@ -249,22 +250,59 @@ export async function POST(request: Request) {
           .limit(1)
           .single();
         checked(set.error);
-        const args = {
-          p_set_id: set.data!.id,
-          p_idempotency_key: randomUUID(),
-          p_use_free_open: false,
-        };
-        const first = await client.rpc("b_open_pack", args),
-          again = await client.rpc("b_open_pack", args);
-        checked(first.error);
-        checked(again.error);
+        const jar = new Map<string, string>();
+        const browser = createServerClient(
+          process.env.NEXT_PUBLIC_SUPABASE_URL!,
+          process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+          {
+            cookies: {
+              getAll: () => [...jar].map(([name, value]) => ({ name, value })),
+              setAll: (values) => {
+                for (const cookie of values) jar.set(cookie.name, cookie.value);
+              },
+            },
+          },
+        );
+        const login = await browser.auth.signInWithPassword({
+          email,
+          password,
+        });
+        checked(login.error);
+        const requestKey = randomUUID();
+        async function open() {
+          const r = await fetch(
+            "https://web-plum-alpha-64.vercel.app/api/v1/packs/open",
+            {
+              method: "POST",
+              headers: {
+                Origin: "https://web-plum-alpha-64.vercel.app",
+                "Content-Type": "application/json",
+                "Idempotency-Key": requestKey,
+                Cookie: [...jar]
+                  .map(([name, value]) => name + "=" + value)
+                  .join("; "),
+              },
+              body: JSON.stringify({
+                set_id: set.data!.id,
+                use_free_open: false,
+              }),
+              signal: AbortSignal.timeout(45000),
+            },
+          );
+          const value = await r.json();
+          if (!r.ok)
+            throw new Error("PACK_HTTP_FAILED:" + JSON.stringify(value));
+          return value.data as { id: string; cards: unknown[] };
+        }
+        const first = await open(),
+          again = await open();
         const real = await client.from("real_inventory").select("quantity"),
           virt = await client.from("virtual_inventory").select("quantity");
         checked(real.error);
         checked(virt.error);
-        const receipt = first.data as { id: string; cards: unknown[] };
+        const receipt = first;
         if (
-          receipt.id !== again.data.id ||
+          receipt.id !== again.id ||
           receipt.cards.length !== 10 ||
           real.data?.length ||
           virt.data?.reduce((n, r) => n + Number(r.quantity), 0) !== 10
@@ -274,6 +312,7 @@ export async function POST(request: Request) {
           ok: true,
           cards: 10,
           same_saved_opening: true,
+          authenticated_http: true,
           physical_copies: 0,
           virtual_copies: 10,
         });
