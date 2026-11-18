@@ -127,6 +127,7 @@ export function SignIn() {
       <p>Public browsing is available without an account.</p>
       {providers.data?.github && (
         <p>
+          {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- OAuth needs full navigation and must never be prefetched. */}
           <a className="pp-button" href="/auth/github">
             Continue with GitHub
           </a>
