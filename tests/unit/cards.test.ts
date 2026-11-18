@@ -1,3 +1,4 @@
+import { metadataOnlyRow } from "../../services/ingestion/cards/preserve-configuration";
 import { describe, it, expect, vi } from "vitest";
 import {
   cardSearchQuery,
@@ -193,4 +194,44 @@ it("keeps multilingual printing identities distinct and accepts the supported ca
   expect(() =>
     providerIdentity("tcgdex", "invented", "card", "base1-4"),
   ).toThrow();
+});
+
+describe("metadata refresh preserves live display and play configuration", () => {
+  it("does not replace existing card images or pack eligibility with source defaults", () => {
+    const source = {
+      id: "variant",
+      finish: "holo",
+      image_url: null,
+      image_rights_cleared: false,
+      eligible_for_packs: false,
+    };
+    const result = metadataOnlyRow("card_variants", source);
+    expect(result).toEqual({ id: "variant", finish: "holo" });
+    expect(source).toHaveProperty("eligible_for_packs", false);
+  });
+  it("preserves configured set gates on refresh", () => {
+    expect(
+      metadataOnlyRow(
+        "tcg_sets",
+        {
+          id: "set",
+          name: "Updated metadata",
+          rights_status: "metadata_only",
+          enabled_for_simulation: false,
+          is_demo: false,
+          public_metadata_allowed: false,
+        },
+        true,
+      ),
+    ).toEqual({ id: "set", name: "Updated metadata" });
+  });
+  it("retains safe metadata-only gates for a newly imported set", () => {
+    expect(
+      metadataOnlyRow(
+        "tcg_sets",
+        { rights_status: "metadata_only", enabled_for_simulation: false },
+        false,
+      ),
+    ).toHaveProperty("enabled_for_simulation", false);
+  });
 });

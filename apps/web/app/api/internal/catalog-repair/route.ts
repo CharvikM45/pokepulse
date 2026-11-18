@@ -145,7 +145,12 @@ export async function POST(request: Request) {
         checked(eligible.error);
         const cleared = await db
           .from("tcg_sets")
-          .update({ rights_status: "approved", enabled_for_simulation: true })
+          .update({
+            rights_status: "approved",
+            enabled_for_simulation: true,
+            simulation_permission_evidence_url:
+              "https://github.com/CharvikM45/pokepulse/blob/main/docs/content-rights/custom-simulation.md",
+          })
           .eq("id", set.id);
         checked(cleared.error);
         const existing = await db
