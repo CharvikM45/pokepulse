@@ -70,7 +70,6 @@ export function PortfolioDashboard() {
         </p>
         <div className="pp-row">
           <Link href="/cards">Add cards from Pokédex →</Link>
-          <Link href="/collection">Open set binder →</Link>
         </div>
       </header>
       <label>

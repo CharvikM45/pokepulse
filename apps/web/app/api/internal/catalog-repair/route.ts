@@ -7,6 +7,7 @@ import {
 import { createClient } from "@supabase/supabase-js";
 import { z } from "zod";
 import { Client } from "pg";
+import { supabaseRootCa } from "../../../../src/database-ca";
 import { adminDb, readJsonBody } from "../../../../src/server";
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
@@ -51,7 +52,7 @@ export async function POST(request: Request) {
       connection.searchParams.delete("sslmode");
       const client = new Client({
         connectionString: connection.toString(),
-        ssl: { rejectUnauthorized: true },
+        ssl: { rejectUnauthorized: true, ca: supabaseRootCa },
         connectionTimeoutMillis: 10000,
         statement_timeout: 30000,
       });
