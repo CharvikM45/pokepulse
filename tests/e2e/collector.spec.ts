@@ -136,7 +136,7 @@ test("free simulation disabled and anonymous binder never imply physical ownersh
   await expect(
     page.getByText(/Pokémon Discovery Demo/, { exact: true }),
   ).toBeVisible();
-  await page.goto("/collection");
+  await page.goto("/sets/10000000-0000-4000-8000-000000000001");
   await expect(page.getByText(/Anonymous demo sample/)).toBeVisible();
   await expect(page.getByText(/fictional-1/).first()).toBeVisible();
   await expect(

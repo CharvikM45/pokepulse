@@ -377,7 +377,7 @@ test("adapter: lost pack acknowledgment reuses its key, reload restores saved re
   await page.reload();
   await expect(page.getByRole("button", { name: "Reveal all" })).toBeVisible();
   expect(calls).toHaveLength(2);
-  await page.goto("/collection");
+  await page.goto(`/sets/${setId}`);
   await expect(
     page.getByRole("region", { name: "Virtual collection" }),
   ).toBeVisible();

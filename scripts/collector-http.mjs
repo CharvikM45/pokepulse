@@ -612,6 +612,13 @@ try {
         );
         await page.goto("/collection");
         await expect(
+          page.getByRole("heading", { name: "Your virtual cards." }),
+        ).toBeVisible();
+        await expect(
+          page.getByText("1 virtual copy", { exact: true }),
+        ).toHaveCount(2);
+        await page.goto(`/sets/${setId}`);
+        await expect(
           page.getByRole("region", { name: "Virtual collection" }),
         ).toBeVisible();
         await page

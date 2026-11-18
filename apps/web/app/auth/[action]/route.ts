@@ -18,6 +18,16 @@ import {
   authFailure,
 } from "../../../src/auth/policy";
 export const dynamic = "force-dynamic";
+function redirectTo(url: URL) {
+  return new Response(null, {
+    status: 303,
+    headers: {
+      Location: url.toString(),
+      "Cache-Control": "no-store",
+      "Referrer-Policy": "no-referrer",
+    },
+  });
+}
 async function handle(
   request: Request,
   { params }: { params: Promise<{ action: string }> },
@@ -38,12 +48,11 @@ async function handle(
             : "/collection/portfolio"),
       );
       const failed = (reason: string) =>
-        Response.redirect(
+        redirectTo(
           new URL(
             `/dashboard?auth_error=${reason}`,
             process.env.APP_ORIGIN ?? url.origin,
           ),
-          303,
         );
       const code = url.searchParams.get("code");
       const token = url.searchParams.get("token_hash");
@@ -61,10 +70,7 @@ async function handle(
         }));
       } else return failed("missing");
       if (error) return failed("expired");
-      return Response.redirect(
-        new URL(next, process.env.APP_ORIGIN ?? url.origin),
-        303,
-      );
+      return redirectTo(new URL(next, process.env.APP_ORIGIN ?? url.origin));
     }
     if (request.method !== "POST")
       throw new HttpError("NOT_FOUND", 404, "Endpoint not found.");
@@ -79,8 +85,11 @@ async function handle(
       email?: string;
       password?: string;
     };
+    const actor = ["update-password", "sign-out"].includes(action)
+      ? (await db.auth.getUser()).data.user?.id
+      : undefined;
     const subject = createHash("sha256")
-      .update(input.email?.toLowerCase() ?? "session-action")
+      .update(input.email?.toLowerCase() ?? actor ?? "anonymous-session-action")
       .digest("hex");
     const service = adminDb();
     for (const [key, limit] of [
